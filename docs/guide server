@@ -1,7 +1,7 @@
 2
 ### SCP :
 - Upload file to SCP
-    - scp RESMOB-0.0.1-SNAPSHOT.war 101.50.0.167:/usr/download
+    - scp JoinTech-0.0.1-SNAPSHOT.war 101.50.0.167:/usr/download
 
 
 ### mysql

@@ -10,7 +10,7 @@ do_stop(){
 	return 0
 }
 do_start(){
-	nohup java -jar RESMOB-0.0.1-SNAPSHOT.war -Drun.jvmArguments="$JVM_ARGS" &
+	nohup java -jar JoinTech-0.0.1-SNAPSHOT.war -Drun.jvmArguments="$JVM_ARGS" &
 	return 0
 }
 
