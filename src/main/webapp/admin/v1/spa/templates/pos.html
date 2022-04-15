@@ -1,0 +1,201 @@
+<#include "../../../inc-lib-button-action.html"/>
+<!-- Main row -->
+<div class="row">
+	<!-- Left col -->
+	<section class="col-lg-12 connectedSortable">
+		<!-- /.box -->
+		<div class="box box-solid">
+			<div class="nav-tabs-custom">
+				<!-- Tabs within a box -->
+				<ul class="nav nav-tabs pull-left">
+					<li class="active"><a href="#pos-href" data-toggle="tab">POS</a></li>
+					<li><a href="#menu-tab" data-toggle="tab" id="menuTab">Menu</a></li>
+				</ul>
+				<div class="tab-content no-padding">
+					<!-- Morris chart - Sales -->
+					<div class="chart tab-pane active screen-tab" id="pos-href" style="position: relative; height: 900px;">
+						<div class="row">
+						<div class="col-lg-6 col-xs-12 col-sm-12">
+							<div class="form-horizontal box-body-split-tab" style="background-color: white; padding-left:20px; padding-top:11px">
+								<form method="post" id="saveRole" action="">
+									<div class="form-group">
+										<label class="col-sm-3 control-label">Customer id</label>
+										<div class="col-sm-9">
+											<input class="form-control" id="customerIdInput" disabled placeholder="Customer id" name="inputRoleName">
+										</div>
+									</div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Created date</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" id="createdDate" disabled placeholder="Created date" name="inputRoleName">
+                                        </div>
+                                    </div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">Customer name</label>
+										<div class="col-sm-9">
+											<input class="form-control" id="customerNameInput" placeholder="Customer name" name="inputRoleName">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">Phone number</label>
+										<div class="col-sm-9">
+											<input class="form-control" id="phoneNumberInput" placeholder="Phone number" name="inputRoleName">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">Customer address</label>
+										<div class="col-sm-9">
+											<input class="form-control" id="customerAddressInput" placeholder="Customer address" name="inputRoleName">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-sm-3" style="">Is Active</label><label style="margin-left: 3%;" class="containerChk">
+										<input id="checkBoxIsActive" type="checkbox" checked="checked"> <span class="checkmarkChk"></span>
+									</label>
+									</div>
+								</form>
+							</div>
+						</div>
+<!--						<div class="vertical"></div>-->
+						<div class="col-lg-6 col-xs-12 col-sm-12">
+							<div class="box-body">
+								<table id="tableMasterItems" class="table table-bordered">
+									<thead>
+										<tr>
+											<th><div class="center_header">No</div></th>
+											<th><div class="center_header">Modify Time</div></th>
+											<th><div class="center_header">Item Code</div></th>
+											<th><div class="center_header">Item Name</div></th>
+											<th><div class="center_header">Qty</div></th>
+											<th><div class="center_header">Action</div></th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+                    <hr>
+						<div class="row">
+							<div class="box-body">
+								<table id="posTmptList" class="table table-bordered">
+									<thead>
+									<tr>
+										<th><div class="center_header">No</div></th>
+										<th><div class="center_header">Create Time</div></th>
+										<th><div class="center_header">Modify Time</div></th>
+										<th><div class="center_header">Role Name</div></th>
+										<th><div class="center_header">Is Active</div></th>
+										<th><div class="center_header">Action</div></th>
+									</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+
+					<div class="chart tab-pane screen-tab" id="menu-tab"
+						style="position: relative; height: 900px;">
+						<div class="box-header">
+							<div class="pull-right form-inline">
+								<div class="form-group">
+									<div class="col-sm-5 text-right text-left-customize-mobile"
+										style="padding-right: 0%;">
+										<div class="btn-group">
+											<button type="button"
+												class="btn btn-success btn-sm dropdown-toggle"
+												data-toggle="dropdown">
+												<i class="fa fa-bars"></i>
+											</button>
+											<ul class="dropdown-menu pull-right" role="menu">
+												<#if addButtonAction == addButtonActionStatic >
+												<li><a href="#" data-toggle="modal"
+													data-target="#addNewMenuModal" class="buttonClose"
+													id="addNewMenu">Add new menu</a></li>
+												<li class="divider"></li>
+												</#if>
+												<li><a href="#">View calendar</a></li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="box-body">
+							<table id="tableMenu" class="table table-bordered">
+								<thead>
+									<tr>
+										<th><div class="center_header">No</div></th>
+										<th><div class="center_header">Create Time</div></th>
+										<th><div class="center_header">Modify Time</div></th>
+										<th><div class="center_header">Menu Name</div></th>
+										<th><div class="center_header">URL</div></th>
+										<th><div class="center_header">Is Active</div></th>
+										<th><div class="center_header">Action</div></th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+
+<!-- Modal -->
+<div id="addNewMenuModal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content col-sm-8 col-md-offset-3">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Add new menu</h4>
+			</div>
+			<form method="post" id="addMenuPost" action="" >
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="recipient-name" class="form-control-label">Name
+							of Menu</label> <input type="text" id="nameOfMenuInput"
+							class="form-control" name="nameOfMenu" style="width: 100%;">
+					</div>
+					<div class="form-group">
+						<label for="recipient-name" class="form-control-label">Url</label>
+						<input type="text" id="urlInput" name="urlInput" class="form-control"
+							style="width: 100%;">
+					</div>
+					<div class="form-group">
+						<div style="padding: 0px 0px 0px 3%;">
+							<br>
+							<div class="row">
+								<label class="containerChk">Is Active <input
+									type="checkbox" checked="checked" id="isActiveInput"> <span
+									class="checkmarkChk"></span>
+								</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="infoRestMessage"></div>
+				<div class="modal-footer">
+					<input type="submit" id="saveModalAddMenu"
+						class="btn btn-info btn-flat" value="Save"/>
+					<button type="button" class="btn btn-info btn-flat buttonClose"
+						data-dismiss="modal">Close</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript"
+	src="/admin/v1/spa/templates/pos.js"></script>
+<script type="text/javascript"
+	src="/admin/v1/spa/templates/menu-index.js"></script>
+

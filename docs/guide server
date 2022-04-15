@@ -1,0 +1,40 @@
+2
+### SCP :
+- Upload file to SCP
+    - scp RESMOB-0.0.1-SNAPSHOT.war 101.50.0.167:/usr/download
+
+
+### mysql
+- https://www.digitalocean.com/community/tutorials/how-to-install-mariadb-on-ubuntu-20-04
+- dump file from mariadb
+    - mysqldump -u root -p database_name > filenam.sql
+- restore
+    - mysql  database_name < file.sql
+
+- create user database
+    - GRANT ALL ON *.* TO 'myuser'@'localhost' IDENTIFIED BY 'tidaktidak321' WITH GRANT OPTION;
+    - GRANT ALL ON *.* TO 'root'@'localhost' IDENTIFIED BY '' WITH GRANT OPTION;
+    - GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost'
+    - - GRANT ALL  ON *.* TO 'root'@'localhost'
+    - GRANT ALL ON *.* TO 'admin'@'localhost' IDENTIFIED BY 'password' WITH GRANT OPTION;
+    - GRANT ALL PRIVILEGES ON *.* TO 'database_user'@'localhost';
+    - DROP USER IF EXISTS 'root'@'localhost';
+- check user mysql
+    - SELECT user, host FROM mysql.user;
+
+### NGINX
+- install
+    - https://software.endy.muhardin.com/devops/deployment-microservice-kere-hore-1/
+- reverse proxy :
+    1. open /etc/nginx/sites-available/
+    2. create reverse-proxy.com
+    3. vi reverse-proxy.com and put here config
+    server {
+        listen 80;
+        location / {
+            proxy_pass http://localhost:8181;
+        }
+    }
+    4. ln -s /etc/nginx/sites-available/reverse-proxy.conf /etc/nginx/sites-enabled/reverse-proxy.conf
+    5. test config : service nginx configtest or nginx -t
+    6. service nginx restart

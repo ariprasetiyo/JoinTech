@@ -1,0 +1,169 @@
+<#include "../../../inc-lib-button-action.html"/>
+<!-- Main row -->
+<div class="row">
+	<!-- Left col -->
+	<section class="col-lg-12 connectedSortable">
+		<!-- /.box -->
+		<div class="box box-solid">
+			<div class="box-header">
+				<div class="pull-right form-inline">
+					<div class="form-group">
+						<div class="col-sm-7" style="padding-right: 5%;">
+							<div class="input-group">
+								<select class="form-control" name="roles_id">
+									<#if viewButtonAction == viewButtonActionStatic >
+										<#list selectroles as a>
+										<option value="${a.id}">${a.roleName}</option>
+										</#list>
+									<#else>
+										<option value="1">${user_group}</option>
+									</#if>
+								</select>
+								<div class="input-group-btn">
+									<button type="submit" id="submitAction"
+										class="btn btn-info btn-flat">Action</button>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-5 text-right text-left-customize-mobile"
+							style=" padding-right: 0%;">
+							<div class="btn-group">
+								<button type="button"
+									class="btn btn-success btn-sm dropdown-toggle"
+									data-toggle="dropdown">
+									<i class="fa fa-bars"></i>
+								</button>
+								<ul class="dropdown-menu pull-right" role="menu">
+									<li><a href="#" data-toggle="modal" data-target="#myModal"
+										class="buttonClose" id="addNewUser">Add new dpo</a></li>
+									<li class="divider"></li>
+									<li><a href="#">View calendar</a></li>
+								</ul>
+							</div>
+							<button type="button" class="btn btn-success btn-sm"
+								data-widget="collapse">
+								<i class="fa fa-minus"></i>
+							</button>
+							<button type="button" class="btn btn-success btn-sm"
+								data-widget="remove">
+								<i class="fa fa-times"></i>
+							</button>
+						</div>
+					</div>
+
+				</div>
+				<!-- /. tools -->
+			</div>
+			<div class="box-body">
+				<!-- /.box-header -->
+				<div class="box-body">
+					<table id="tableAuthorization" class="table table-bordered">
+						<thead>
+							<tr>
+								<th><div class="center_header">No</div></th>
+								<th><div class="center_header">Name menu</div></th>
+								<th><div class="center_header">Create Time</div></th>
+								<th><div class="center_header">Modify Time</div></th>
+								<th><div class="center_header">Is Create</div></th>
+								<th><div class="center_header">Is Update</div></th>
+								<th><div class="center_header">Is Delete</div></th>
+								<th><div class="center_header">Is Disabled</div></th>
+								<th><div class="center_header">Action</div></th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
+				<!-- /.box-body -->
+			</div>
+		</div>
+	</section>
+</div>
+<!-- /.row (main row) -->
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content col-sm-8 col-md-offset-3">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Add new authorization</h4>
+			</div>
+			<form method="post" id="addMenu" action="">
+			<div class="modal-body">
+				<div class="form-group">
+					<label for="recipient-name" class="form-control-label">Role
+						Name:</label> <input type="text" id="idRoleAdd" disabled
+						class="form-control" style="width: 100%;">
+				</div>
+				<div class="form-group">
+					<label for="recipient-name" class="form-control-label">Menu:</label>
+					<select id="modalMenuid" class="form-control select2"
+						style="width: 100%;">
+						<#if listMenu?? > 
+                            <#list listMenu as menus>
+                            <option value="${menus.id}" >${menus.menusName}</option>
+                            </#list>
+                            </#if >
+                        </select>
+				</div>
+				<div class="form-group">
+					<label for="recipient-name" class="form-control-label">Parent
+						menu:</label> <select id="modalParentMenuid" name="modalParentMenuid" class="form-control select2"
+						style="width: 100%;">
+						<option>-</option>
+						<#if listMenuAuthorization?? >
+                            <#list listMenuAuthorization as listMenuAuthorizations>
+                            <option value="${listMenuAuthorizations.id}" >${listMenuAuthorizations.sysMenu.menusName}</option>
+                            </#list>
+                            </#if >
+                        </select>
+				</div>
+				
+				<div class="form-group">
+					<label for="recipient-name" class="form-control-label">Role Access:</label> <select class="form-control select2" name="roles_id"
+						style="width: 100%;">
+						<#list selectroles as a>
+						<option value="${a.id}">${a.roleName}</option>
+						</#list>
+					</select>
+				</div>
+				
+				<div class="form-group">
+					<div style="padding: 0px 0px 0px 3%;">
+						<div class="row">
+							<label class="form-control-label">Authorities:</label>
+						</div>
+						<div class="row">
+							<label class="containerChk">Is Create <input type="checkbox"
+								checked="checked" id="isCreateAddMenu"> <span class="checkmarkChk"></span>
+							</label>
+							<label class="containerChk">Is Update <input type="checkbox"
+								checked="checked" id="isUpdateAddMenu"> <span class="checkmarkChk"></span>
+							</label>
+							<label class="containerChk">Is Delete <input type="checkbox"
+								checked="checked" id="isDeleteAddMenu"> <span class="checkmarkChk"></span>
+							</label>
+							<label class="containerChk">Is Disable <input type="checkbox"
+								checked="checked" id="isDisableAddMenu"> <span class="checkmarkChk"></span>
+							</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="infoSavaAuthorization"></div>
+			<div class="modal-footer">
+				<button type="button" id="saveModalAddMenu" class="btn btn-info btn-flat"
+					data-dismiss="modal">Save</button>
+				<button type="button" class="btn btn-info btn-flat" data-dismiss="modal">Close</button>
+			</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript"
+	src="/admin/v1/spa/templates/daftar-dpo-index.js"></script>

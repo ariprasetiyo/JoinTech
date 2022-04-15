@@ -1,0 +1,202 @@
+
+<!-- Main row -->
+<div class="row">
+	<!-- Left col -->
+	<section class="col-lg-12 connectedSortable">
+		<!-- /.box -->
+		<div class="box box-solid">
+			<div class="box-header">
+				<div class="pull-right form-inline">
+					<div class="form-group">
+						<div class="col-sm-7" style="padding-right: 5%;">
+							<form method="POST" action="">
+								<input type="hidden" id="csrfToken"
+									name="${_csrf.parameterName}" value="${_csrf.token}" />
+								<div class="input-group">
+									<select class="form-control" name="roles_id">
+										<option selected value="1"></option>
+									</select>
+									<div class="input-group-btn">
+										<button type="submit" class="btn btn-info btn-flat">Action</button>
+									</div>
+								</div>
+							</form>
+						</div>
+						<div class="col-sm-5 text-right text-left-customize-mobile"
+							style="padding-left: 0%; padding-right: 0%;">
+							<div class="btn-group">
+								<button type="button"
+									class="btn btn-success btn-sm dropdown-toggle"
+									data-toggle="dropdown">
+									<i class="fa fa-bars"></i>
+								</button>
+								<ul class="dropdown-menu pull-right" role="menu">
+									<li><a href="#" data-toggle="modal" data-target="#myModal"
+										class="buttonClose">Add new menu</a></li>
+									<li class="divider"></li>
+									<li><a href="#">View calendar</a></li>
+								</ul>
+							</div>
+							<button type="button" class="btn btn-success btn-sm"
+								data-widget="collapse">
+								<i class="fa fa-minus"></i>
+							</button>
+							<button type="button" class="btn btn-success btn-sm"
+								data-widget="remove">
+								<i class="fa fa-times"></i>
+							</button>
+						</div>
+					</div>
+
+				</div>
+				<!-- /. tools -->
+			</div>
+			<div class="box-body">
+				<!-- /.box-header -->
+				<div class="box-body">
+					<table id="tableUser" class="table table-bordered table-striped">
+						<thead>
+							<tr>
+								<th><div class="center">No</div></th>
+								<th><div class="center">Id</div></th>
+								<th><div class="center">Create Time</div></th>
+								<th><div class="center">Modify Time</div></th>
+								<th><div class="center">User Name</div></th>
+								<th><div class="center">Name</div></th>
+								<th><div class="center">Email</div></th>
+								<th><div class="center">No Hp</div></th>
+								<th><div class="center">Roles</div></th>
+								<th><div class="center">Is Active</div></th>
+								<th><div class="center">Action</div></th>
+							</tr>
+						</thead>
+						<tbody>
+							<#if usersMenu??> <#list usersMenu.listUser as listUserMenu>
+							<tr>
+								<td><div class="center">No</div></td>
+								<td><div class="center">Id</div></td>
+								<td><div class="center">Create Time</div></td>
+								<td><div class="center">Modify Time</div></td>
+								<td><div class="center">User Name</div></td>
+								<td><div class="center">Name</div></td>
+								<td><div class="center">Email</div></td>
+								<td><div class="center">No Hp</div></td>
+								<td><div class="center">Roles</div></td>
+								<td><div class="center">Is Active</div></td>
+								<td><div class="center">Action</div></td>
+							</tr>
+							</#list> </#if>
+						</tbody>
+					</table>
+				</div>
+				<!-- /.box-body -->
+			</div>
+		</div>
+	</section>
+</div>
+<!-- /.row (main row) -->
+<div class="control-sidebar-bg"></div>
+
+<div id="modalDeleteUser" class="modal modal-danger" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title">Warning</h4>
+			</div>
+			<div class="modal-body">
+				<p>Are you sure delete this data ?</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-outline pull-left"
+					data-dismiss="modal">Cancel</button>
+				<button type="button" id="deleteUser" class="btn btn-outline">Delete</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content col-sm-8 col-md-offset-3">
+			<form method="post" id="adduser" action="">
+				<input type="hidden" id="csrfToken" name="${_csrf.parameterName}"
+					value="${_csrf.token}" /> <input type="hidden" id="idUserNya"
+					value="" />
+				<div class="modal-header">
+					<button type="button" class="close buttonClose"
+						data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">
+						Add new user
+						<div id="infoSaveUser"></div>
+					</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<div style="padding: 0px 0px 0px 3%;">
+							<div class="row margin-bottom" style="width: 100%">
+								<label class="control-label col-sm-3" style="padding-left: 1%">Username</label>
+								<input class="col-sm-9" type="text" id="TextUsername"
+									name="TextUsername" placeholder="Username">
+							</div>
+							<div class="row margin-bottom" style="width: 100%">
+								<label class="control-label col-sm-3" style="padding-left: 1%">Password</label>
+								<input class="col-sm-9" type="password" id="TextPassword"
+									name="TextPassword" placeholder="Password">
+							</div>
+							<div class="row margin-bottom" style="width: 100%">
+								<label class="control-label col-sm-3" style="padding-left: 1%">Name</label>
+								<input class="col-sm-9" type="text" id="TextName"
+									placeholder="Name">
+							</div>
+							<div class="row margin-bottom" style="width: 100%">
+								<label class="control-label col-sm-3" style="padding-left: 1%">Email</label>
+								<input class="col-sm-9" type="text" id="TextEmail"
+									name="TextEmail" placeholder="Email">
+							</div>
+							<div class="row margin-bottom" style="width: 100%">
+								<label class="control-label col-sm-3" style="padding-left: 1%">No
+									Hp</label> <input class="col-sm-9" type="text" id="TextNoHp"
+									name="TextNoHp" placeholder="No Hp">
+							</div>
+							<div class="row margin-bottom" style="width: 100%"
+								id="select2RoleDiv">
+								<label class="control-label col-sm-3" style="padding-left: 1%">Role</label>
+								<select id="SelectRole" name="SelectRole"
+									class="role-select2-multiple" multiple="multiple">
+									<#list selectroles as a>
+									<option value="${a.id}">${a.roleName}</option>
+									</#list>
+								</select>
+							</div>
+							<div class="row margin-bottom" style="width: 100%">
+								<label class="control-label col-sm-3" style="padding-left: 1%">Is
+									Active</label> <input id="CheckBoxIsActive" type="checkbox"
+									style="position: initial">
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" id="saveModalAddMenu" class="btn btn-default" />
+					<!--data-dismiss="modal"-->
+					Save
+					</button>
+					<button type="button" class="btn btn-default buttonClose"
+						data-dismiss="modal">Close</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+</body>
+</html>

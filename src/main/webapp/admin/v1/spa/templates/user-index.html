@@ -1,0 +1,243 @@
+<#include "../../../inc-lib-button-action.html"/>
+<!-- Main row -->
+<div class="row">
+	<!-- Left col -->
+	<section class="col-lg-12 connectedSortable">
+		<!-- /.box -->
+		<div class="box box-solid">
+			<div class="box-header">
+				<div class="pull-right form-inline">
+					<div class="form-group">
+						<div class="col-sm-7" style="padding-right: 5%;">
+							<div class="input-group">
+								<select class="form-control" name="roles_id">
+									<#if viewButtonAction == viewButtonActionStatic >
+										<option value="0">All</option>
+										<#list selectroles as a>
+											<option value="${a.id}">${a.roleName}</option>
+										</#list>
+									<#else>
+										<option value="1" >${user_group}</option>
+									</#if>
+								</select>
+								<div class="input-group-btn">
+									<button type="submit" id="submitAction"
+										class="btn btn-info btn-flat">Action</button>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-5 text-right text-left-customize-mobile"
+							style="padding-right: 0%;">
+							<div class="btn-group">
+								<button type="button"
+									class="btn btn-success btn-sm dropdown-toggle"
+									data-toggle="dropdown">
+									<i class="fa fa-bars"></i>
+								</button>
+								<ul class="dropdown-menu pull-right" role="menu">
+									<#if addButtonAction == addButtonActionStatic >
+									<li><a href="#" data-toggle="modal" data-target="#myModal"
+										   class="buttonClose" id="addNewUser">Add new user</a></li>
+									<li class="divider"></li>
+									</#if>
+									<li><a href="#">View calendar</a></li>
+								</ul>
+							</div>
+							<button type="button" class="btn btn-success btn-sm"
+								data-widget="collapse">
+								<i class="fa fa-minus"></i>
+							</button>
+							<button type="button" class="btn btn-success btn-sm"
+								data-widget="remove">
+								<i class="fa fa-times"></i>
+							</button>
+						</div>
+					</div>
+
+				</div>
+				<!-- /. tools -->
+			</div>
+			<div class="box-body">
+				<!-- /.box-header -->
+				<div class="box-body">
+					<table id="tableUser" class="table table-bordered">
+						<thead>
+							<tr>
+								<th><div class="center_header">No</div></th>
+								<th><div class="center_header">Id</div></th>
+								<th><div class="center_header">Create Time</div></th>
+								<th><div class="center_header">Modify Time</div></th>
+								<th><div class="center_header">User Name</div></th>
+								<th><div class="center_header">Name</div></th>
+								<th><div class="center_header">Email</div></th>
+								<th><div class="center_header">No Hp</div></th>
+								<th><div class="center_header">Roles</div></th>
+								<th><div class="center_header">Is Active</div></th>
+								<th><div class="center_header">Action</div></th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
+				<!-- /.box-body -->
+			</div>
+		</div>
+	</section>
+</div>
+<!-- /.row (main row) -->
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content col-sm-8 col-md-offset-3">
+			<form method="post" id="adduser" action="">
+				<input type="hidden" id="csrfToken" name="${_csrf.parameterName}"
+					value="${_csrf.token}" /> <input type="hidden" id="idUserNya"
+					value="" />
+				<div class="modal-header">
+					<button type="button" class="close buttonClose"
+						data-dismiss="modal">&times;</button>
+					<h4 class="modal-title" id="formInputUser"> Add new user </h4>
+				</div>
+				<div class="modal-body" style="margin-bottom: 3%;">
+					<div class="form-group">
+						<div style="padding: 0px 0px 0px 3%;">
+							<div class="form-group">
+								<label for="recipient-name" class="form-control-label">Username</label>
+								<input disabled class="form-control" type="text"
+									id="TextUsername" name="TextUsername" placeholder="Username"
+									style="width: 100%;" />
+							</div>
+
+							<!-- <div class="row margin-bottom" style="width: 100%">
+								<label class="control-label col-sm-3" style="padding-left: 1%">Username</label>
+								<input disabled class="col-sm-9" type="text" id="TextUsername"
+									name="TextUsername" placeholder="Username">
+							</div> -->
+
+							<div class="form-group" id='oldPassword' hidden='true'>
+								<label for="recipient-name" class="form-control-label">Entry
+									Old Password</label> <input class="form-control" type="password"
+									id="TextOldPassword" name="TextOldPassword"
+									placeholder="Old Password" style="width: 100%;" />
+							</div>
+							<!-- <div id='oldPassword' hidden='true' class="row margin-bottom"
+								style="width: 100%">
+								<label class="control-label col-sm-3" style="padding-left: 1%">Old
+									Password</label> <input class="col-sm-9" type="password"
+									id="TextOldPassword" name="TextOldPassword"
+									placeholder="Old Password">
+							</div> -->
+
+							<div id='newPassword' class="form-group">
+								<label for="recipient-name" class="form-control-label">New
+									Password</label> <input class="form-control" type="password"
+									id="TextNewPassword" name="TextNewPassword"
+									placeholder="New Password" style="width: 100%;" />
+							</div>
+							<!-- <div id='newPassword' class="row margin-bottom"
+								style="width: 100%">
+								<label class="control-label col-sm-3" style="padding-left: 1%">New
+									Password</label> <input class="col-sm-9" type="password"
+									id="TextNewPassword" name="TextNewPassword"
+									placeholder="New Password">
+							</div> -->
+
+							<div class="form-group">
+								<label for="recipient-name" class="form-control-label">Verify
+									Password</label> <input class="form-control" type="password"
+									id="TextVerifyPassword" name="TextVerifyPassword"
+									placeholder="Verify Password" style="width: 100%;" />
+							</div>
+
+							<!-- <div class="row margin-bottom" style="width: 100%">
+								<label class="control-label col-sm-3" style="padding-left: 1%">Verify
+									Password</label> <input class="col-sm-9" type="password"
+									id="TextVerifyPassword" name="TextVerifyPassword"
+									placeholder="Verify Password">
+							</div> -->
+
+							<div class="form-group">
+								<label for="recipient-name" class="form-control-label">Name</label>
+								<input class="form-control" type="text" id="TextName"
+									name="TextName" placeholder="Name" style="width: 100%;" />
+							</div>
+
+							<!-- <div class="row margin-bottom" style="width: 100%">
+								<label class="control-label col-sm-3" style="padding-left: 1%">Name</label>
+								<input class="col-sm-9" type="text" id="TextName"
+									placeholder="Name">
+							</div> -->
+
+							<div class="form-group">
+								<label for="recipient-name" class="form-control-label">Email</label>
+								<input class="form-control" type="text" id="TextEmail"
+									name="TextEmail" placeholder="Email" style="width: 100%;" />
+							</div>
+
+							<!-- <div class="row margin-bottom" style="width: 100%">
+								<label class="control-label col-sm-3" style="padding-left: 1%">Email</label>
+								<input disabled class="col-sm-9" type="text" id="TextEmail"
+									name="TextEmail" placeholder="Email">
+							</div> -->
+
+							<div class="form-group">
+								<label for="recipient-name" class="form-control-label">No Hp</label>
+								<input class="form-control" type="text" id="TextNoHp"
+									name="TextNoHp" placeholder="No Hp" style="width: 100%;" />
+							</div>
+							<!-- <div class="row margin-bottom" style="width: 100%">
+								<label class="control-label col-sm-3" style="padding-left: 1%">No
+									Hp</label> <input class="col-sm-9" type="text" id="TextNoHp"
+									name="TextNoHp" placeholder="No Hp">
+							</div> -->
+
+							<!-- <div class="row margin-bottom" style="width: 100%"
+								id="select2RoleDiv">
+								<label class="control-label col-sm-3" style="padding-left: 1%">Role</label>
+								<select id="SelectRole" name="SelectRole"
+									class="role-select2-multiple" multiple="multiple">
+								</select>
+							</div> -->
+							<div class="form-group"
+								id="select2RoleDivv">
+								<label class="control-label col-sm-3" style="padding-left: 1%">Role</label>
+								<select id="SelectRole" name="SelectRole"
+									class="role-select2-multiple" multiple="multiple"  style="width: 100%">
+									<#list selectroles as a>
+									<option value="${a.id}">${a.roleName}</option>
+									</#list>
+								</select>
+							</div>
+							<div class="form-group" >
+								<label class="control-label col-sm-3" style="padding-left: 1%">Is
+									Active</label> <label class="containerChk"> <input
+									id="CheckBoxIsActive" type="checkbox" checked="checked">
+									<span class="checkmarkChk"></span>
+								</label>
+
+								<!-- </label> <label class="control-label col-sm-3" style="padding-left: 1%">Is
+									Active</label> <input id="CheckBoxIsActive" type="checkbox"
+									style="position: initial"> -->
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="infoSaveUser"></div>
+				<div class="modal-footer">
+					<button type="button" id="saveModalAddMenu"
+						class="btn btn-info btn-flat">Save</button>
+					<button type="button" id="editUser" class="btn btn-info btn-flat">Edit</button>
+					<button type="button" class="btn btn-info btn-flat buttonClose"
+						data-dismiss="modal">Close</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<script type="text/javascript"
+	src="/admin/v1/spa/templates/user-index.js"></script>
+

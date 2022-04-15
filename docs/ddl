@@ -1,0 +1,147 @@
+#Master table
+create table master (id varchar(30) not null primary key )
+
+#insert data table sys_button_action
+insert into sys_button_action values
+('edit', 'system', now(), true, 'system' , now(), '1.0', 'global edit button action'),
+('save', 'system', now(), true, 'system' , now(),'1.0', 'global save button action'),
+('delete', 'system', now(), true, 'system' ,now(), '1.0', 'global delete button action'),
+('view', 'system', now(), true, 'system' , now(),'1.0', 'global view button action')
+
+Default create table
+CREATE TABLE `sys_roles_control_list` (
+`created_by` varchar(50) DEFAULT NULL,
+  `created_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `disabled` bit(1) NOT NULL,
+  `modified_by` varchar(50) DEFAULT NULL,
+  `modified_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `version` varchar(5) DEFAULT NULL,
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+one to manny ( sys_roles one to many sys_button_action )
+CREATE TABLE `sys_roles_button_action` (
+`roles_id` bigint(20) NOT NULL,
+`menu_name` varchar(20) NOT NULL,
+`created_by` varchar(50) DEFAULT NULL,
+`created_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+`disabled` bit(1) NOT NULL,
+`modified_by` varchar(50) DEFAULT NULL,
+`modified_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+`version` varchar(5) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE INDEX sys_roles_button_action_roles_id ON sys_roles_button_action (roles_id);
+CREATE INDEX sys_roles_button_action_menu_name ON sys_roles_button_action (menu_name);
+
+
+CREATE TABLE `data_daftar_pelaku` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `ref_id_personal` varchar(40) DEFAULT NULL,
+  `ref_id_komplotan` JSON default null,
+  `no_laporan` varchar(50) DEFAULT NULL,
+  `note` text DEFAULT NULL,
+  `modus` varchar(200) DEFAULT NULL,
+  `pasal` varchar(200) DEFAULT NULL,
+  `lokasi_lapas` varchar(200) DEFAULT NULL,
+  `lokasi_tkp` varchar(200) DEFAULT NULL,
+  `tanggal_tkp` date DEFAULT NULL,
+  `pdf_location` varchar(100) DEFAULT NULL,
+  `is_delete` bit(1) NOT NULL,
+  `created_by` varchar(50) DEFAULT NULL,
+  `created_time` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified_by` varchar(50) DEFAULT NULL,
+  `modified_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `version` varchar(5) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+---------------
+
+CREATE TABLE `data_daftar_pelaku` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `ref_id_personal` varchar(40) DEFAULT NULL,
+  `ref_id_komplotan` JSON default null,
+  `no_laporan` varchar(50) DEFAULT NULL,
+  `note` text DEFAULT NULL,
+  `modus` varchar(200) DEFAULT NULL,
+  `pasal` varchar(200) DEFAULT NULL,
+  `lokasi_lapas` varchar(200) DEFAULT NULL,
+  `lokasi_tkp` varchar(200) DEFAULT NULL,
+  `tanggal_tkp` date DEFAULT NULL,
+  `photo_location` varchar(100) DEFAULT NULL,
+  `pdf_location` varchar(100) DEFAULT NULL,
+  `is_delete` bit(1) NOT NULL,
+  `created_by` varchar(50) DEFAULT NULL,
+  `created_time` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified_by` varchar(50) DEFAULT NULL,
+  `modified_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `version` varchar(5) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `data_daftar_dpo` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `nama` varchar(100) DEFAULT NULL,
+  `address` varchar(200) DEFAULT NULL,
+  `birth_day` date DEFAULT NULL,
+  `no_ktp` varchar(50) DEFAULT NULL,
+  `no_laporan` varchar(50) DEFAULT NULL,
+  `note` text DEFAULT NULL,
+  `modus` varchar(200) DEFAULT NULL,
+  `pasal` varchar(200) DEFAULT NULL,
+  `status` varchar(30) DEFAULT NULL,
+  `lokasi_tkp` varchar(200) DEFAULT NULL,
+  `tanggal_tkp` date DEFAULT NULL,
+  `ref_id_komplotan` varchar(40) DEFAULT NULL,
+  `photo_location` varchar(100) DEFAULT NULL,
+  `pdf_location` varchar(100) DEFAULT NULL,
+  `is_delete` bit(1) NOT NULL,
+  `created_by` varchar(50) DEFAULT NULL,
+  `created_time` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified_by` varchar(50) DEFAULT NULL,
+  `modified_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `version` varchar(5) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `data_daftar_saksi` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `nama` varchar(100) DEFAULT NULL,
+  `address` varchar(200) DEFAULT NULL,
+  `no_ktp` varchar(50) DEFAULT NULL,
+  `no_hp` varchar(13) DEFAULT NULL,
+  `note` text DEFAULT NULL,
+  `ref_id_komplotan` varchar(40) DEFAULT NULL,
+  `photo_location` varchar(100) DEFAULT NULL,
+  `pdf_location` varchar(100) DEFAULT NULL,
+  `is_delete` bit(1) NOT NULL,
+  `created_by` varchar(50) DEFAULT NULL,
+  `created_time` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified_by` varchar(50) DEFAULT NULL,
+  `modified_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `version` varchar(5) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `data_diri` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id_data_diri` varchar(40) DEFAULT NULL,
+  `no_ktp` varchar(50) DEFAULT NULL,
+  `nama` varchar(100) DEFAULT NULL,
+  `alias` varchar(100) DEFAULT NULL,
+  `address` varchar(200) DEFAULT NULL,
+  `no_hp` varchar(13) DEFAULT NULL,
+  `note` text DEFAULT NULL,
+  `photo_profile` JSON CHECK (JSON_VALID(`photo_profile`)) ,
+  `is_delete` bit(1) NOT NULL,
+  `created_by` varchar(50) DEFAULT NULL,
+  `created_time` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified_by` varchar(50) DEFAULT NULL,
+  `modified_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `version` varchar(5) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;

@@ -1,0 +1,45 @@
+<#assign saveButtonAction =''>
+<#assign viewButtonAction =''>
+<#assign editButtonAction =''>
+<#assign deleteButtonAction =''>
+<#assign addButtonAction =''>
+
+<#assign saveButtonActionStatic ='save'>
+<#assign editButtonActionStatic ='edit'>
+<#assign deleteButtonActionStatic ='delete'>
+<#assign viewButtonActionStatic ='view'>
+<#assign addButtonActionStatic ='add'>
+
+<#list button_action_acl as buttonActionAcl>
+    <#if buttonActionAcl == 'save'>
+        <#assign saveButtonAction = buttonActionAcl>
+        <input type="text" hidden id="saveButton" value="${saveButtonAction}" />
+    <#elseif buttonActionAcl == 'view'>
+        <#assign viewButtonAction = buttonActionAcl>
+        <input type="text" hidden id="viewButton" value="${viewButtonAction}" />
+    <#elseif buttonActionAcl == 'edit'>
+        <#assign editButtonAction = buttonActionAcl>
+        <input type="text" hidden id="editButton" value="${editButtonAction}" />
+    <#elseif buttonActionAcl == 'delete'>
+        <#assign deleteButtonAction = buttonActionAcl>
+        <input type="text" hidden id="deleteButton" value="${deleteButtonAction}" />
+    <#elseif buttonActionAcl == 'add'>
+        <#assign addButtonAction = buttonActionAcl>
+        <input type="text" hidden id="addButton" value="${addButtonAction}" />
+    </#if>
+
+</#list>
+
+<script type="text/javascript" language="JavaScript">
+     var saveButtonAction = $('#saveButton').val()
+     var editButtonAction = $('#editButton').val()
+     var deleteButtonAction = $('#deleteButton').val()
+     var viewButtonAction = $('#viewButton').val()
+     var addButtonAction = $('#addButton').val()
+
+     var saveButtonActionStatic = '${saveButtonActionStatic}'
+     var editButtonActionStatic = '${editButtonActionStatic}'
+     var deleteButtonActionStatic = '${deleteButtonActionStatic}'
+     var viewButtonActionStatic = '${viewButtonActionStatic}'
+     var addButtonActionStatic = '${addButtonActionStatic}'
+</script>

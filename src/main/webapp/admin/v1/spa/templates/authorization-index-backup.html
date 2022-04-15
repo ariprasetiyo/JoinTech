@@ -1,0 +1,196 @@
+<!-- Main row -->
+<div class="row">
+	<!-- Left col -->
+	<section class="col-lg-12 connectedSortable">
+		<!-- /.box -->
+		<div class="box box-solid">
+			<div class="box-header">
+				<div class="pull-right form-inline">
+					<div class="form-group">
+						<div class="col-sm-7" style="padding-right: 5%;">
+							<form method="POST" action="">
+								<div class="input-group">
+									<select class="form-control" name="roles_id">
+										<#list selectroles as a>
+										<option value="${a.id}">${a.roleName}</option>
+										</#list>
+									</select>
+									<div class="input-group-btn">
+										<button type="submit" class="btn btn-info btn-flat">Action</button>
+									</div>
+								</div>
+							</form>
+						</div>
+						<div class="col-sm-5 text-right text-left-customize-mobile"
+							style=" padding-right: 0%;">
+							<div class="btn-group">
+								<button type="button"
+									class="btn btn-success btn-sm dropdown-toggle"
+									data-toggle="dropdown">
+									<i class="fa fa-bars"></i>
+								</button>
+								<ul class="dropdown-menu pull-right" role="menu">
+									<li><a href="#" data-toggle="modal" data-target="#myModal"
+										class="buttonClose" id="addNewUser">Add new authorization</a></li>
+									<li class="divider"></li>
+									<li><a href="#">View calendar</a></li>
+								</ul>
+							</div>
+							<button type="button" class="btn btn-success btn-sm"
+								data-widget="collapse">
+								<i class="fa fa-minus"></i>
+							</button>
+							<button type="button" class="btn btn-success btn-sm"
+								data-widget="remove">
+								<i class="fa fa-times"></i>
+							</button>
+						</div>
+					</div>
+
+				</div>
+				<!-- /. tools -->
+			</div>
+			<div class="box-body">
+				<!-- /.box-header -->
+				<div class="box-body">
+					<table id="tableAuthorization"
+						class="table table-bordered table-striped">
+						<thead>
+							<tr>
+								<th><div class="center">No</div></th>
+								<th><div class="center">Name menu</div></th>
+								<th><div class="center">Create Time</div></th>
+								<th><div class="center">Modify Time</div></th>
+								<th><div class="center">Is Create</div></th>
+								<th><div class="center">Is Update</div></th>
+								<th><div class="center">Is Delete</div></th>
+								<th><div class="center">Is Disabled</div></th>
+								<th><div class="center">Action</div></th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
+				<!-- /.box-body -->
+			</div>
+		</div>
+	</section>
+</div>
+<!-- /.row (main row) -->
+
+<div id="modalDeleteUser" style="z-index:10000" class="modal modal-danger" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title">Warning</h4>
+			</div>
+			<div class="modal-body">
+				<p id="messageDelete">Replace message here ?</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-outline pull-left"
+					data-dismiss="modal">Cancel</button>
+				<button type="button" id="deleteUser" class="btn btn-outline">Delete</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content col-sm-8 col-md-offset-3">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Add new authorization</h4>
+			</div>
+			<form method="post" id="addMenu" action="">
+			<div class="modal-body">
+				<div class="form-group">
+					<label for="recipient-name" class="form-control-label">Role
+						Name:</label> <input type="text" id="idRoleAdd" disabled
+						class="form-control" style="width: 100%;">
+				</div>
+				<div class="form-group">
+					<label for="recipient-name" class="form-control-label">Menu:</label>
+					<select id="modalMenuid" class="form-control select2"
+						style="width: 100%;">
+						<#if listMenu?? > 
+                            <#list listMenu as menus>
+                            <option value="${menus.id}" >${menus.menusName}</option>
+                            </#list>
+                            </#if >
+                        </select>
+				</div>
+				<div class="form-group">
+					<label for="recipient-name" class="form-control-label">Parent
+						menu:</label> <select id="modalParentMenuid" name="modalParentMenuid" class="form-control select2"
+						style="width: 100%;">
+						<option>-</option>
+						<#if listMenuAuthorization?? > 
+                            <#list listMenuAuthorization as listMenuAuthorizations>
+                            <option value="${listMenuAuthorizations.id}" >${listMenuAuthorizations.sysMenu.menusName}</option>
+                            </#list>
+                            </#if > 
+                        </select>
+				</div>
+				
+				<div class="form-group">
+					<label for="recipient-name" class="form-control-label">Role Access:</label> <select class="form-control select2" name="roles_id"
+						style="width: 100%;">
+						<#list selectroles as a>
+						<option value="${a.id}">${a.roleName}</option>
+						</#list>
+					</select>
+				</div>
+				
+				<div class="form-group">
+					<div style="padding: 0px 0px 0px 3%;">
+						<div class="row">
+							<label class="form-control-label">Authorities:</label>
+						</div>
+						<div class="row">
+							<label class="containerChk">Is Create <input type="checkbox"
+								checked="checked"> <span class="checkmarkChk"></span>
+							</label>
+							<label class="containerChk">Is Update <input type="checkbox"
+								checked="checked"> <span class="checkmarkChk"></span>
+							</label>
+							<label class="containerChk">Is Delete <input type="checkbox"
+								checked="checked"> <span class="checkmarkChk"></span>
+							</label>
+							<label class="containerChk">Is Disable <input type="checkbox"
+								checked="checked"> <span class="checkmarkChk"></span>
+							</label>
+							
+							<!-- <label for="modalIsCreate">Is Create</label> <input
+								type="checkbox" id="modalIsUpdate" checked> <label
+								for="modalIsUpdate">Is Update</label> <input type="checkbox"
+								id="modalIsDelete" checked> <label for="modalIsDelete">Is
+								Delete</label> <input type="checkbox" id="modalIsDisabled" checked>
+							<label for="modalIsDisabled">Is Disabled</label> -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="saveModalAddMenu" class="btn btn-info btn-flat"
+					data-dismiss="modal">Save</button>
+				<button type="button" class="btn btn-info btn-flat" data-dismiss="modal">Close</button>
+			</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript"
+	src="/admin/v1/spa/templates/authorization-index.js"></script>
