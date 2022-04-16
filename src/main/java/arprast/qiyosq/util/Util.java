@@ -5,6 +5,7 @@ public class Util {
 	private static boolean isLogAuditTrail = true;
 	private static boolean isEnableCommonLogger = true;
 	private static boolean isEnableLoggerAccessPage = false;
+	public static final String PERCENTAGE = "%";
 	
 	public static boolean isLogAuditTrail() {
 		return isLogAuditTrail;

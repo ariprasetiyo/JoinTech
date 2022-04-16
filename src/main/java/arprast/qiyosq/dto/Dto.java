@@ -27,7 +27,7 @@ public class Dto implements Serializable {
 
 	//userId
 	protected Long id;
-	private String requestId;
+	protected String requestId;
 
 	@JsonFormat(pattern = "dd-MM-yyyy hh:mm:ss")
 	private Date createdTime;

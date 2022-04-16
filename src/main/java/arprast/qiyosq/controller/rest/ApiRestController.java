@@ -1,7 +1,6 @@
 package arprast.qiyosq.controller.rest;
 
 import arprast.qiyosq.dto.*;
-import arprast.qiyosq.model.MasterItemModel;
 import arprast.qiyosq.services.InventoryMasterItemServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -25,15 +25,17 @@ public class ApiRestController {
             MediaType.APPLICATION_XML_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE,
             MediaType.APPLICATION_XML_VALUE})
     @ResponseBody
-    public ResponseEntity<ResponseDto> authorizationUpdate() {
-
-        List<MasterItemDto> masterItems = inventoryMasterItemService.getMasterItems();
-        ResponseDto responseDto = new ResponseDto();
-        ResponseData responseData = new ResponseData();
+    public final ResponseEntity<ResponseDto> getMasterItems(@RequestBody @Valid final RequestDto<RequestData> masterItemRequest) {
+        if(logger.isDebugEnabled()){
+            logger.debug("getMasterItems {}", masterItemRequest.toString());
+        }
+        final List<MasterItemDto> masterItems = inventoryMasterItemService.getMasterItems(masterItemRequest);
+        final ResponseDto responseDto = new ResponseDto();
+        final ResponseData responseData = new ResponseData();
         responseData.setTotalRecord(masterItems.size());
         responseData.setData(masterItems);
         responseDto.setResponseData(responseData);
-        return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
 }

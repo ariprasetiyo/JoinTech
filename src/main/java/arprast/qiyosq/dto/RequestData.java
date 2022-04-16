@@ -51,8 +51,14 @@ public class RequestData extends Dto {
 
 	@Override
 	public String toString() {
-		return "RequestData [limit=" + limit + ", offset=" + offset + ", search=" + search + ", sortColumn="
-				+ sortColumn + ", isAscending=" + isAscending + ", getId()=" + getId() + "]";
+		return "{" +
+				"limit=" + limit +
+				", offset=" + offset +
+				", search='" + search + '\'' +
+				", sortColumn='" + sortColumn + '\'' +
+				", isAscending=" + isAscending +
+				", id=" + id +
+				", requestId='" + requestId + '\'' +
+				'}';
 	}
-
 }

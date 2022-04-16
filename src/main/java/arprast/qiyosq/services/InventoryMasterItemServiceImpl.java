@@ -2,6 +2,8 @@ package arprast.qiyosq.services;
 
 import arprast.qiyosq.dao.DaoImpl;
 import arprast.qiyosq.dto.MasterItemDto;
+import arprast.qiyosq.dto.RequestData;
+import arprast.qiyosq.dto.RequestDto;
 import arprast.qiyosq.model.MasterItemModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,12 +16,15 @@ public class InventoryMasterItemServiceImpl {
     @Autowired
     DaoImpl daoImpl;
 
-    public List<MasterItemDto> getMasterItems() {
-        return masterItemDtos(daoImpl.getMasterItems());
+    public final List<MasterItemDto> getMasterItems(final RequestDto<RequestData> request ) {
+        final String search = request.getRequestData().getSearch();
+        final int offset = request.getRequestData().getOffset();
+        final int limit = request.getRequestData().getLimit();
+        return masterItemDtos(daoImpl.getMasterItems(search, offset, limit));
     }
 
     private List<MasterItemDto> masterItemDtos(final List<MasterItemModel> models) {
-        final List dtos = new ArrayList<MasterItemDto>();
+        final List<MasterItemDto> dtos = new ArrayList<>();
         for (MasterItemModel model : models) {
             dtos.add(toMasterItemDto(model));
         }
