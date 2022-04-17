@@ -59,5 +59,4 @@ public class ResponseDto extends Dto {
 	public void setResponseData(Object responseData) {
 		this.responseData = responseData;
 	}
-
 }

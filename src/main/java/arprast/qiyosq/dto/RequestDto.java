@@ -11,6 +11,7 @@ public class RequestDto<T extends Dto> {
 	private String id;
 	private String key;
 
+
 	public T getRequestData() {
 		return requestData;
 	}
@@ -35,12 +36,4 @@ public class RequestDto<T extends Dto> {
 		this.id = id;
 	}
 
-	@Override
-	public String toString() {
-		return "RequestDto{" +
-				"requestData=" + requestData +
-				", id='" + id + '\'' +
-				", key='" + key + '\'' +
-				'}';
-	}
 }

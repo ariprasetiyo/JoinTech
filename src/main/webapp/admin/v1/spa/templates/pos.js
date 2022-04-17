@@ -139,7 +139,7 @@ $(function() {
 					async : true,
 					type : 'POST',
 					contentType : 'application/json',
-					url : '/admin/v1/api/inventory/master/items',
+					url : '/admin/v1/api/inventory/master/item/list',
 					headers : {
 						'X-XSRF-TOKEN' : csrfToken
 					},
