@@ -2,6 +2,10 @@ package arprast.qiyosq.services;
 
 import arprast.qiyosq.dao.DaoImpl;
 import arprast.qiyosq.dto.*;
+import arprast.qiyosq.http.Request;
+import arprast.qiyosq.http.Response;
+import arprast.qiyosq.model.MasterItemModel;
+import arprast.qiyosq.ref.MessageStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +21,49 @@ public class PosService {
     @Autowired
     DaoImpl daoImpl;
 
-    public ResponseEntity<ResponseDto> addItemTmp(RequestDto<RequestAddItemTmp> request) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("getMasterItems {}", request.toString());
+    public ResponseEntity<Response> addItemTmp(Request<RequestAddItemTmp> request) {
+        final Response responseDto = new Response();
+        responseDto.setResponseId(request.getRequestId());
+
+        final MasterItemModel masterItem = daoImpl.getMasterItem(request.getRequestData().getItemCode());
+        if(request.getRequestData().getQty() > masterItem.getStock()){
+            responseDto.setMessageStatus(MessageStatus.POS_TMP_NOT_ENOUGH_STOCK);
+            return new ResponseEntity<>(responseDto, HttpStatus.OK);
         }
-        final ResponseDto responseDto = new ResponseDto();
+//
+//        POSHeaderTmpModel posHeaderTmp = new POSHeaderTmpModel();
+//        posHeaderTmp.setAddress();
+//        posHeaderTmp.setCustomerName();
+//        posHeaderTmp.setCreatedTime();
+//        posHeaderTmp.setPaymentMethod();
+//        posHeaderTmp.setRequestId();
+//        posHeaderTmp.setPhoneNumber();
+//        posHeaderTmp.setTotalTrxAmount();
+//        posHeaderTmp.setTotalDiscountAmount();
+//        posHeaderTmp.setTotalPaidAmount();
+//        posHeaderTmp.setUsername();
+//
+//        POSDetailTmpModel POSItemTmp = new POSDetailTmpModel();
+//        POSItemTmp.setRequestId();
+//        POSItemTmp.setItemCode();
+//        POSItemTmp.setItemCodeLabel();
+//        POSItemTmp.setItemName();
+//        POSItemTmp.setDescription();
+//        POSItemTmp.setQty();
+//        POSItemTmp.setSellPrice();
+//        POSItemTmp.setPriceDetail();
+//        POSItemTmp.setBasicPrice();
+//        POSItemTmp.setItemType();
+
+
+
         final ResponseData responseData = new ResponseData();
+        responseData.setTotalRecord(0);
+        responseData.setData("");
+        responseDto.setResponseData(responseData);
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
+    private void POSItemTmpModel() {
+    }
 }

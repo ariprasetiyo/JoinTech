@@ -149,37 +149,29 @@
 </div>
 
 <!-- Modal -->
-<div id="addNewMenuModal" class="modal fade" role="dialog">
+<div id="addQty" class="modal fade" role="dialog">
 	<div class="modal-dialog">
 
 		<!-- Modal content-->
 		<div class="modal-content col-sm-8 col-md-offset-3">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">Add new menu</h4>
+				<h4 class="modal-title">Input Qty</h4>
 			</div>
-			<form method="post" id="addMenuPost" action="" >
+			<form method="post" id="addItemPOS" action="" >
+				<input hidden id="itemCodeInModal" type="text" value="">
 				<div class="modal-body">
 					<div class="form-group">
-						<label for="recipient-name" class="form-control-label">Name
-							of Menu</label> <input type="text" id="nameOfMenuInput"
-							class="form-control" name="nameOfMenu" style="width: 100%;">
+						<label class="form-control-label">Item code</label><input disabled type="text" id="itemCodeLabelInModal" class="form-control" name="nameOfItem" style="width: 100%;">
 					</div>
 					<div class="form-group">
-						<label for="recipient-name" class="form-control-label">Url</label>
-						<input type="text" id="urlInput" name="urlInput" class="form-control"
-							style="width: 100%;">
+						<label class="form-control-label">Item Name</label> <input disabled type="text" id="itemNameInModal" class="form-control" name="nameOfItem" style="width: 100%;">
 					</div>
 					<div class="form-group">
-						<div style="padding: 0px 0px 0px 3%;">
-							<br>
-							<div class="row">
-								<label class="containerChk">Is Active <input
-									type="checkbox" checked="checked" id="isActiveInput"> <span
-									class="checkmarkChk"></span>
-								</label>
-							</div>
-						</div>
+						<label  class="form-control-label">Qty</label> <input disabled type="text" id="qtyInModal" class="form-control" name="nameOfItem" style="width: 100%;">
+					</div>
+					<div class="form-group">
+						<label class="form-control-label">Input Qty</label> <input type="text" id="inputQtyInModal" class="form-control" name="nameOfItemQty" style="width: 100%;">
 					</div>
 				</div>
 				<div id="infoRestMessage"></div>
@@ -194,8 +186,5 @@
 	</div>
 </div>
 
-<script type="text/javascript"
-	src="/admin/v1/spa/templates/pos.js"></script>
-<script type="text/javascript"
-	src="/admin/v1/spa/templates/menu-index.js"></script>
+<script type="text/javascript" src="/admin/v1/spa/templates/pos.js"></script>
 

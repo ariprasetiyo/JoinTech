@@ -147,6 +147,18 @@ function _jsonRequestListData(data, id) {
 	return JSON.stringify(jsonRequest);
 }
 
+function _jsonRequestListDataV2(data, id) {
+	var jsonRequest = {};
+	jsonRequest["requestId"] = _uuid();
+	var request = {};
+	request["id"] = id;
+	request["limit"] = data.length;
+	request["offset"] = data.start;
+	request["search"] = data.search.value;
+	jsonRequest["requestData"] = request;
+	return JSON.stringify(jsonRequest);
+}
+
 function _jsonRequestDeleteData(id) {
 	var jsonRequest = {};
 	var request = {};

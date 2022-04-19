@@ -80,7 +80,7 @@ git rm --cached FILENAME. Example git rm --cached server.sh
 			* Response body json format :
 				```json
 				{
-				    "statusType": "UPDATE_SUCCEED",
+				    "messageStatus": "UPDATE_SUCCEED",
 				    "message": "UPDATE SUCCESS",
 				    "response": {
 				        "id": 1,
@@ -112,7 +112,7 @@ git rm --cached FILENAME. Example git rm --cached server.sh
 			* Response body in json message format :
 				```json
 				{
-				    "statusType": "LIST_SUCCEED",
+				    "messageStatus": "LIST_SUCCEED",
 				    "message": "LIST SUCEESS",
 				    "response": {
 				        "disabled": false,

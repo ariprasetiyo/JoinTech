@@ -10,11 +10,10 @@ import java.util.Date;
 
 import javax.validation.constraints.NotNull;
 
+import arprast.qiyosq.ref.MessageStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-
-import arprast.qiyosq.ref.StatusType;
 
 /**
  *
@@ -27,8 +26,6 @@ public class Dto implements Serializable {
 
 	//userId
 	protected Long id;
-	@NotNull
-	protected String requestId;
 
 	@JsonFormat(pattern = "dd-MM-yyyy hh:mm:ss")
 	private Date createdTime;
@@ -48,21 +45,13 @@ public class Dto implements Serializable {
 	private String modifiedBy;
 
 	@JsonIgnore
-	private StatusType statusType;
+	private MessageStatus messageStatus;
 
 	@JsonIgnore
 	private String message;
 
 	public static long getSerialVersionUID() {
 		return serialVersionUID;
-	}
-
-	public String getRequestId() {
-		return requestId;
-	}
-
-	public void setRequestId(String requestId) {
-		this.requestId = requestId;
 	}
 
 	public Long getId() {
@@ -121,12 +110,12 @@ public class Dto implements Serializable {
 		this.modifiedBy = modifiedBy;
 	}
 
-	public StatusType getStatusType() {
-		return statusType;
+	public MessageStatus getMessageStatus() {
+		return messageStatus;
 	}
 
-	public void setStatusType(StatusType statusType) {
-		this.statusType = statusType;
+	public void setMessageStatus(MessageStatus messageStatus) {
+		this.messageStatus = messageStatus;
 	}
 
 	public String getMessage() {

@@ -3,6 +3,7 @@ package arprast.qiyosq.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import arprast.qiyosq.ref.MessageStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,6 @@ import arprast.qiyosq.dto.RequestData;
 import arprast.qiyosq.model.AuthorizationModel;
 import arprast.qiyosq.model.MenusModel;
 import arprast.qiyosq.ref.ActionType;
-import arprast.qiyosq.ref.StatusType;
 import arprast.qiyosq.util.LogUtil;
 
 @Service
@@ -166,8 +166,8 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
 		LogUtil.logDebugType(logger, true, ActionType.SAVE, "{}", authorizationDto.toString());
 		if (authorizationDto.getRoleId() == null) {
-			authorizationDto.setStatusType(StatusType.SAVE_ERROR);
-			authorizationDto.setMessage(StatusType.NULL_VALUE.stringValue);
+			authorizationDto.setMessageStatus(MessageStatus.SAVE_ERROR);
+			authorizationDto.setMessage(MessageStatus.NULL_VALUE.stringValue);
 			return authorizationDto;
 		}
 
@@ -175,14 +175,14 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 		authorizationModel = authorizationDao.save(authorizationModel);
 
 		if (authorizationModel == null || authorizationModel.getId() == null) {
-			authorizationDto.setStatusType(StatusType.SAVE_ERROR);
-			authorizationDto.setMessage(StatusType.SAVE_AUTHORIZATION_ERROR.stringValue);
+			authorizationDto.setMessageStatus(MessageStatus.SAVE_ERROR);
+			authorizationDto.setMessage(MessageStatus.SAVE_AUTHORIZATION_ERROR.stringValue);
 			return authorizationDto;
 		}
 
 		authorizationDto.setId(authorizationModel.getId());
-		authorizationDto.setStatusType(StatusType.SAVE_SUCCEED);
-		authorizationDto.setMessage(StatusType.SAVE_SUCCEED.stringValue);
+		authorizationDto.setMessageStatus(MessageStatus.SAVE_SUCCEED);
+		authorizationDto.setMessage(MessageStatus.SAVE_SUCCEED.stringValue);
 
 		return authorizationDto;
 	}

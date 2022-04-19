@@ -2,6 +2,8 @@ package arprast.qiyosq.services;
 
 import arprast.qiyosq.dao.DaoImpl;
 import arprast.qiyosq.dto.*;
+import arprast.qiyosq.http.Request;
+import arprast.qiyosq.http.Response;
 import arprast.qiyosq.model.MasterItemModel;
 import arprast.qiyosq.util.LogUtil;
 import org.slf4j.Logger;
@@ -9,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,9 +26,11 @@ public class InventoryMasterItemService extends LogUtil {
     @Autowired
     DaoImpl daoImpl;
 
-    public ResponseEntity<ResponseDto> getMasterItem(RequestDto<RequestData> masterItemRequest) {
+    public ResponseEntity<Response> getMasterItem(Request<RequestData> masterItemRequest) {
+            final Response responseDto = new Response();
+        responseDto.setResponseId(masterItemRequest.getRequestId());
+
         final List<MasterItemDto> masterItems = getMasterItems(masterItemRequest);
-        final ResponseDto responseDto = new ResponseDto();
         final ResponseData responseData = new ResponseData();
         responseData.setTotalRecord(masterItems.size());
         responseData.setData(masterItems);
@@ -32,7 +38,7 @@ public class InventoryMasterItemService extends LogUtil {
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
-    private final List<MasterItemDto> getMasterItems(final RequestDto<RequestData> request) {
+    private final List<MasterItemDto> getMasterItems(final Request<RequestData> request) {
         final String search = request.getRequestData().getSearch();
         final int offset = request.getRequestData().getOffset();
         final int limit = request.getRequestData().getLimit();

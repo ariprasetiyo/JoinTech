@@ -45,7 +45,7 @@ public class SpringApplicationMain {
 			Collection<?> auths = auth2.getAuthorities();
 
 			for (Object da : auths) {
-				log.debug("{}",da);
+				log.debug("auth check {}",da);
 			}
 
 			log.debug("name : " + auth2.getName());

@@ -3,6 +3,7 @@ package arprast.qiyosq.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import arprast.qiyosq.ref.MessageStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,6 @@ import arprast.qiyosq.dto.ResponseData;
 import arprast.qiyosq.dto.ScreenMenuDto;
 import arprast.qiyosq.model.MenusModel;
 import arprast.qiyosq.model.RolesModel;
-import arprast.qiyosq.ref.StatusType;
 
 @Service
 public class MenuServiceImpl implements MenuService {
@@ -132,8 +132,8 @@ public class MenuServiceImpl implements MenuService {
 		int countMenuById = menusDao.countMenuById(menuDto.getId());
 		int countMenuByName = menusDao.countMenuByMenuName(menuDto.getMenusName());
 		if (countMenuByName > 0 || countMenuById > 0) {
-			menuDto.setStatusType(StatusType.DUPLICATE_DATA_ERROR);
-			menuDto.setMessage(StatusType.DUPLICATE_DATA_ERROR.stringValue);
+			menuDto.setMessageStatus(MessageStatus.DUPLICATE_DATA_ERROR);
+			menuDto.setMessage(MessageStatus.DUPLICATE_DATA_ERROR.stringValue);
 			return menuDto;
 		}
 
@@ -152,8 +152,8 @@ public class MenuServiceImpl implements MenuService {
 
 		int countMenuById = menusDao.countMenuById(menuDto.getId());
 		if (countMenuById == 0) {
-			menuDto.setStatusType(StatusType.DATA_NOT_FOUND);
-			menuDto.setMessage(StatusType.DATA_NOT_FOUND.stringValue);
+			menuDto.setMessageStatus(MessageStatus.DATA_NOT_FOUND);
+			menuDto.setMessage(MessageStatus.DATA_NOT_FOUND.stringValue);
 			return menuDto;
 		}
 		
@@ -166,13 +166,13 @@ public class MenuServiceImpl implements MenuService {
 		MenusModel sysMenus = menusDao.save(menuModel);
 
 		if (sysMenus.getId() == null) {
-			menuDto.setStatusType(StatusType.SAVE_ERROR);
-			menuDto.setMessage(StatusType.SAVE_ERROR.stringValue);
+			menuDto.setMessageStatus(MessageStatus.SAVE_ERROR);
+			menuDto.setMessage(MessageStatus.SAVE_ERROR.stringValue);
 			return menuDto;
 		}
 
-		menuDto.setStatusType(StatusType.SAVE_SUCCEED);
-		menuDto.setMessage(StatusType.SAVE_SUCCEED.stringValue);
+		menuDto.setMessageStatus(MessageStatus.SAVE_SUCCEED);
+		menuDto.setMessage(MessageStatus.SAVE_SUCCEED.stringValue);
 		return menuDto;
 	}
 	

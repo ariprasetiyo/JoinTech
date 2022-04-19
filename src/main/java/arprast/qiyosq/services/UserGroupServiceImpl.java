@@ -2,6 +2,7 @@ package arprast.qiyosq.services;
 
 import java.util.List;
 
+import arprast.qiyosq.ref.MessageStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,6 @@ import arprast.qiyosq.dto.RequestData;
 import arprast.qiyosq.dto.ResponseData;
 import arprast.qiyosq.dto.RolesDto;
 import arprast.qiyosq.model.RolesModel;
-import arprast.qiyosq.ref.StatusType;
 
 @Service
 public class UserGroupServiceImpl implements UserGroupService {
@@ -53,8 +53,8 @@ public class UserGroupServiceImpl implements UserGroupService {
 		ResponseData responseData = new ResponseData();
 		int countUserGroup = userGroupDao.countUserGroupByRoleName(rolesDto.getRoleName());
 		if (countUserGroup > 0) {
-			responseData.setStatusType(StatusType.DUPLICATE_DATA_ERROR);
-			responseData.setMessage(StatusType.DUPLICATE_DATA_ERROR.stringValue);
+			responseData.setMessageStatus(MessageStatus.DUPLICATE_DATA_ERROR);
+			responseData.setMessage(MessageStatus.DUPLICATE_DATA_ERROR.stringValue);
 			return responseData;
 		}
 
@@ -65,10 +65,10 @@ public class UserGroupServiceImpl implements UserGroupService {
 		responseData.setData(rolesModel);
 
 		if (rolesModel.getId() == null) {
-			responseData.setStatusType(StatusType.SAVE_ERROR);
-			responseData.setMessage(StatusType.NULL_POINTER_ERROR.stringValue);
+			responseData.setMessageStatus(MessageStatus.SAVE_ERROR);
+			responseData.setMessage(MessageStatus.NULL_POINTER_ERROR.stringValue);
 		} else {
-			responseData.setStatusType(StatusType.SAVE_SUCCEED);
+			responseData.setMessageStatus(MessageStatus.SAVE_SUCCEED);
 		}
 
 		logger.debug("Final save user group {}", responseData.toString());
@@ -80,8 +80,8 @@ public class UserGroupServiceImpl implements UserGroupService {
 
 		ResponseData responseData = new ResponseData();
 		if (rolesDto.getId() == null || rolesDto.getId() <= 0) {
-			responseData.setStatusType(StatusType.UPDATE_ERROR);
-			responseData.setMessage(StatusType.NULL_VALUE.stringValue);
+			responseData.setMessageStatus(MessageStatus.UPDATE_ERROR);
+			responseData.setMessage(MessageStatus.NULL_VALUE.stringValue);
 			return responseData;
 		}
 
@@ -93,10 +93,10 @@ public class UserGroupServiceImpl implements UserGroupService {
 		responseData.setData(rolesModel);
 
 		if (rolesModel.getId() == null) {
-			responseData.setStatusType(StatusType.UPDATE_ERROR);
-			responseData.setMessage(StatusType.NULL_POINTER_ERROR.stringValue);
+			responseData.setMessageStatus(MessageStatus.UPDATE_ERROR);
+			responseData.setMessage(MessageStatus.NULL_POINTER_ERROR.stringValue);
 		} else {
-			responseData.setStatusType(StatusType.UPDATE_SUCCEED);
+			responseData.setMessageStatus(MessageStatus.UPDATE_SUCCEED);
 		}
 
 		logger.debug("Final edit user group {}", responseData.toString());

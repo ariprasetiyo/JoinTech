@@ -12,7 +12,7 @@ import arprast.qiyosq.model.AuthorizationModel;
 import arprast.qiyosq.model.DaftarPelakuModel;
 import arprast.qiyosq.model.MenusModel;
 import arprast.qiyosq.ref.ActionType;
-import arprast.qiyosq.ref.StatusType;
+import arprast.qiyosq.ref.MessageStatus;
 import arprast.qiyosq.util.LogUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -221,8 +221,8 @@ public class DaftarPelakuServiceImpl implements DaftarPelakuService {
 
         LogUtil.logDebugType(logger, true, ActionType.SAVE, "{}", daftarPelakuDto.toString());
         if (daftarPelakuDto.getId() == null) {
-            daftarPelakuDto.setStatusType(StatusType.SAVE_ERROR);
-            daftarPelakuDto.setMessage(StatusType.NULL_VALUE.stringValue);
+            daftarPelakuDto.setMessageStatus(MessageStatus.SAVE_ERROR);
+            daftarPelakuDto.setMessage(MessageStatus.NULL_VALUE.stringValue);
             return daftarPelakuDto;
         }
 
@@ -230,14 +230,14 @@ public class DaftarPelakuServiceImpl implements DaftarPelakuService {
 //		authorizationModel = authorizationDao.save(authorizationModel);
 //
 //		if (authorizationModel == null || authorizationModel.getId() == null) {
-//            daftarPelakuDto.setStatusType(StatusType.SAVE_ERROR);
-//            daftarPelakuDto.setMessage(StatusType.SAVE_AUTHORIZATION_ERROR.stringValue);
+//            daftarPelakuDto.setMessageStatus(MessageStatus.SAVE_ERROR);
+//            daftarPelakuDto.setMessage(MessageStatus.SAVE_AUTHORIZATION_ERROR.stringValue);
 //			return daftarPelakuDto;
 //		}
 
 //        daftarPelakuDto.setId(authorizationModel.getId());
-        daftarPelakuDto.setStatusType(StatusType.SAVE_SUCCEED);
-        daftarPelakuDto.setMessage(StatusType.SAVE_SUCCEED.stringValue);
+        daftarPelakuDto.setMessageStatus(MessageStatus.SAVE_SUCCEED);
+        daftarPelakuDto.setMessage(MessageStatus.SAVE_SUCCEED.stringValue);
 
         return daftarPelakuDto;
     }

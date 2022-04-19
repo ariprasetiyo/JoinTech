@@ -57,6 +57,32 @@ public class MasterItemModel {
         this.stock = stock== null ? 0 : stock;
     }
 
+    public MasterItemModel(final String itemCode,
+                           final String itemCodeLabel,
+                           final String itemName,
+                           final String description,
+                           final float sellPrice,
+                           final String priceDetail,
+                           final float basicPrice,
+                           final String unitMeasure,
+                           final String itemType,
+                           final Integer stock) {
+        this.itemCode = itemCode;
+        this.itemCodeLabel = itemCodeLabel;
+        this.itemName = itemName;
+        this.description = description;
+        this.sellPrice = sellPrice;
+        try {
+            this.priceDetail = priceDetailDeserialize.readValue(priceDetail);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        this.basicPrice = basicPrice;
+        this.unitMeasure = unitMeasure;
+        this.itemType = ItemType.valueOfName(itemType);
+        this.stock = stock== null ? 0 : stock;
+    }
+
     public int getStock() {
         return stock;
     }

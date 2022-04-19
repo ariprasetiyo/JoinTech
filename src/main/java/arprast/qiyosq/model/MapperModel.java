@@ -30,7 +30,7 @@ import java.util.Date;
 
                         })
         })
-@SqlResultSetMapping(name = "MasterItemModelMapper",
+@SqlResultSetMapping(name = "MasterItemsModelMapper",
         classes = {
                 @ConstructorResult(
                         targetClass = MasterItemModel.class,
@@ -45,6 +45,23 @@ import java.util.Date;
                                 @ColumnResult(name = "unit_measure",  type = String.class),
                                 @ColumnResult(name = "is_active",  type = Boolean.class),
                                 @ColumnResult(name = "modified_time",  type = Date.class),
+                                @ColumnResult(name = "item_type",  type = String.class),
+                                @ColumnResult(name = "stock",  type = Integer.class)
+                        })
+        })
+@SqlResultSetMapping(name = "MasterItemModelMapper",
+        classes = {
+                @ConstructorResult(
+                        targetClass = MasterItemModel.class,
+                        columns = {
+                                @ColumnResult(name = "item_code", type = String.class),
+                                @ColumnResult(name = "item_code_label",  type = String.class),
+                                @ColumnResult(name = "item_name",  type = String.class),
+                                @ColumnResult(name = "description",  type = String.class),
+                                @ColumnResult(name = "sell_price",   type = Float.class),
+                                @ColumnResult(name = "price_detail",  type = String.class),
+                                @ColumnResult(name = "basic_price",   type = Float.class),
+                                @ColumnResult(name = "unit_measure",  type = String.class),
                                 @ColumnResult(name = "item_type",  type = String.class),
                                 @ColumnResult(name = "stock",  type = Integer.class)
                         })

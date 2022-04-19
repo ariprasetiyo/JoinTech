@@ -1,8 +1,12 @@
 package arprast.qiyosq.dto;
 
+import javax.validation.constraints.NotNull;
+
 public class RequestAddItemTmp extends Dto {
+
+    @NotNull
     String itemCode;
-    String userId;
+    @NotNull
     int qty;
 
     public String getItemCode() {
@@ -11,14 +15,6 @@ public class RequestAddItemTmp extends Dto {
 
     public void setItemCode(String itemCode) {
         this.itemCode = itemCode;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     public int getQty() {

@@ -49,16 +49,4 @@ public class RequestData extends Dto {
 		this.isAscending = isAscending;
 	}
 
-	@Override
-	public String toString() {
-		return "{" +
-				"limit=" + limit +
-				", offset=" + offset +
-				", search='" + search + '\'' +
-				", sortColumn='" + sortColumn + '\'' +
-				", isAscending=" + isAscending +
-				", id=" + id +
-				", requestId='" + requestId + '\'' +
-				'}';
-	}
 }

@@ -2,6 +2,8 @@ package arprast.qiyosq.util;
 
 import arprast.qiyosq.controller.rest.ApiRestController;
 import arprast.qiyosq.dto.ResponseDto;
+import arprast.qiyosq.http.Response;
+import arprast.qiyosq.ref.MessageStatus;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,7 +11,6 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import org.slf4j.Logger;
 
 import arprast.qiyosq.ref.ActionType;
-import arprast.qiyosq.ref.StatusType;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 
@@ -30,18 +31,6 @@ public class LogUtil {
 	private static final ObjectWriter requestWritter = jsonMapper.writerFor(objectRef);
 	private static final ObjectWriter responseWritter = jsonMapper.writerFor(responseRef);
 
-
-	public static ResponseEntity<ResponseDto> logResponse(final Class aClass, final ResponseEntity<ResponseDto> response) {
-		String jsonResponse = null;
-		try {
-			jsonResponse = responseWritter.writeValueAsString(response);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-		logger.info(Util.RESPONSE, aClass.getSimpleName(), jsonResponse);
-		return response;
-	}
-
 	public static void logRequest(final Class aClass, final Object request) {
 		String jsonRequest = null;
 		try {
@@ -52,13 +41,23 @@ public class LogUtil {
 		logger.info(Util.REQUEST, aClass.getSimpleName(), jsonRequest);
 	}
 
+	public static ResponseEntity<Response> logResponse(final Class aClass, final ResponseEntity<Response> response) {
+		String jsonResponse = null;
+		try {
+			jsonResponse = responseWritter.writeValueAsString(response);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		logger.info(Util.RESPONSE, aClass.getSimpleName(), jsonResponse);
+		return response;
+	}
+
 	/**
 	 * Future for audit trail
 	 * 
 	 * @param logger
 	 * @param isEnabled
 	 * @param paramMessageStatus
-	 *            : {@value StatusType, ActionType}
 	 * @param message
 	 * @param values
 	 * 
@@ -66,7 +65,7 @@ public class LogUtil {
 	public static void logDebugType(Logger logger, boolean isEnabled, Object paramMessageStatus, String message,
 			Object... values) {
 		try {
-			if (paramMessageStatus instanceof StatusType) {
+			if (paramMessageStatus instanceof MessageStatus) {
 				if (logger.isDebugEnabled() && isEnabled) {
 					messages.append(MESSAGE_STATUS_TYPE);
 					messages.append(COLON);

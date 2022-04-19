@@ -342,31 +342,33 @@ ALTER TABLE `sys_user_roles`
 VER 1 20220409
 
 create table pos_header_tmp(
- transaction_id varchar(50) not null primary key,
+  request_id varchar(50) not null primary key,
   customer_name varchar(200) not null,
   customer_id varchar(50) not null,
   phone_number varchar(200) not null,
   address varchar(255) not null,
-  payment_channel varchar(50),
   payment_method varchar(50) not null,
   total_trx_amount float,
   total_discount_amount float,
   total_paid_amount float,
-  created_by varchar(50) DEFAULT NULL,
-  created_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  username varchar(100) DEFAULT NULL,
+  created_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  index(username)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 create table pos_detail_tmp (
-  seq int(6) not null,
-  transaction_id varchar(50) not null,
+  seq int(6) not null AUTO_INCREMENT primary key,
+  request_id varchar(50) not null,
   item_code varchar(200) not null,
+  item_code_label varchar(200) not null,
   item_name varchar(200) not null,
+  description varchar(500) default null,
   qty integer(8) not null,
-  seller_price float not null,
+  sell_price float not null,
   price_detail json not null,
   basic_price float not null,
-  status varchar(20) not null,
-  index(transaction_id)
+  item_type varchar(20) not null,
+  index(request_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 create table invoice_sales_header(

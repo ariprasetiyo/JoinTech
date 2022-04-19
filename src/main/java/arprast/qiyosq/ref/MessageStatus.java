@@ -1,6 +1,6 @@
 package arprast.qiyosq.ref;
 
-public enum StatusType {
+public enum MessageStatus {
 
 	SAVE_SUCCEED(1, "SAVE SUCCEED"), 
 	UPDATE_SUCCEED(2, "UPDATE SUCCEED"), 
@@ -21,6 +21,9 @@ public enum StatusType {
 	SAVE_AUTHORIZATION_ERROR(514,"SAVE ROLE ERROR"), 
 	SAVE_USER_GROUP_ERROR(515,"SAVE USER GROUP ERROR"),
 	DUPLICATE_DATA_ON_DB(516,"DUPLICATE DATA ON DB"),
+
+	POS_TMP_NOT_ENOUGH_STOCK(1000, "not enough stock"),
+
 	DATA_NOT_FOUND(517,"DATA NOT FOUND");
 
 	public final int intValue;
@@ -30,12 +33,12 @@ public enum StatusType {
 	 * @param intValue
 	 * @param stringValue
 	 */
-	private StatusType(int intValue, String stringValue) {
+	private MessageStatus(int intValue, String stringValue) {
 		this.intValue = intValue;
 		this.stringValue = stringValue;
 	}
 
-	public static StatusType valueOf(int intValue) {
+	public static MessageStatus valueOf(int intValue) {
 		switch (intValue) {
 		case 1:
 			return SAVE_SUCCEED;

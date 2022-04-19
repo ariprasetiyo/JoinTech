@@ -10,6 +10,7 @@ import java.util.concurrent.Future;
 
 import javax.validation.Valid;
 
+import arprast.qiyosq.ref.MessageStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,6 @@ import arprast.qiyosq.dto.RequestData;
 import arprast.qiyosq.dto.RequestDto;
 import arprast.qiyosq.dto.ResponseData;
 import arprast.qiyosq.dto.ResponseDto;
-import arprast.qiyosq.ref.StatusType;
 import arprast.qiyosq.services.MenuService;
 
 /**
@@ -65,7 +65,7 @@ public class MenuRestController {
 				ResponseDto responseDto = new ResponseDto();
 				MenuDto menuDto = menuService.validateSaveMenu(menu.getRequestData());
 				responseDto.setResponseData(menuDto);
-				responseDto.setStatusType(menuDto.getStatusType());
+				responseDto.setMessageStatus(menuDto.getMessageStatus());
 				responseDto.setMessage(menuDto.getMessage());
 				return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
 
@@ -85,7 +85,7 @@ public class MenuRestController {
 				ResponseDto responseDto = new ResponseDto();
 				MenuDto menuDto = menuService.validateEditMenu(menu.getRequestData());
 				responseDto.setResponseData(menuDto);
-				responseDto.setStatusType(menuDto.getStatusType());
+				responseDto.setMessageStatus(menuDto.getMessageStatus());
 				responseDto.setMessage(menuDto.getMessage());
 				return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
 
@@ -107,10 +107,10 @@ public class MenuRestController {
 				ResponseDto responseDto = new ResponseDto();
 				boolean isSuccessDelete = menuService.validateDeleteMenu(dto.getId());
 				if (isSuccessDelete) {
-					responseDto = new ResponseDto(StatusType.DELETE_SUCCEED, StatusType.DELETE_SUCCEED.stringValue,
+					responseDto = new ResponseDto(MessageStatus.DELETE_SUCCEED, MessageStatus.DELETE_SUCCEED.stringValue,
 							dto);
 				} else {
-					responseDto = new ResponseDto(StatusType.DELETE_ERROR, StatusType.DELETE_ERROR.stringValue, dto);
+					responseDto = new ResponseDto(MessageStatus.DELETE_ERROR, MessageStatus.DELETE_ERROR.stringValue, dto);
 				}
 				return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
 
