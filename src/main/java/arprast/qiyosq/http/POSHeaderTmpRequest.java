@@ -1,41 +1,27 @@
-package arprast.qiyosq.model;
+package arprast.qiyosq.http;
 
 import arprast.qiyosq.ref.PaymentMethod;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-public class POSHeaderTmpModel {
-    private String requestId;
+public class POSHeaderTmpRequest {
+
+    @NotNull
     private String customerName;
     private String phoneNumber;
     private String address;
+    @NotNull
     private PaymentMethod paymentMethod;
+    @NotNull
     private float totalTrxAmount;
+    @NotNull
     private float totalDiscountAmount;
+    @NotNull
     private float totalPaidAmount;
-    private String username;
-    private Date createdTime;
-
-    public POSHeaderTmpModel(String requestId, String customerName, String phoneNumber, String address, String paymentMethod, float totalTrxAmount, float totalDiscountAmount, float totalPaidAmount, String username, Date createdTime) {
-        this.requestId = requestId;
-        this.customerName = customerName;
-        this.phoneNumber = phoneNumber;
-        this.address = address;
-        this.paymentMethod = PaymentMethod.valueOfName(paymentMethod);
-        this.totalTrxAmount = totalTrxAmount;
-        this.totalDiscountAmount = totalDiscountAmount;
-        this.totalPaidAmount = totalPaidAmount;
-        this.username = username;
-        this.createdTime = createdTime;
-    }
-
-    public String getRequestId() {
-        return requestId;
-    }
-
-    public void setRequestId(String requestId) {
-        this.requestId = requestId;
-    }
+    private Date createdTime = new Date();
+    @NotNull
+    private POSAddItemTmpRequest items;
 
     public String getCustomerName() {
         return customerName;
@@ -93,19 +79,19 @@ public class POSHeaderTmpModel {
         this.totalPaidAmount = totalPaidAmount;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public Date getCreatedTime() {
         return createdTime;
     }
 
     public void setCreatedTime(Date createdTime) {
         this.createdTime = createdTime;
+    }
+
+    public POSAddItemTmpRequest getItems() {
+        return items;
+    }
+
+    public void setItems(POSAddItemTmpRequest items) {
+        this.items = items;
     }
 }

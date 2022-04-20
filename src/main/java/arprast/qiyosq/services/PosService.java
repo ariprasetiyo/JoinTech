@@ -2,10 +2,12 @@ package arprast.qiyosq.services;
 
 import arprast.qiyosq.dao.DaoImpl;
 import arprast.qiyosq.dto.*;
+import arprast.qiyosq.http.POSHeaderTmpRequest;
 import arprast.qiyosq.http.Request;
 import arprast.qiyosq.http.Response;
 import arprast.qiyosq.model.MasterItemModel;
 import arprast.qiyosq.ref.MessageStatus;
+import arprast.qiyosq.util.Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +23,13 @@ public class PosService {
     @Autowired
     DaoImpl daoImpl;
 
-    public ResponseEntity<Response> addItemTmp(Request<RequestAddItemTmp> request) {
-        final Response responseDto = new Response();
-        responseDto.setResponseId(request.getRequestId());
+    public ResponseEntity<Response> addItemTmp(Request<POSHeaderTmpRequest> request) {
+        Response responseDto = Util.buildResponse(request);
 
-        final MasterItemModel masterItem = daoImpl.getMasterItem(request.getRequestData().getItemCode());
-        if(request.getRequestData().getQty() > masterItem.getStock()){
+        request.getUsername();
+
+        final MasterItemModel masterItem = daoImpl.getMasterItem(request.getRequestData().getItems().getItemCode());
+        if(request.getRequestData().getItems().getQty() > masterItem.getStock()){
             responseDto.setMessageStatus(MessageStatus.POS_TMP_NOT_ENOUGH_STOCK);
             return new ResponseEntity<>(responseDto, HttpStatus.OK);
         }

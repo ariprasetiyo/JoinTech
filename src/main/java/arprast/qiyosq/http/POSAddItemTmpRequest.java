@@ -1,8 +1,8 @@
-package arprast.qiyosq.dto;
+package arprast.qiyosq.http;
 
 import javax.validation.constraints.NotNull;
 
-public class RequestAddItemTmp extends Dto {
+public class POSAddItemTmpRequest {
 
     @NotNull
     String itemCode;

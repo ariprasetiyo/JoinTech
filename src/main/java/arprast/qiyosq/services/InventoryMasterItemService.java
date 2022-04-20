@@ -6,6 +6,7 @@ import arprast.qiyosq.http.Request;
 import arprast.qiyosq.http.Response;
 import arprast.qiyosq.model.MasterItemModel;
 import arprast.qiyosq.util.LogUtil;
+import arprast.qiyosq.util.Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +27,10 @@ public class InventoryMasterItemService extends LogUtil {
     @Autowired
     DaoImpl daoImpl;
 
-    public ResponseEntity<Response> getMasterItem(Request<RequestData> masterItemRequest) {
-            final Response responseDto = new Response();
-        responseDto.setResponseId(masterItemRequest.getRequestId());
+    public final ResponseEntity<Response> getMasterItem(final Request<RequestData> request) {
+        final Response responseDto = Util.buildResponse(request);
 
-        final List<MasterItemDto> masterItems = getMasterItems(masterItemRequest);
+        final List<MasterItemDto> masterItems = getMasterItems(request);
         final ResponseData responseData = new ResponseData();
         responseData.setTotalRecord(masterItems.size());
         responseData.setData(masterItems);

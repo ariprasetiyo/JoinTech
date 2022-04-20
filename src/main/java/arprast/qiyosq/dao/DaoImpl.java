@@ -51,6 +51,14 @@ public class DaoImpl {
                 .toString();
     }
 
+    private static String getPOSHeaderTmpQuery() {
+        return new StringBuilder()
+                .append("select imi.item_code, item_code_label, item_name, description, sell_price, price_detail, basic_price, unit_measure, item_type, imis.stock ")
+                .append("from inventory_master_item imi left join inventory_master_item_stock imis on imi.item_code  = imis.item_code  ")
+                .append("where imi.item_code = ? and is_active = true ")
+                .toString();
+    }
+
     private static String getInsertItemTmpPOS() {
         return new StringBuilder()
                 .append("insert into ( transaction_id, item_code, item_name, qty, seller_price, price_detail, basic_price, status) values ")
@@ -79,6 +87,12 @@ public class DaoImpl {
                 .setParameter(3, offset)
                 .setParameter(4, limit)
                 .getResultList();
+    }
+
+    @SuppressWarnings("unchecked")
+    public MasterItemModel getPOSHeaderTmp(final String userName) {
+        return (MasterItemModel) em.createNativeQuery(getPOSHeaderTmpQuery(), "POSHeaderTmpMapper")
+                .setParameter(1, userName).getSingleResult();
     }
 
     @SuppressWarnings("unchecked")

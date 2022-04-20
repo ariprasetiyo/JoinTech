@@ -1,5 +1,8 @@
 package arprast.qiyosq.util;
 
+import arprast.qiyosq.http.Request;
+import arprast.qiyosq.http.Response;
+
 public class Util {
 	
 	private static boolean isLogAuditTrail = true;
@@ -27,5 +30,12 @@ public class Util {
 	public static void setEnableLoggerAccessPage(boolean isEnableLoggerAccessPage) {
 		Util.isEnableLoggerAccessPage = isEnableLoggerAccessPage;
 	}
-	
+
+
+	public static final Response buildResponse(final Request request){
+		final Response responseDto = new Response();
+		responseDto.setResponseId(request.getRequestId());
+		responseDto.setUsername(request.getUsername());
+		return responseDto;
+	}
 }

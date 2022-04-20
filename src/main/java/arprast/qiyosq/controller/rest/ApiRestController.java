@@ -1,6 +1,6 @@
 package arprast.qiyosq.controller.rest;
 
-import arprast.qiyosq.dto.RequestAddItemTmp;
+import arprast.qiyosq.http.POSHeaderTmpRequest;
 import arprast.qiyosq.dto.RequestData;
 import arprast.qiyosq.http.Request;
 import arprast.qiyosq.http.Response;
@@ -29,25 +29,29 @@ public class ApiRestController {
             MediaType.APPLICATION_XML_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE,
             MediaType.APPLICATION_XML_VALUE})
     @ResponseBody
+    @SuppressWarnings("unchecked")
     public final ResponseEntity<Response> getMasterItems(@RequestBody @Valid final Request<RequestData> masterItemRequest) {
-        LogUtil.logRequest(masterItemService.getClass(), masterItemRequest);
-        return LogUtil.logResponse(posService.getClass(), masterItemService.getMasterItem(masterItemRequest));
+        return LogUtil.logResponse(masterItemService.getClass(), masterItemService.getMasterItem( initRequest(masterItemService.getClass(), masterItemRequest)));
     }
 
     @RequestMapping(value = "/admin/v1/api/pos/item/add", method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE,
             MediaType.APPLICATION_XML_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE,
             MediaType.APPLICATION_XML_VALUE})
     @ResponseBody
-    public final ResponseEntity<Response> addPosItemTmp(@RequestBody @Valid final Request<RequestAddItemTmp> masterItemRequest) {
-        LogUtil.logRequest(posService.getClass(), masterItemRequest);
-        final String username = getUserName();
-        return LogUtil.logResponse(posService.getClass(), posService.addItemTmp(masterItemRequest));
+    @SuppressWarnings("unchecked")
+    public final ResponseEntity<Response> addPosItemTmp(@RequestBody @Valid final Request<POSHeaderTmpRequest> addItemTmpRequest) {
+        return LogUtil.logResponse(posService.getClass(), posService.addItemTmp( initRequest(posService.getClass(), addItemTmpRequest)));
+    }
+
+    private static final Request initRequest(final Class aClass,final Request request){
+        request.setUsername(getUserName());
+        LogUtil.logRequest(aClass, request);
+        return request;
     }
 
     private static final String getUserName(){
         final Authentication auth2 = SecurityContextHolder.getContext().getAuthentication();
         return auth2.getName();
     }
-
 
 }
