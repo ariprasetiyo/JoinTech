@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ServicesController {
     
-    @RequestMapping(value = "/services.html", method = RequestMethod.GET)
+    @RequestMapping(value = "/service.html", method = RequestMethod.GET)
     public ModelAndView login(@RequestParam(value = "error", required = false) String error,
             @RequestParam(value = "logout", required = false) String logout) {
         ModelAndView model = new ModelAndView();
@@ -23,7 +23,7 @@ public class ServicesController {
         if (logout != null) {
             model.addObject("message", "Logged out from AG successfully.");
         }
-        model.setViewName("public/services.html");
+        model.setViewName("public/service.html");
         return model;
     }
 }

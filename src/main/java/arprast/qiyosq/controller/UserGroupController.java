@@ -5,7 +5,7 @@
  */
 package arprast.qiyosq.controller;
 
-import arprast.qiyosq.services.RolesService;
+import arprast.qiyosq.service.RolesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

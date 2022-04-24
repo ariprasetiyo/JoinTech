@@ -20,7 +20,7 @@ import arprast.qiyosq.dto.RequestData;
 import arprast.qiyosq.dto.RequestDto;
 import arprast.qiyosq.dto.ResponseData;
 import arprast.qiyosq.dto.ResponseDto;
-import arprast.qiyosq.services.AuthorizationService;
+import arprast.qiyosq.service.AuthorizationService;
 
 @RestController
 public class AuthorizationRestController {

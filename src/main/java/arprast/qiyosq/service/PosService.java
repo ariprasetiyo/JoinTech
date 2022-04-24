@@ -1,4 +1,4 @@
-package arprast.qiyosq.services;
+package arprast.qiyosq.service;
 
 import arprast.qiyosq.dao.DaoImpl;
 import arprast.qiyosq.dto.*;
@@ -48,7 +48,7 @@ public class PosService {
             headerModel.setTotalPaidAmount(masterItem.getSellPrice());
             daoImpl.insertPOSHeaderTmp(headerModel);
 
-            daoImpl.insertItemTmpPOS();
+//            daoImpl.insertItemTmpPOS();
         }
 
 //        POSHeaderTmpModel posHeaderTmp = new POSHeaderTmpModel();

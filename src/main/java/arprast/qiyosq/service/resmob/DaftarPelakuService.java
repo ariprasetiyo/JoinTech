@@ -1,13 +1,14 @@
-package arprast.qiyosq.services;
-
-import java.util.List;
+package arprast.qiyosq.service.resmob;
 
 import arprast.qiyosq.dto.AuthorizationDto;
+import arprast.qiyosq.dto.DaftarPelakuDto;
 import arprast.qiyosq.dto.RequestData;
 import arprast.qiyosq.model.AuthorizationModel;
 import arprast.qiyosq.model.MenusModel;
 
-public interface AuthorizationService {
+import java.util.List;
+
+public interface DaftarPelakuService {
 
 	public void viewSysRoles(Long idRoles);
 
@@ -19,11 +20,11 @@ public interface AuthorizationService {
 
 	public String getAuthorizationJson(Long idRole);
 	
-	public List<AuthorizationDto> getAuthorizationList(RequestData requestData);
+	public List<DaftarPelakuDto> getDaftarPelakuList(RequestData requestData);
 
 /*	public void viewDataMenu(Model model, Long idRole);*/
 
-	public AuthorizationDto saveMenu(AuthorizationDto authorizationDto);
+	public DaftarPelakuDto saveDaftarPelaku(DaftarPelakuDto daftarPelakuDto);
 
 	int updateAuthorization(Long id, AuthorizationDto authorizationDto);
 

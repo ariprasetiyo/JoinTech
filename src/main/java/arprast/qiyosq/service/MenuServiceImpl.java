@@ -1,4 +1,4 @@
-package arprast.qiyosq.services;
+package arprast.qiyosq.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -133,7 +133,7 @@ public class MenuServiceImpl implements MenuService {
 		int countMenuByName = menusDao.countMenuByMenuName(menuDto.getMenusName());
 		if (countMenuByName > 0 || countMenuById > 0) {
 			menuDto.setStatusCode(StatusCode.DUPLICATE_DATA_ERROR);
-			menuDto.setMessage(StatusCode.DUPLICATE_DATA_ERROR.stringValue);
+			menuDto.setMessage(StatusCode.DUPLICATE_DATA_ERROR.desc);
 			return menuDto;
 		}
 
@@ -153,7 +153,7 @@ public class MenuServiceImpl implements MenuService {
 		int countMenuById = menusDao.countMenuById(menuDto.getId());
 		if (countMenuById == 0) {
 			menuDto.setStatusCode(StatusCode.DATA_NOT_FOUND);
-			menuDto.setMessage(StatusCode.DATA_NOT_FOUND.stringValue);
+			menuDto.setMessage(StatusCode.DATA_NOT_FOUND.desc);
 			return menuDto;
 		}
 		
@@ -167,12 +167,12 @@ public class MenuServiceImpl implements MenuService {
 
 		if (sysMenus.getId() == null) {
 			menuDto.setStatusCode(StatusCode.SAVE_ERROR);
-			menuDto.setMessage(StatusCode.SAVE_ERROR.stringValue);
+			menuDto.setMessage(StatusCode.SAVE_ERROR.desc);
 			return menuDto;
 		}
 
 		menuDto.setStatusCode(StatusCode.SAVE_SUCCEED);
-		menuDto.setMessage(StatusCode.SAVE_SUCCEED.stringValue);
+		menuDto.setMessage(StatusCode.SAVE_SUCCEED.desc);
 		return menuDto;
 	}
 	

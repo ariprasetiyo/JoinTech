@@ -1,4 +1,4 @@
-package arprast.qiyosq.services;
+package arprast.qiyosq.service;
 
 public class AccessControlServiceImpl {
 }

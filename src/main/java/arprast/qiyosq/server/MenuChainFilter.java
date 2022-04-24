@@ -17,7 +17,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import arprast.qiyosq.services.AuthorizationService;
+import arprast.qiyosq.service.AuthorizationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import arprast.qiyosq.ref.ActionType;
-import arprast.qiyosq.services.MenuService;
+import arprast.qiyosq.service.MenuService;
 import arprast.qiyosq.util.LogUtil;
 import arprast.qiyosq.util.Util;
 import arprast.qiyosq.ref.StringConstan;

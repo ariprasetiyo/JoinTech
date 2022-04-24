@@ -38,7 +38,7 @@ public class ResponseDto extends Dto {
 
 	public void setStatusCode(StatusCode statusCode) {
 		this.statusCode = statusCode;
-		this.message = statusCode.stringValue;
+		this.message = statusCode.desc;
 	}
 
 	public String getMessage() {

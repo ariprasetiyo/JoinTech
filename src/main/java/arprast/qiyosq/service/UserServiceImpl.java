@@ -1,4 +1,4 @@
-package arprast.qiyosq.services;
+package arprast.qiyosq.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
 			if (isValidPassword(userDto) == false) {
 				userDto = new UserDto();
 				userDto.setStatusCode(StatusCode.UPDATE_ERROR);
-				userDto.setMessage(StatusCode.WRONG_OLD_PASSWORD.stringValue);
+				userDto.setMessage(StatusCode.WRONG_OLD_PASSWORD.desc);
 				return userDto;
 			}
 		} else {

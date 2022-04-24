@@ -23,7 +23,7 @@ import arprast.qiyosq.dto.RequestDto;
 import arprast.qiyosq.dto.ResponseData;
 import arprast.qiyosq.dto.ResponseDto;
 import arprast.qiyosq.dto.RolesDto;
-import arprast.qiyosq.services.UserGroupService;
+import arprast.qiyosq.service.UserGroupService;
 
 @RestController
 @RequestMapping(value = "/admin/v1/api/userGroup")

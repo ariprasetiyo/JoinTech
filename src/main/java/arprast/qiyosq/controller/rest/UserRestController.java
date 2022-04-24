@@ -25,7 +25,7 @@ import arprast.qiyosq.dto.RequestDto;
 import arprast.qiyosq.dto.ResponseData;
 import arprast.qiyosq.dto.ResponseDto;
 import arprast.qiyosq.dto.UserDto;
-import arprast.qiyosq.services.UserService;
+import arprast.qiyosq.service.UserService;
 
 @RestController
 public class UserRestController {
@@ -41,9 +41,9 @@ public class UserRestController {
 		ResponseDto responseDto = new ResponseDto();
 		boolean isSuccessDeleteUser = userService.deleteUser(user.getRequestData().getId());
 		if (isSuccessDeleteUser) {
-			responseDto = new ResponseDto(StatusCode.DELETE_SUCCEED, StatusCode.DELETE_SUCCEED.stringValue, dto);
+			responseDto = new ResponseDto(StatusCode.DELETE_SUCCEED, StatusCode.DELETE_SUCCEED.desc, dto);
 		} else {
-			responseDto = new ResponseDto(StatusCode.DELETE_ERROR, StatusCode.DELETE_ERROR.stringValue, dto);
+			responseDto = new ResponseDto(StatusCode.DELETE_ERROR, StatusCode.DELETE_ERROR.desc, dto);
 		}
 		return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
 	}

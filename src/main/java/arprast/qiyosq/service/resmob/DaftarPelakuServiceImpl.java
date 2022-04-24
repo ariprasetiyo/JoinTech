@@ -1,4 +1,4 @@
-package arprast.qiyosq.services.resmob;
+package arprast.qiyosq.service.resmob;
 
 import arprast.qiyosq.dao.AuthorizationDao;
 import arprast.qiyosq.dao.AuthorizationDaoImpl;
@@ -222,7 +222,7 @@ public class DaftarPelakuServiceImpl implements DaftarPelakuService {
         LogUtil.logDebugType(logger, true, ActionType.SAVE, "{}", daftarPelakuDto.toString());
         if (daftarPelakuDto.getId() == null) {
             daftarPelakuDto.setStatusCode(StatusCode.SAVE_ERROR);
-            daftarPelakuDto.setMessage(StatusCode.NULL_VALUE.stringValue);
+            daftarPelakuDto.setMessage(StatusCode.NULL_VALUE.desc);
             return daftarPelakuDto;
         }
 
@@ -237,7 +237,7 @@ public class DaftarPelakuServiceImpl implements DaftarPelakuService {
 
 //        daftarPelakuDto.setId(authorizationModel.getId());
         daftarPelakuDto.setStatusCode(StatusCode.SAVE_SUCCEED);
-        daftarPelakuDto.setMessage(StatusCode.SAVE_SUCCEED.stringValue);
+        daftarPelakuDto.setMessage(StatusCode.SAVE_SUCCEED.desc);
 
         return daftarPelakuDto;
     }

@@ -1,7 +1,7 @@
 package arprast.qiyosq.controller.rest;
 
 import arprast.qiyosq.dto.*;
-import arprast.qiyosq.services.resmob.DaftarPelakuService;
+import arprast.qiyosq.service.resmob.DaftarPelakuService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

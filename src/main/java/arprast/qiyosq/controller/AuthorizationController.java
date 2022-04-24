@@ -13,8 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import arprast.qiyosq.services.AuthorizationService;
-import arprast.qiyosq.services.RolesService;
+import arprast.qiyosq.service.AuthorizationService;
+import arprast.qiyosq.service.RolesService;
 
 @Controller
 @RequestMapping("/admin/v1/view/authorization")

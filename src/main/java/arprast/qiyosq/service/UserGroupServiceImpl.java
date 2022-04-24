@@ -1,4 +1,4 @@
-package arprast.qiyosq.services;
+package arprast.qiyosq.service;
 
 import java.util.List;
 
@@ -54,7 +54,7 @@ public class UserGroupServiceImpl implements UserGroupService {
 		int countUserGroup = userGroupDao.countUserGroupByRoleName(rolesDto.getRoleName());
 		if (countUserGroup > 0) {
 			responseData.setStatusCode(StatusCode.DUPLICATE_DATA_ERROR);
-			responseData.setMessage(StatusCode.DUPLICATE_DATA_ERROR.stringValue);
+			responseData.setMessage(StatusCode.DUPLICATE_DATA_ERROR.desc);
 			return responseData;
 		}
 
@@ -66,7 +66,7 @@ public class UserGroupServiceImpl implements UserGroupService {
 
 		if (rolesModel.getId() == null) {
 			responseData.setStatusCode(StatusCode.SAVE_ERROR);
-			responseData.setMessage(StatusCode.NULL_POINTER_ERROR.stringValue);
+			responseData.setMessage(StatusCode.NULL_POINTER_ERROR.desc);
 		} else {
 			responseData.setStatusCode(StatusCode.SAVE_SUCCEED);
 		}
@@ -81,7 +81,7 @@ public class UserGroupServiceImpl implements UserGroupService {
 		ResponseData responseData = new ResponseData();
 		if (rolesDto.getId() == null || rolesDto.getId() <= 0) {
 			responseData.setStatusCode(StatusCode.UPDATE_ERROR);
-			responseData.setMessage(StatusCode.NULL_VALUE.stringValue);
+			responseData.setMessage(StatusCode.NULL_VALUE.desc);
 			return responseData;
 		}
 
@@ -94,7 +94,7 @@ public class UserGroupServiceImpl implements UserGroupService {
 
 		if (rolesModel.getId() == null) {
 			responseData.setStatusCode(StatusCode.UPDATE_ERROR);
-			responseData.setMessage(StatusCode.NULL_POINTER_ERROR.stringValue);
+			responseData.setMessage(StatusCode.NULL_POINTER_ERROR.desc);
 		} else {
 			responseData.setStatusCode(StatusCode.UPDATE_SUCCEED);
 		}

@@ -1,4 +1,4 @@
-package arprast.qiyosq.services;
+package arprast.qiyosq.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -167,7 +167,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 		LogUtil.logDebugType(logger, true, ActionType.SAVE, "{}", authorizationDto.toString());
 		if (authorizationDto.getRoleId() == null) {
 			authorizationDto.setStatusCode(StatusCode.SAVE_ERROR);
-			authorizationDto.setMessage(StatusCode.NULL_VALUE.stringValue);
+			authorizationDto.setMessage(StatusCode.NULL_VALUE.desc);
 			return authorizationDto;
 		}
 
@@ -176,13 +176,13 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
 		if (authorizationModel == null || authorizationModel.getId() == null) {
 			authorizationDto.setStatusCode(StatusCode.SAVE_ERROR);
-			authorizationDto.setMessage(StatusCode.SAVE_AUTHORIZATION_ERROR.stringValue);
+			authorizationDto.setMessage(StatusCode.SAVE_AUTHORIZATION_ERROR.desc);
 			return authorizationDto;
 		}
 
 		authorizationDto.setId(authorizationModel.getId());
 		authorizationDto.setStatusCode(StatusCode.SAVE_SUCCEED);
-		authorizationDto.setMessage(StatusCode.SAVE_SUCCEED.stringValue);
+		authorizationDto.setMessage(StatusCode.SAVE_SUCCEED.desc);
 
 		return authorizationDto;
 	}

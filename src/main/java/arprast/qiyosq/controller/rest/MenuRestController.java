@@ -25,7 +25,7 @@ import arprast.qiyosq.dto.RequestData;
 import arprast.qiyosq.dto.RequestDto;
 import arprast.qiyosq.dto.ResponseData;
 import arprast.qiyosq.dto.ResponseDto;
-import arprast.qiyosq.services.MenuService;
+import arprast.qiyosq.service.MenuService;
 
 /**
  *
@@ -107,10 +107,10 @@ public class MenuRestController {
 				ResponseDto responseDto = new ResponseDto();
 				boolean isSuccessDelete = menuService.validateDeleteMenu(dto.getId());
 				if (isSuccessDelete) {
-					responseDto = new ResponseDto(StatusCode.DELETE_SUCCEED, StatusCode.DELETE_SUCCEED.stringValue,
+					responseDto = new ResponseDto(StatusCode.DELETE_SUCCEED, StatusCode.DELETE_SUCCEED.desc,
 							dto);
 				} else {
-					responseDto = new ResponseDto(StatusCode.DELETE_ERROR, StatusCode.DELETE_ERROR.stringValue, dto);
+					responseDto = new ResponseDto(StatusCode.DELETE_ERROR, StatusCode.DELETE_ERROR.desc, dto);
 				}
 				return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
 

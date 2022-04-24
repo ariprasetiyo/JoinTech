@@ -5,8 +5,8 @@
  */
 package arprast.qiyosq.controller;
 
-import arprast.qiyosq.services.AuthorizationService;
-import arprast.qiyosq.services.RolesService;
+import arprast.qiyosq.service.AuthorizationService;
+import arprast.qiyosq.service.RolesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

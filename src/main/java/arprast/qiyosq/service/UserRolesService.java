@@ -1,4 +1,4 @@
-package arprast.qiyosq.services;
+package arprast.qiyosq.service;
 
 import arprast.qiyosq.model.UserRolesModel;
 
