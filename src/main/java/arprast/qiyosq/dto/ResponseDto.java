@@ -1,6 +1,6 @@
 package arprast.qiyosq.dto;
 
-import arprast.qiyosq.ref.MessageStatus;
+import arprast.qiyosq.ref.StatusCode;
 
 public class ResponseDto extends Dto {
 
@@ -14,7 +14,7 @@ public class ResponseDto extends Dto {
 	 * public Class<T> getClazz() { return clazz; }
 	 */
 
-	private MessageStatus messageStatus;
+	private StatusCode statusCode;
 
 	private String message;
 
@@ -26,19 +26,19 @@ public class ResponseDto extends Dto {
 
 	/**
 	 * 
-	 * @param messageStatus
+	 * @param statusCode
 	 * @param message
 	 * @param responseData
 	 */
-	public ResponseDto(MessageStatus messageStatus, String message, Object responseData) {
+	public ResponseDto(StatusCode statusCode, String message, Object responseData) {
 		this.message = message;
-		this.messageStatus = messageStatus;
+		this.statusCode = statusCode;
 		this.responseData = responseData;
 	}
 
-	public void setMessageStatus(MessageStatus messageStatus) {
-		this.messageStatus = messageStatus;
-		this.message = messageStatus.stringValue;
+	public void setStatusCode(StatusCode statusCode) {
+		this.statusCode = statusCode;
+		this.message = statusCode.stringValue;
 	}
 
 	public String getMessage() {
@@ -49,8 +49,8 @@ public class ResponseDto extends Dto {
 		this.message = message;
 	}
 
-	public MessageStatus getMessageStatus() {
-		return messageStatus;
+	public StatusCode getStatusCode() {
+		return statusCode;
 	}
 
 

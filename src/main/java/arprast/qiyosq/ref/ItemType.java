@@ -4,10 +4,10 @@ public enum ItemType {
     SERVICE("service"),
     GOODS("goods");
 
-    private String name;
+    public String id;
 
     ItemType(final String name) {
-        this.name = name;
+        this.id = name;
     }
 
     public static ItemType valueOfName(final String name) {

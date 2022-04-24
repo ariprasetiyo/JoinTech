@@ -2,6 +2,7 @@ package arprast.qiyosq.util;
 
 import arprast.qiyosq.http.Request;
 import arprast.qiyosq.http.Response;
+import org.apache.commons.lang3.RandomStringUtils;
 
 public class Util {
 	
@@ -11,7 +12,9 @@ public class Util {
 	public static final String PERCENTAGE = "%";
 	public static final String REQUEST = "class={}, request={}";
 	public static final String RESPONSE = "class={}, response={}";
-	
+	private static final String PREFIX_CUSTOMER_ID = "cst";
+	private static final String DASH = "-";
+
 	public static boolean isLogAuditTrail() {
 		return isLogAuditTrail;
 	}
@@ -37,5 +40,15 @@ public class Util {
 		responseDto.setResponseId(request.getRequestId());
 		responseDto.setUsername(request.getUsername());
 		return responseDto;
+	}
+
+	public static final String generateCustomerId(){
+		return new StringBuilder()
+				.append(PREFIX_CUSTOMER_ID)
+				.append(DASH)
+				.append(System.currentTimeMillis())
+				.append(DASH)
+				.append(RandomStringUtils.randomAlphanumeric(3))
+				.toString();
 	}
 }

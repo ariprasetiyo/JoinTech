@@ -6,7 +6,8 @@ import arprast.qiyosq.http.POSHeaderTmpRequest;
 import arprast.qiyosq.http.Request;
 import arprast.qiyosq.http.Response;
 import arprast.qiyosq.model.MasterItemModel;
-import arprast.qiyosq.ref.MessageStatus;
+import arprast.qiyosq.model.POSHeaderTmpModel;
+import arprast.qiyosq.ref.StatusCode;
 import arprast.qiyosq.util.Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,14 +27,30 @@ public class PosService {
     public ResponseEntity<Response> addItemTmp(Request<POSHeaderTmpRequest> request) {
         Response responseDto = Util.buildResponse(request);
 
-        request.getUsername();
-
         final MasterItemModel masterItem = daoImpl.getMasterItem(request.getRequestData().getItems().getItemCode());
         if(request.getRequestData().getItems().getQty() > masterItem.getStock()){
-            responseDto.setMessageStatus(MessageStatus.POS_TMP_NOT_ENOUGH_STOCK);
+            responseDto.setStatusCode(StatusCode.POS_TMP_NOT_ENOUGH_STOCK);
             return new ResponseEntity<>(responseDto, HttpStatus.OK);
         }
-//
+
+        final POSHeaderTmpModel pOSHeader = daoImpl.getPOSHeaderTmp(request.getUsername(), request.getRequestId());
+        if(pOSHeader == null){
+            final POSHeaderTmpModel headerModel = new POSHeaderTmpModel();
+            headerModel.setRequestId(request.getRequestId());
+            headerModel.setUsername(request.getRequestId());
+            headerModel.setPhoneNumber(request.getRequestData().getPhoneNumber());
+            headerModel.setCustomerName(request.getRequestData().getCustomerName());
+            headerModel.setPaymentMethod(request.getRequestData().getPaymentMethod());
+            headerModel.setAddress(request.getRequestData().getAddress());
+            headerModel.setCustomerId(Util.generateCustomerId());
+            headerModel.setTotalTrxAmount(masterItem.getSellPrice());
+            headerModel.setTotalDiscountAmount(masterItem.getPriceDetail().getDiscountDetail().getDiscountAmount());
+            headerModel.setTotalPaidAmount(masterItem.getSellPrice());
+            daoImpl.insertPOSHeaderTmp(headerModel);
+
+            daoImpl.insertItemTmpPOS();
+        }
+
 //        POSHeaderTmpModel posHeaderTmp = new POSHeaderTmpModel();
 //        posHeaderTmp.setAddress();
 //        posHeaderTmp.setCustomerName();

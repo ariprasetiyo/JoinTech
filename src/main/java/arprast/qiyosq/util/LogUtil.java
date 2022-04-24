@@ -3,7 +3,7 @@ package arprast.qiyosq.util;
 import arprast.qiyosq.controller.rest.ApiRestController;
 import arprast.qiyosq.dto.ResponseDto;
 import arprast.qiyosq.http.Response;
-import arprast.qiyosq.ref.MessageStatus;
+import arprast.qiyosq.ref.StatusCode;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -65,7 +65,7 @@ public class LogUtil {
 	public static void logDebugType(Logger logger, boolean isEnabled, Object paramMessageStatus, String message,
 			Object... values) {
 		try {
-			if (paramMessageStatus instanceof MessageStatus) {
+			if (paramMessageStatus instanceof StatusCode) {
 				if (logger.isDebugEnabled() && isEnabled) {
 					messages.append(MESSAGE_STATUS_TYPE);
 					messages.append(COLON);

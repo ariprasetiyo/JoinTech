@@ -3,6 +3,7 @@ package arprast.qiyosq.http;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -10,7 +11,7 @@ public class Request<T> {
     @Valid
     @NotNull
     private T requestData;
-    @NotNull
+    @NotBlank(message = "Request id can't be blank")
     private String requestId;
     private String version;
     private String username;

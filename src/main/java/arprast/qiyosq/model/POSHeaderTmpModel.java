@@ -6,6 +6,7 @@ import java.util.Date;
 
 public class POSHeaderTmpModel {
     private String requestId;
+    private String customerId;
     private String customerName;
     private String phoneNumber;
     private String address;
@@ -16,8 +17,23 @@ public class POSHeaderTmpModel {
     private String username;
     private Date createdTime;
 
-    public POSHeaderTmpModel(String requestId, String customerName, String phoneNumber, String address, String paymentMethod, float totalTrxAmount, float totalDiscountAmount, float totalPaidAmount, String username, Date createdTime) {
+    public POSHeaderTmpModel(){
+
+    }
+
+    public POSHeaderTmpModel(final String requestId,
+                             final  String customerId,
+                             final  String customerName,
+                             final String phoneNumber,
+                             final String address,
+                             final String paymentMethod,
+                             final float totalTrxAmount,
+                             final float totalDiscountAmount,
+                             final float totalPaidAmount,
+                             final String username,
+                             final Date createdTime) {
         this.requestId = requestId;
+        this.customerId = customerId;
         this.customerName = customerName;
         this.phoneNumber = phoneNumber;
         this.address = address;
@@ -35,6 +51,14 @@ public class POSHeaderTmpModel {
 
     public void setRequestId(String requestId) {
         this.requestId = requestId;
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
     }
 
     public String getCustomerName() {

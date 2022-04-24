@@ -10,7 +10,7 @@ import java.util.concurrent.Future;
 
 import javax.validation.Valid;
 
-import arprast.qiyosq.ref.MessageStatus;
+import arprast.qiyosq.ref.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,9 +41,9 @@ public class UserRestController {
 		ResponseDto responseDto = new ResponseDto();
 		boolean isSuccessDeleteUser = userService.deleteUser(user.getRequestData().getId());
 		if (isSuccessDeleteUser) {
-			responseDto = new ResponseDto(MessageStatus.DELETE_SUCCEED, MessageStatus.DELETE_SUCCEED.stringValue, dto);
+			responseDto = new ResponseDto(StatusCode.DELETE_SUCCEED, StatusCode.DELETE_SUCCEED.stringValue, dto);
 		} else {
-			responseDto = new ResponseDto(MessageStatus.DELETE_ERROR, MessageStatus.DELETE_ERROR.stringValue, dto);
+			responseDto = new ResponseDto(StatusCode.DELETE_ERROR, StatusCode.DELETE_ERROR.stringValue, dto);
 		}
 		return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
 	}
@@ -72,7 +72,7 @@ public class UserRestController {
 		return CompletableFuture.supplyAsync(() -> {
 			try {
 				UserDto userDto = userService.saveUserAndRole(user.getRequestData());
-				ResponseDto userDtoJson = new ResponseDto(userDto.getMessageStatus(), userDto.getMessage(), userDto);
+				ResponseDto userDtoJson = new ResponseDto(userDto.getStatusCode(), userDto.getMessage(), userDto);
 				return new ResponseEntity<ResponseDto>(userDtoJson, HttpStatus.OK);
 
 			} catch (Exception e) {
@@ -88,7 +88,7 @@ public class UserRestController {
 		return CompletableFuture.supplyAsync(() -> {
 			try {
 				UserDto userDto = userService.updateUserAndRole(user.getRequestData());
-				ResponseDto userDtoJson = new ResponseDto(userDto.getMessageStatus(), userDto.getMessage(), userDto);
+				ResponseDto userDtoJson = new ResponseDto(userDto.getStatusCode(), userDto.getMessage(), userDto);
 				return new ResponseEntity<ResponseDto>(userDtoJson, HttpStatus.OK);
 
 			} catch (Exception e) {

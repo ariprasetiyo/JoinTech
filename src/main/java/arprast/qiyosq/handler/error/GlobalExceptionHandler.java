@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
-import arprast.qiyosq.ref.MessageStatus;
+import arprast.qiyosq.ref.StatusCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -93,13 +93,13 @@ public class GlobalExceptionHandler {
 					fieldError.getDefaultMessage());
 
 		}
-		LogUtil.logDebugType(logger, true, MessageStatus.API_REQ_RES_ERROR, error.toString());
+		LogUtil.logDebugType(logger, true, StatusCode.API_REQ_RES_ERROR, error.toString());
 		return error;
 	}
 
 	private final static Error errors(HttpStatus httpStatus, Object message, Object cause) {
 		Error messageErrorMap = new Error(httpStatus.value(), message.toString());
-		LogUtil.logDebugType(logger, true, MessageStatus.API_REQ_RES_GLOBAL_ERROR, cause.toString());
+		LogUtil.logDebugType(logger, true, StatusCode.API_REQ_RES_GLOBAL_ERROR, cause.toString());
 		return messageErrorMap;
 	}
 }

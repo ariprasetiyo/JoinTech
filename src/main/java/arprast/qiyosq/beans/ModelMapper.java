@@ -76,6 +76,7 @@ import java.util.Date;
                         targetClass = POSHeaderTmpModel.class,
                         columns = {
                                 @ColumnResult(name = "request_id", type = String.class),
+                                @ColumnResult(name = "customer_id", type = String.class),
                                 @ColumnResult(name = "customer_name",  type = String.class),
                                 @ColumnResult(name = "customer_id",  type = String.class),
                                 @ColumnResult(name = "phone_number",  type = String.class),

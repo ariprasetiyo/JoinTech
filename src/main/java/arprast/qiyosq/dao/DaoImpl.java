@@ -7,6 +7,8 @@ package arprast.qiyosq.dao;
 
 import arprast.qiyosq.model.DaftarPelakuModel;
 import arprast.qiyosq.model.MasterItemModel;
+import arprast.qiyosq.model.POSDetailTmpModel;
+import arprast.qiyosq.model.POSHeaderTmpModel;
 import arprast.qiyosq.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -53,16 +55,16 @@ public class DaoImpl {
 
     private static String getPOSHeaderTmpQuery() {
         return new StringBuilder()
-                .append("select imi.item_code, item_code_label, item_name, description, sell_price, price_detail, basic_price, unit_measure, item_type, imis.stock ")
-                .append("from inventory_master_item imi left join inventory_master_item_stock imis on imi.item_code  = imis.item_code  ")
-                .append("where imi.item_code = ? and is_active = true ")
+                .append("select customer_name , customer_id , phone_number , address , payment_method, total_trx_amount,  total_discount_amount , total_paid_amount, created_time ")
+                .append("from pos_header_tmp where username = ? and request_id = ? ")
                 .toString();
     }
 
-    private static String getInsertItemTmpPOS() {
+    private static String getInsertHeaderPOS() {
         return new StringBuilder()
-                .append("insert into ( transaction_id, item_code, item_name, qty, seller_price, price_detail, basic_price, status) values ")
-                .append(" (?, ?, ?, ?, ?, ?, ?, ?); ")
+                .append("INSERT INTO pos_header_tmp ")
+                .append("(request_id, customer_name, customer_id, phone_number, address, payment_method, total_trx_amount, total_discount_amount, total_paid_amount, username, created_time)")
+                .append("VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, current_timestamp())")
                 .toString();
     }
 
@@ -90,9 +92,27 @@ public class DaoImpl {
     }
 
     @SuppressWarnings("unchecked")
-    public MasterItemModel getPOSHeaderTmp(final String userName) {
-        return (MasterItemModel) em.createNativeQuery(getPOSHeaderTmpQuery(), "POSHeaderTmpMapper")
-                .setParameter(1, userName).getSingleResult();
+    public POSHeaderTmpModel getPOSHeaderTmp(final String userName, final String requestId) {
+        return (POSHeaderTmpModel) em.createNativeQuery(getPOSHeaderTmpQuery(), "POSHeaderTmpMapper")
+                .setParameter(1, userName)
+                .setParameter(2, requestId)
+                .getSingleResult();
+    }
+
+    @SuppressWarnings("unchecked")
+    public int insertPOSHeaderTmp(POSHeaderTmpModel posHeaderTmpModel) {
+        return  em.createNativeQuery(getInsertHeaderPOS())
+                .setParameter(1, posHeaderTmpModel.getRequestId())
+                .setParameter(2, posHeaderTmpModel.getCustomerName())
+                .setParameter(3, posHeaderTmpModel.getCustomerId())
+                .setParameter(4, posHeaderTmpModel.getPhoneNumber())
+                .setParameter(5, posHeaderTmpModel.getAddress())
+                .setParameter(6, posHeaderTmpModel.getPaymentMethod().id)
+                .setParameter(7, posHeaderTmpModel.getTotalTrxAmount())
+                .setParameter(8, posHeaderTmpModel.getTotalDiscountAmount())
+                .setParameter(9, posHeaderTmpModel.getTotalPaidAmount())
+                .setParameter(10, posHeaderTmpModel.getUsername())
+                .executeUpdate();
     }
 
     @SuppressWarnings("unchecked")
@@ -101,18 +121,26 @@ public class DaoImpl {
                 .setParameter(1, itemCode).getSingleResult();
     }
 
+    private static String getPOSDetalTmp() {
+        return new StringBuilder()
+                .append("insert into pos_detail_tmp ( request_id, item_code, item_code_label, item_name, description, qty, sell_price, price_detail, basic_price, item_type) values ")
+                .append(" (?, ?, ?, ?, ?, ?, ?, ?, ?, ?); ")
+                .toString();
+    }
+
     @SuppressWarnings("unchecked")
-    public int insertItemTmpPOS(final String itemCode) {
-        return em.createNativeQuery(getInsertItemTmpPOS())
-                .setParameter(1, itemCode)
-                .setParameter(2, itemCode)
-                .setParameter(3, itemCode)
-                .setParameter(4, itemCode)
-                .setParameter(5, itemCode)
-                .setParameter(6, itemCode)
-                .setParameter(7, itemCode)
-                .setParameter(8, itemCode)
-                .setParameter(9, itemCode)
+    public int insertItemTmpPOS(final POSDetailTmpModel model) {
+        return em.createNativeQuery(getPOSDetalTmp())
+                .setParameter(1, model.getRequestId())
+                .setParameter(2, model.getItemCode())
+                .setParameter(3, model.getItemCodeLabel())
+                .setParameter(4, model.getItemName())
+                .setParameter(5, model.getDescription())
+                .setParameter(6, model.getQty())
+                .setParameter(7, model.getSellPrice())
+                .setParameter(8, model.getPriceDetail())
+                .setParameter(9, model.getBasicPrice())
+                .setParameter(9, model.getItemType().id)
                 .executeUpdate();
     }
 }

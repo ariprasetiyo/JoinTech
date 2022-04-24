@@ -2,25 +2,20 @@ package arprast.qiyosq.http;
 
 import arprast.qiyosq.ref.PaymentMethod;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 public class POSHeaderTmpRequest {
 
-    @NotNull
+    @NotBlank(message =  "Customer name can't blank")
     private String customerName;
     private String phoneNumber;
     private String address;
-    @NotNull
+    @NotNull(message =  "Payment method cant't blank")
     private PaymentMethod paymentMethod;
-    @NotNull
-    private float totalTrxAmount;
-    @NotNull
-    private float totalDiscountAmount;
-    @NotNull
-    private float totalPaidAmount;
     private Date createdTime = new Date();
-    @NotNull
+    @NotNull(message =  "Item cant't blank")
     private POSAddItemTmpRequest items;
 
     public String getCustomerName() {
@@ -53,30 +48,6 @@ public class POSHeaderTmpRequest {
 
     public void setPaymentMethod(PaymentMethod paymentMethod) {
         this.paymentMethod = paymentMethod;
-    }
-
-    public float getTotalTrxAmount() {
-        return totalTrxAmount;
-    }
-
-    public void setTotalTrxAmount(float totalTrxAmount) {
-        this.totalTrxAmount = totalTrxAmount;
-    }
-
-    public float getTotalDiscountAmount() {
-        return totalDiscountAmount;
-    }
-
-    public void setTotalDiscountAmount(float totalDiscountAmount) {
-        this.totalDiscountAmount = totalDiscountAmount;
-    }
-
-    public float getTotalPaidAmount() {
-        return totalPaidAmount;
-    }
-
-    public void setTotalPaidAmount(float totalPaidAmount) {
-        this.totalPaidAmount = totalPaidAmount;
     }
 
     public Date getCreatedTime() {

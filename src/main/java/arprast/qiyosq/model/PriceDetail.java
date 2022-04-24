@@ -2,6 +2,7 @@ package arprast.qiyosq.model;
 
 public class PriceDetail {
     private float sellPrice;
+    private DiscountDetail discountDetail;
     private float basicPrice;
     private float marginPctg;
     private float marginAmount;
@@ -36,5 +37,13 @@ public class PriceDetail {
 
     public void setMarginAmount(float marginAmount) {
         this.marginAmount = marginAmount;
+    }
+
+    public DiscountDetail getDiscountDetail() {
+        return discountDetail;
+    }
+
+    public void setDiscountDetail(DiscountDetail discountDetail) {
+        this.discountDetail = discountDetail;
     }
 }

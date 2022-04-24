@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import arprast.qiyosq.ref.MessageStatus;
+import arprast.qiyosq.ref.StatusCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
 
 	public UserDto saveUserAndRole(UserDto userDto) {
 		LogUtil.logDebugType(logger, true, ActionType.SAVE, "{}", userDto.toString());
-		return saveEditUserAndRole(userDto, false, ActionType.SAVE, MessageStatus.SAVE_ERROR, MessageStatus.SAVE_SUCCEED);
+		return saveEditUserAndRole(userDto, false, ActionType.SAVE, StatusCode.SAVE_ERROR, StatusCode.SAVE_SUCCEED);
 	}
 
 	public UserDto updateUserAndRole(UserDto userDto) {
@@ -50,16 +50,16 @@ public class UserServiceImpl implements UserService {
 		if (userDto.getOldPassword() != null && !userDto.getOldPassword().isEmpty()) {
 			if (isValidPassword(userDto) == false) {
 				userDto = new UserDto();
-				userDto.setMessageStatus(MessageStatus.UPDATE_ERROR);
-				userDto.setMessage(MessageStatus.WRONG_OLD_PASSWORD.stringValue);
+				userDto.setStatusCode(StatusCode.UPDATE_ERROR);
+				userDto.setMessage(StatusCode.WRONG_OLD_PASSWORD.stringValue);
 				return userDto;
 			}
 		} else {
 			String password = userDao.findUserPassword(userDto.getId());
 			userDto.setPassword(password);
 		}
-		return saveEditUserAndRole(userDto, true, ActionType.UPADATE, MessageStatus.UPDATE_ERROR,
-				MessageStatus.UPDATE_SUCCEED);
+		return saveEditUserAndRole(userDto, true, ActionType.UPADATE, StatusCode.UPDATE_ERROR,
+				StatusCode.UPDATE_SUCCEED);
 	}
 
 	private boolean isValidPassword(UserDto userDto) {
@@ -69,18 +69,18 @@ public class UserServiceImpl implements UserService {
 	}
 
 	private UserDto saveEditUserAndRole(UserDto userDto, final boolean isEdit, final ActionType actionType,
-										final MessageStatus messageErrorType, final MessageStatus messageSuccessType) {
+										final StatusCode messageErrorType, final StatusCode messageSuccessType) {
 
 		if (userDto.getPassword().isEmpty()) {
 			userDto = new UserDto();
-			userDto.setMessageStatus(messageErrorType);
+			userDto.setStatusCode(messageErrorType);
 			userDto.setMessage(MessageType.PASSWORD_IS_EMPTY.stringValue);
 			return userDto;
 		}
 
 		if (userDto.getPassword().length() < 8) {
 			userDto = new UserDto();
-			userDto.setMessageStatus(messageErrorType);
+			userDto.setStatusCode(messageErrorType);
 			userDto.setMessage(MessageType.PASSWORD_LESS_THAN_EIGHT.stringValue);
 			return userDto;
 		}
@@ -91,12 +91,12 @@ public class UserServiceImpl implements UserService {
 		if (user == null) {
 			LogUtil.logDebugType(logger, true, messageErrorType, MessageType.NULL.stringValue);
 			userDto = new UserDto();
-			userDto.setMessageStatus(messageErrorType);
+			userDto.setStatusCode(messageErrorType);
 			userDto.setMessage(MessageType.UPDATE_USER_IS_NULL.stringValue);
 			return userDto;
 		}
 
-		userDto.setMessageStatus(messageSuccessType);
+		userDto.setStatusCode(messageSuccessType);
 		LogUtil.logDebugType(logger, true, messageSuccessType, user.toString());
 
 		return userDto;

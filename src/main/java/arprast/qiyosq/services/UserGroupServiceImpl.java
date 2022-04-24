@@ -2,7 +2,7 @@ package arprast.qiyosq.services;
 
 import java.util.List;
 
-import arprast.qiyosq.ref.MessageStatus;
+import arprast.qiyosq.ref.StatusCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,8 +53,8 @@ public class UserGroupServiceImpl implements UserGroupService {
 		ResponseData responseData = new ResponseData();
 		int countUserGroup = userGroupDao.countUserGroupByRoleName(rolesDto.getRoleName());
 		if (countUserGroup > 0) {
-			responseData.setMessageStatus(MessageStatus.DUPLICATE_DATA_ERROR);
-			responseData.setMessage(MessageStatus.DUPLICATE_DATA_ERROR.stringValue);
+			responseData.setStatusCode(StatusCode.DUPLICATE_DATA_ERROR);
+			responseData.setMessage(StatusCode.DUPLICATE_DATA_ERROR.stringValue);
 			return responseData;
 		}
 
@@ -65,10 +65,10 @@ public class UserGroupServiceImpl implements UserGroupService {
 		responseData.setData(rolesModel);
 
 		if (rolesModel.getId() == null) {
-			responseData.setMessageStatus(MessageStatus.SAVE_ERROR);
-			responseData.setMessage(MessageStatus.NULL_POINTER_ERROR.stringValue);
+			responseData.setStatusCode(StatusCode.SAVE_ERROR);
+			responseData.setMessage(StatusCode.NULL_POINTER_ERROR.stringValue);
 		} else {
-			responseData.setMessageStatus(MessageStatus.SAVE_SUCCEED);
+			responseData.setStatusCode(StatusCode.SAVE_SUCCEED);
 		}
 
 		logger.debug("Final save user group {}", responseData.toString());
@@ -80,8 +80,8 @@ public class UserGroupServiceImpl implements UserGroupService {
 
 		ResponseData responseData = new ResponseData();
 		if (rolesDto.getId() == null || rolesDto.getId() <= 0) {
-			responseData.setMessageStatus(MessageStatus.UPDATE_ERROR);
-			responseData.setMessage(MessageStatus.NULL_VALUE.stringValue);
+			responseData.setStatusCode(StatusCode.UPDATE_ERROR);
+			responseData.setMessage(StatusCode.NULL_VALUE.stringValue);
 			return responseData;
 		}
 
@@ -93,10 +93,10 @@ public class UserGroupServiceImpl implements UserGroupService {
 		responseData.setData(rolesModel);
 
 		if (rolesModel.getId() == null) {
-			responseData.setMessageStatus(MessageStatus.UPDATE_ERROR);
-			responseData.setMessage(MessageStatus.NULL_POINTER_ERROR.stringValue);
+			responseData.setStatusCode(StatusCode.UPDATE_ERROR);
+			responseData.setMessage(StatusCode.NULL_POINTER_ERROR.stringValue);
 		} else {
-			responseData.setMessageStatus(MessageStatus.UPDATE_SUCCEED);
+			responseData.setStatusCode(StatusCode.UPDATE_SUCCEED);
 		}
 
 		logger.debug("Final edit user group {}", responseData.toString());

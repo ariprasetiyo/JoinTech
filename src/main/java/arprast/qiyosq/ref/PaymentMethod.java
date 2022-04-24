@@ -1,16 +1,21 @@
 package arprast.qiyosq.ref;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public enum PaymentMethod {
 
+    @JsonProperty("bank_transfer")
     BANK_TRANSFER("bank_transfer", "bank transfer"),
+    @JsonProperty("qris")
     QRIS("qris", "qris"),
+    @JsonProperty("cash")
     CASH("cash", "cash");
 
-    public final String methodId;
+    public final String id;
     public final String desc;
 
-    PaymentMethod(final String methodId, final String desc) {
-        this.methodId = methodId;
+    PaymentMethod(final String id, final String desc) {
+        this.id = id;
         this.desc = desc;
     }
 

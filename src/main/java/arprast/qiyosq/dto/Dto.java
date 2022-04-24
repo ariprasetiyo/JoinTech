@@ -10,7 +10,7 @@ import java.util.Date;
 
 import javax.validation.constraints.NotNull;
 
-import arprast.qiyosq.ref.MessageStatus;
+import arprast.qiyosq.ref.StatusCode;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -45,7 +45,7 @@ public class Dto implements Serializable {
 	private String modifiedBy;
 
 	@JsonIgnore
-	private MessageStatus messageStatus;
+	private StatusCode statusCode;
 
 	@JsonIgnore
 	private String message;
@@ -110,12 +110,12 @@ public class Dto implements Serializable {
 		this.modifiedBy = modifiedBy;
 	}
 
-	public MessageStatus getMessageStatus() {
-		return messageStatus;
+	public StatusCode getStatusCode() {
+		return statusCode;
 	}
 
-	public void setMessageStatus(MessageStatus messageStatus) {
-		this.messageStatus = messageStatus;
+	public void setStatusCode(StatusCode statusCode) {
+		this.statusCode = statusCode;
 	}
 
 	public String getMessage() {

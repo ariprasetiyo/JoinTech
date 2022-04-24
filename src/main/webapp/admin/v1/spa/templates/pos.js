@@ -1,8 +1,10 @@
 $(function() {
 	var csrfToken = $('#csrfToken').val();
 	_screenTabSize();
+	var uudIdValue = "";
 
 	$("#inputQtyInModal").numeric();
+	$("#customerNameInputId").valid();
 	$("#addItemPOS").validate({
         rules : {
             nameOfItem : {
@@ -10,7 +12,7 @@ $(function() {
                 required : true
             },
             nameOfItemQty : {
-                minlength : 1,
+                min : 1,
                 required : true
             },
             urlInput : {
@@ -59,14 +61,29 @@ $(function() {
                 $('#addQty').modal('show');
 	});
 
+	function getUUID(){
+        if(uudIdValue === null || uudIdValue === '' || uudIdValue === 'undefined'){
+            uudIdValue = _uuid();
+        }
+        return uudIdValue;
+    }
+
 	function jsonRequestAddItemPOS(id, itemCode, qty) {
 		var jsonRequest = {};
 		var jsonData = {};
+
+		var jsonItems = {};
+        jsonItems["itemCode"] =  $("#itemCodeInModal").val();
+        jsonItems["qty"] = $("#inputQtyInModal").val();;
+
 		jsonData["id"] = id;
-		jsonData["itemCode"] = $("#itemCodeInModal").val();
-		jsonData["qty"] = $("#qtyInModal").val();;
+		jsonData["customerName"] = $("#customerNameInputId").val();
+		jsonData["phoneNumber"] = $("#phoneNumberInput").val();
+		jsonData["address"] = $("#customerAddressInput").val();
+		jsonData["paymentMethod"] = "cash";
+        jsonData["items"] = jsonItems
 		jsonRequest["requestData"] = jsonData;
-		jsonRequest["requestId"] = _uuid();
+		jsonRequest["requestId"] = getUUID();
 		return JSON.stringify(jsonRequest);
 	}
 
@@ -114,6 +131,7 @@ $(function() {
 	function listDataTable(data, callback, settings) {
 		$.ajax({
             async : true,
+
             type : 'POST',
             contentType : 'application/json',
             url : '/admin/v1/api/inventory/master/item/list',

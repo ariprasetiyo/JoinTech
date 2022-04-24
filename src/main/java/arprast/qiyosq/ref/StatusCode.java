@@ -1,6 +1,6 @@
 package arprast.qiyosq.ref;
 
-public enum MessageStatus {
+public enum StatusCode {
 
 	SAVE_SUCCEED(1, "SAVE SUCCEED"), 
 	UPDATE_SUCCEED(2, "UPDATE SUCCEED"), 
@@ -27,18 +27,18 @@ public enum MessageStatus {
 	DATA_NOT_FOUND(517,"DATA NOT FOUND");
 
 	public final int intValue;
-	public final String stringValue;
+	public final String desc;
 
 	/**
 	 * @param intValue
-	 * @param stringValue
+	 * @param desc
 	 */
-	private MessageStatus(int intValue, String stringValue) {
+	private StatusCode(int intValue, String desc) {
 		this.intValue = intValue;
-		this.stringValue = stringValue;
+		this.desc = desc;
 	}
 
-	public static MessageStatus valueOf(int intValue) {
+	public static StatusCode valueOf(int intValue) {
 		switch (intValue) {
 		case 1:
 			return SAVE_SUCCEED;

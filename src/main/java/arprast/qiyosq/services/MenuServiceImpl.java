@@ -3,7 +3,7 @@ package arprast.qiyosq.services;
 import java.util.ArrayList;
 import java.util.List;
 
-import arprast.qiyosq.ref.MessageStatus;
+import arprast.qiyosq.ref.StatusCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -132,8 +132,8 @@ public class MenuServiceImpl implements MenuService {
 		int countMenuById = menusDao.countMenuById(menuDto.getId());
 		int countMenuByName = menusDao.countMenuByMenuName(menuDto.getMenusName());
 		if (countMenuByName > 0 || countMenuById > 0) {
-			menuDto.setMessageStatus(MessageStatus.DUPLICATE_DATA_ERROR);
-			menuDto.setMessage(MessageStatus.DUPLICATE_DATA_ERROR.stringValue);
+			menuDto.setStatusCode(StatusCode.DUPLICATE_DATA_ERROR);
+			menuDto.setMessage(StatusCode.DUPLICATE_DATA_ERROR.stringValue);
 			return menuDto;
 		}
 
@@ -152,8 +152,8 @@ public class MenuServiceImpl implements MenuService {
 
 		int countMenuById = menusDao.countMenuById(menuDto.getId());
 		if (countMenuById == 0) {
-			menuDto.setMessageStatus(MessageStatus.DATA_NOT_FOUND);
-			menuDto.setMessage(MessageStatus.DATA_NOT_FOUND.stringValue);
+			menuDto.setStatusCode(StatusCode.DATA_NOT_FOUND);
+			menuDto.setMessage(StatusCode.DATA_NOT_FOUND.stringValue);
 			return menuDto;
 		}
 		
@@ -166,13 +166,13 @@ public class MenuServiceImpl implements MenuService {
 		MenusModel sysMenus = menusDao.save(menuModel);
 
 		if (sysMenus.getId() == null) {
-			menuDto.setMessageStatus(MessageStatus.SAVE_ERROR);
-			menuDto.setMessage(MessageStatus.SAVE_ERROR.stringValue);
+			menuDto.setStatusCode(StatusCode.SAVE_ERROR);
+			menuDto.setMessage(StatusCode.SAVE_ERROR.stringValue);
 			return menuDto;
 		}
 
-		menuDto.setMessageStatus(MessageStatus.SAVE_SUCCEED);
-		menuDto.setMessage(MessageStatus.SAVE_SUCCEED.stringValue);
+		menuDto.setStatusCode(StatusCode.SAVE_SUCCEED);
+		menuDto.setMessage(StatusCode.SAVE_SUCCEED.stringValue);
 		return menuDto;
 	}
 	
