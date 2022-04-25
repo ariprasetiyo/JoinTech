@@ -76,11 +76,10 @@ import java.util.Date;
                         targetClass = POSHeaderTmpModel.class,
                         columns = {
                                 @ColumnResult(name = "request_id", type = String.class),
-                                @ColumnResult(name = "customer_id", type = String.class),
-                                @ColumnResult(name = "customer_name",  type = String.class),
+                                @ColumnResult(name = "customer_name", type = String.class),
                                 @ColumnResult(name = "customer_id",  type = String.class),
                                 @ColumnResult(name = "phone_number",  type = String.class),
-                                @ColumnResult(name = "address",   type = Float.class),
+                                @ColumnResult(name = "address",   type = String.class),
                                 @ColumnResult(name = "payment_method",  type = String.class),
                                 @ColumnResult(name = "total_trx_amount",   type = Float.class),
                                 @ColumnResult(name = "total_discount_amount",  type = Float.class),

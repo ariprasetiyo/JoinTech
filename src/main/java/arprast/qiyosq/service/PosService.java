@@ -6,7 +6,9 @@ import arprast.qiyosq.http.POSHeaderTmpRequest;
 import arprast.qiyosq.http.Request;
 import arprast.qiyosq.http.Response;
 import arprast.qiyosq.model.MasterItemModel;
+import arprast.qiyosq.model.POSDetailTmpModel;
 import arprast.qiyosq.model.POSHeaderTmpModel;
+import arprast.qiyosq.ref.ItemType;
 import arprast.qiyosq.ref.StatusCode;
 import arprast.qiyosq.util.Util;
 import org.slf4j.Logger;
@@ -24,66 +26,63 @@ public class PosService {
     @Autowired
     DaoImpl daoImpl;
 
-    public ResponseEntity<Response> addItemTmp(Request<POSHeaderTmpRequest> request) {
-        Response responseDto = Util.buildResponse(request);
+    public ResponseEntity<Response> addItemTmp(final Request<POSHeaderTmpRequest> request) {
+        final Response responseDto = Util.buildResponse(request);
 
         final MasterItemModel masterItem = daoImpl.getMasterItem(request.getRequestData().getItems().getItemCode());
-        if(request.getRequestData().getItems().getQty() > masterItem.getStock()){
+        if(masterItem == null || masterItem.getItemType() != ItemType.SERVICE
+                && ( request.getRequestData().getItems().getQty() > masterItem.getStock())){
             responseDto.setStatusCode(StatusCode.POS_TMP_NOT_ENOUGH_STOCK);
             return new ResponseEntity<>(responseDto, HttpStatus.OK);
         }
 
         final POSHeaderTmpModel pOSHeader = daoImpl.getPOSHeaderTmp(request.getUsername(), request.getRequestId());
+        StatusCode statusCode = StatusCode.FAILED;
         if(pOSHeader == null){
-            final POSHeaderTmpModel headerModel = new POSHeaderTmpModel();
-            headerModel.setRequestId(request.getRequestId());
-            headerModel.setUsername(request.getRequestId());
-            headerModel.setPhoneNumber(request.getRequestData().getPhoneNumber());
-            headerModel.setCustomerName(request.getRequestData().getCustomerName());
-            headerModel.setPaymentMethod(request.getRequestData().getPaymentMethod());
-            headerModel.setAddress(request.getRequestData().getAddress());
-            headerModel.setCustomerId(Util.generateCustomerId());
-            headerModel.setTotalTrxAmount(masterItem.getSellPrice());
-            headerModel.setTotalDiscountAmount(masterItem.getPriceDetail().getDiscountDetail().getDiscountAmount());
-            headerModel.setTotalPaidAmount(masterItem.getSellPrice());
-            daoImpl.insertPOSHeaderTmp(headerModel);
-
-//            daoImpl.insertItemTmpPOS();
+            final int insertResult = insertPOSHeaderTmp(request, masterItem);
+            if(insertResult > 0){
+                statusCode = (insertPOSItemTmp(request, masterItem) > 0 ? StatusCode.SUCCESS : StatusCode.FAILED );
+            }
+        }else{
+            statusCode = (insertPOSItemTmp(request, masterItem) > 0 ? StatusCode.SUCCESS : StatusCode.FAILED );
         }
-
-//        POSHeaderTmpModel posHeaderTmp = new POSHeaderTmpModel();
-//        posHeaderTmp.setAddress();
-//        posHeaderTmp.setCustomerName();
-//        posHeaderTmp.setCreatedTime();
-//        posHeaderTmp.setPaymentMethod();
-//        posHeaderTmp.setRequestId();
-//        posHeaderTmp.setPhoneNumber();
-//        posHeaderTmp.setTotalTrxAmount();
-//        posHeaderTmp.setTotalDiscountAmount();
-//        posHeaderTmp.setTotalPaidAmount();
-//        posHeaderTmp.setUsername();
-//
-//        POSDetailTmpModel POSItemTmp = new POSDetailTmpModel();
-//        POSItemTmp.setRequestId();
-//        POSItemTmp.setItemCode();
-//        POSItemTmp.setItemCodeLabel();
-//        POSItemTmp.setItemName();
-//        POSItemTmp.setDescription();
-//        POSItemTmp.setQty();
-//        POSItemTmp.setSellPrice();
-//        POSItemTmp.setPriceDetail();
-//        POSItemTmp.setBasicPrice();
-//        POSItemTmp.setItemType();
-
-
 
         final ResponseData responseData = new ResponseData();
         responseData.setTotalRecord(0);
         responseData.setData("");
         responseDto.setResponseData(responseData);
+        responseDto.setStatusCode(statusCode);
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
-    private void POSItemTmpModel() {
+    private int insertPOSHeaderTmp(final Request<POSHeaderTmpRequest> request, final MasterItemModel masterItem){
+        final POSHeaderTmpModel headerModel = new POSHeaderTmpModel();
+        headerModel.setRequestId(request.getRequestId());
+        headerModel.setUsername(request.getUsername());
+        headerModel.setPhoneNumber(request.getRequestData().getPhoneNumber());
+        headerModel.setCustomerName(request.getRequestData().getCustomerName());
+        headerModel.setPaymentMethod(request.getRequestData().getPaymentMethod());
+        headerModel.setAddress(request.getRequestData().getAddress());
+        headerModel.setCustomerId(Util.generateCustomerId());
+        headerModel.setTotalTrxAmount(masterItem.getSellPrice());
+        headerModel.setTotalDiscountAmount(masterItem.getPriceDetail().getDiscountDetail().getDiscountAmount());
+        headerModel.setTotalPaidAmount(masterItem.getSellPrice());
+        return daoImpl.insertPOSHeaderTmp(headerModel);
     }
+
+    private int insertPOSItemTmp(final Request<POSHeaderTmpRequest> request, final MasterItemModel masterItem) {
+        final POSDetailTmpModel POSItemTmp = new POSDetailTmpModel();
+        POSItemTmp.setRequestId(request.getRequestId());
+        POSItemTmp.setItemCode(request.getRequestData().getItems().getItemCode());
+        POSItemTmp.setItemCodeLabel(masterItem.getItemCodeLabel());
+        POSItemTmp.setItemName(masterItem.getItemName());
+        POSItemTmp.setDescription(masterItem.getDescription());
+        POSItemTmp.setQty(request.getRequestData().getItems().getQty());
+        POSItemTmp.setSellPrice(masterItem.getSellPrice());
+        POSItemTmp.setPriceDetail(masterItem.getPriceDetail());
+        POSItemTmp.setBasicPrice(masterItem.getBasicPrice());
+        POSItemTmp.setItemType(masterItem.getItemType());
+        return daoImpl.insertItemTmpPOS(POSItemTmp);
+    }
+
 }

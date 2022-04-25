@@ -98,8 +98,8 @@ $(function() {
             },
             datatype : 'json',
             success : function(data, textStatus, jqXHR) {
-                var message = data.message;
-                if (data.statusType != "SAVE_SUCCEED") {
+                var message = data.statusMessage;
+                if (data.statusCode != 200) {
                     $("#infoRestMessage").attr('class', 'warning-message');
                 } else {
                     $("#infoRestMessage").attr('class', 'success-message');

@@ -1,11 +1,11 @@
 package arprast.qiyosq.model;
 
 public class PriceDetail {
-    private float sellPrice;
-    private DiscountDetail discountDetail;
-    private float basicPrice;
-    private float marginPctg;
-    private float marginAmount;
+    private float sellPrice = 0;
+    private DiscountDetail discountDetail = new DiscountDetail();
+    private float basicPrice = 0;
+    private float marginPctg = 0;
+    private float marginAmount = 0;
 
     public float getSellPrice() {
         return sellPrice;

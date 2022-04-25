@@ -5,8 +5,8 @@ import java.util.Date;
 public class DiscountDetail {
     private String voucherCode;
     private String voucherDesc;
-    private float discountPctg;
-    private float discountAmount;
+    private float discountPctg = 0;
+    private float discountAmount = 0;
     private Date expiredDate;
     private Date startDate;
 

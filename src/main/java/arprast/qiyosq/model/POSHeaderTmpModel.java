@@ -2,6 +2,7 @@ package arprast.qiyosq.model;
 
 import arprast.qiyosq.ref.PaymentMethod;
 
+import javax.persistence.ColumnResult;
 import java.util.Date;
 
 public class POSHeaderTmpModel {
@@ -22,8 +23,8 @@ public class POSHeaderTmpModel {
     }
 
     public POSHeaderTmpModel(final String requestId,
-                             final  String customerId,
                              final  String customerName,
+                             final  String customerId,
                              final String phoneNumber,
                              final String address,
                              final String paymentMethod,
