@@ -1,0 +1,746 @@
+-- MariaDB dump 10.19  Distrib 10.6.4-MariaDB, for osx10.14 (x86_64)
+--
+-- Host: localhost    Database: resmob
+-- ------------------------------------------------------
+-- Server version	10.6.4-MariaDB
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `data_daftar_dpo`
+--
+
+DROP TABLE IF EXISTS `data_daftar_dpo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `data_daftar_dpo` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `nama` varchar(100) DEFAULT NULL,
+  `address` varchar(200) DEFAULT NULL,
+  `birth_day` date DEFAULT NULL,
+  `no_ktp` varchar(50) DEFAULT NULL,
+  `no_laporan` varchar(50) DEFAULT NULL,
+  `note` text DEFAULT NULL,
+  `modus` varchar(200) DEFAULT NULL,
+  `pasal` varchar(200) DEFAULT NULL,
+  `status` varchar(30) DEFAULT NULL,
+  `lokasi_tkp` varchar(200) DEFAULT NULL,
+  `tanggal_tkp` date DEFAULT NULL,
+  `ref_id_komplotan` varchar(40) DEFAULT NULL,
+  `photo_location` varchar(100) DEFAULT NULL,
+  `pdf_location` varchar(100) DEFAULT NULL,
+  `is_delete` bit(1) NOT NULL,
+  `created_by` varchar(50) DEFAULT NULL,
+  `created_time` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified_by` varchar(50) DEFAULT NULL,
+  `modified_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `version` varchar(5) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `data_daftar_dpo`
+--
+
+LOCK TABLES `data_daftar_dpo` WRITE;
+/*!40000 ALTER TABLE `data_daftar_dpo` DISABLE KEYS */;
+/*!40000 ALTER TABLE `data_daftar_dpo` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `data_daftar_pelaku`
+--
+
+DROP TABLE IF EXISTS `data_daftar_pelaku`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `data_daftar_pelaku` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `ref_id_personal` varchar(40) DEFAULT NULL,
+  `ref_id_komplotan` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`ref_id_komplotan`)),
+  `no_laporan` varchar(50) DEFAULT NULL,
+  `note` text DEFAULT NULL,
+  `modus` varchar(200) DEFAULT NULL,
+  `pasal` varchar(200) DEFAULT NULL,
+  `lokasi_lapas` varchar(200) DEFAULT NULL,
+  `lokasi_tkp` varchar(200) DEFAULT NULL,
+  `tanggal_tkp` date DEFAULT NULL,
+  `pdf_location` varchar(100) DEFAULT NULL,
+  `is_delete` bit(1) NOT NULL,
+  `created_by` varchar(50) DEFAULT NULL,
+  `created_time` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified_by` varchar(50) DEFAULT NULL,
+  `modified_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `version` varchar(5) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `data_daftar_pelaku`
+--
+
+LOCK TABLES `data_daftar_pelaku` WRITE;
+/*!40000 ALTER TABLE `data_daftar_pelaku` DISABLE KEYS */;
+INSERT INTO `data_daftar_pelaku` VALUES (1,'1','[2]','no-1-laporan','note-disini','pura-pura menjadi tamu','pasal 1 ayat 3 tidak pidana pencurian','klaten','pedan','2021-05-23','pdf location','\0','ari','2021-05-23 16:09:57',NULL,'2021-05-23 16:09:57','1');
+/*!40000 ALTER TABLE `data_daftar_pelaku` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `data_daftar_saksi`
+--
+
+DROP TABLE IF EXISTS `data_daftar_saksi`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `data_daftar_saksi` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `nama` varchar(100) DEFAULT NULL,
+  `address` varchar(200) DEFAULT NULL,
+  `no_ktp` varchar(50) DEFAULT NULL,
+  `no_hp` varchar(13) DEFAULT NULL,
+  `note` text DEFAULT NULL,
+  `ref_id_komplotan` varchar(40) DEFAULT NULL,
+  `photo_location` varchar(100) DEFAULT NULL,
+  `pdf_location` varchar(100) DEFAULT NULL,
+  `is_delete` bit(1) NOT NULL,
+  `created_by` varchar(50) DEFAULT NULL,
+  `created_time` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified_by` varchar(50) DEFAULT NULL,
+  `modified_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `version` varchar(5) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `data_daftar_saksi`
+--
+
+LOCK TABLES `data_daftar_saksi` WRITE;
+/*!40000 ALTER TABLE `data_daftar_saksi` DISABLE KEYS */;
+/*!40000 ALTER TABLE `data_daftar_saksi` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `data_diri`
+--
+
+DROP TABLE IF EXISTS `data_diri`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `data_diri` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id_data_diri` varchar(40) DEFAULT NULL,
+  `no_ktp` varchar(50) DEFAULT NULL,
+  `nama` varchar(100) DEFAULT NULL,
+  `alias` varchar(100) DEFAULT NULL,
+  `address` varchar(200) DEFAULT NULL,
+  `no_hp` varchar(13) DEFAULT NULL,
+  `note` text DEFAULT NULL,
+  `photo_profile` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`photo_profile`)),
+  `is_delete` bit(1) NOT NULL,
+  `created_by` varchar(50) DEFAULT NULL,
+  `created_time` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified_by` varchar(50) DEFAULT NULL,
+  `modified_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `version` varchar(5) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `data_diri`
+--
+
+LOCK TABLES `data_diri` WRITE;
+/*!40000 ALTER TABLE `data_diri` DISABLE KEYS */;
+/*!40000 ALTER TABLE `data_diri` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `data_personal_indentity`
+--
+
+DROP TABLE IF EXISTS `data_personal_indentity`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `data_personal_indentity` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `nama` varchar(100) DEFAULT NULL,
+  `address` varchar(200) DEFAULT NULL,
+  `domisili` varchar(200) DEFAULT NULL,
+  `birth_day` date DEFAULT NULL,
+  `no_ktp` varchar(50) DEFAULT NULL,
+  `note` text DEFAULT NULL,
+  `status` varchar(30) DEFAULT NULL,
+  `photo_location` varchar(100) DEFAULT NULL,
+  `phone_number` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`phone_number`)),
+  `is_delete` bit(1) NOT NULL,
+  `created_by` varchar(50) DEFAULT NULL,
+  `created_time` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified_by` varchar(50) DEFAULT NULL,
+  `modified_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `version` varchar(5) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `data_personal_indentity`
+--
+
+LOCK TABLES `data_personal_indentity` WRITE;
+/*!40000 ALTER TABLE `data_personal_indentity` DISABLE KEYS */;
+INSERT INTO `data_personal_indentity` VALUES (1,'Ari Prasetiyo','RT RW 20/007 Polaman, Beji, Pedan, Klaten','Polaman, Beji','2021-05-17','312973661000130001',NULL,'dpo',NULL,'[\"+625600070411\"]','\0',NULL,'2021-05-17 14:52:12',NULL,'2021-05-17 14:59:42',NULL),(2,'Praset','RT RW 20/007 Polaman, Beji, Pedan, Klaten','Polaman, Beji','2021-05-17','312973661000130001',NULL,'dpo',NULL,'[\"+625600070412\"]','\0',NULL,'2021-05-17 14:52:12',NULL,'2021-05-17 14:59:42',NULL);
+/*!40000 ALTER TABLE `data_personal_indentity` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `inventory_master_item`
+--
+
+DROP TABLE IF EXISTS `inventory_master_item`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `inventory_master_item` (
+  `item_code` varchar(50) NOT NULL,
+  `item_code_label` varchar(200) NOT NULL,
+  `item_name` varchar(200) NOT NULL,
+  `description` varchar(500) NOT NULL,
+  `sell_price` float NOT NULL DEFAULT 0,
+  `price_detail` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`price_detail`)),
+  `basic_price` float NOT NULL DEFAULT 0,
+  `unit_measure` varchar(50) NOT NULL,
+  `is_active` tinyint(1) DEFAULT 1,
+  `created_time` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified_time` timestamp NOT NULL DEFAULT current_timestamp(),
+  `item_type` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`item_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `inventory_master_item`
+--
+
+LOCK TABLES `inventory_master_item` WRITE;
+/*!40000 ALTER TABLE `inventory_master_item` DISABLE KEYS */;
+INSERT INTO `inventory_master_item` VALUES ('TGH-BLN-20220414-220412-A','TGH-BLN-1-3-MBPS','Tagihan setiap bulan 3 Mbps','-',130000,'{\"sellPrice\": 130000, \"basicPrice\":100000, \"marginPctg\":0.3, \"marginAmount\":30000 }',100000,'Mbps',1,'2022-04-15 07:12:20','2022-04-15 07:12:20','service'),('TGH-BLN-20220414-220412-B','TGH-BLN-1-5-MBPS','Tagihan setiap bulan 5 Mbps','-',180000,'{\"sellPrice\": 180000, \"basicPrice\":150000, \"marginPctg\":0.3, \"marginAmount\":30000 }',150000,'Mbps',1,'2022-04-15 07:12:20','2022-04-15 07:12:20','service'),('TGH-BLN-20220414-220412-C','TGH-BLN-1-6-MBPS','Tagihan setiap bulan 6 Mbps','-',230000,'{\"sellPrice\": 230000, \"basicPrice\":200000, \"marginPctg\":0.3, \"marginAmount\":30000 }',200000,'Mbps',1,'2022-04-15 07:12:20','2022-04-15 07:12:20','service'),('TGH-BLN-20220414-220412-D','TGH-BLN-1-8-MBPS','Tagihan setiap bulan 8 Mbps','-',280000,'{\"sellPrice\": 280000, \"basicPrice\":250000, \"marginPctg\":0.3, \"marginAmount\":30000 }',280000,'Mbps',1,'2022-04-15 07:12:20','2022-04-15 07:12:20','service');
+/*!40000 ALTER TABLE `inventory_master_item` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `inventory_master_item_stock`
+--
+
+DROP TABLE IF EXISTS `inventory_master_item_stock`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `inventory_master_item_stock` (
+  `item_code` varchar(50) NOT NULL,
+  `stock` int(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`item_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `inventory_master_item_stock`
+--
+
+LOCK TABLES `inventory_master_item_stock` WRITE;
+/*!40000 ALTER TABLE `inventory_master_item_stock` DISABLE KEYS */;
+/*!40000 ALTER TABLE `inventory_master_item_stock` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `inventory_stock`
+--
+
+DROP TABLE IF EXISTS `inventory_stock`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `inventory_stock` (
+  `item_code` varchar(50) NOT NULL,
+  `qty` int(11) DEFAULT 0,
+  KEY `item_code` (`item_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `inventory_stock`
+--
+
+LOCK TABLES `inventory_stock` WRITE;
+/*!40000 ALTER TABLE `inventory_stock` DISABLE KEYS */;
+/*!40000 ALTER TABLE `inventory_stock` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `invoice_sales_detail`
+--
+
+DROP TABLE IF EXISTS `invoice_sales_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `invoice_sales_detail` (
+  `seq` int(6) NOT NULL,
+  `transaction_id` varchar(50) NOT NULL,
+  `item_code` varchar(50) NOT NULL,
+  `item_name` varchar(200) NOT NULL,
+  `qty` int(8) NOT NULL,
+  `unit_measure` varchar(50) NOT NULL,
+  `seller_price` double NOT NULL,
+  `price_detail` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`price_detail`)),
+  `basic_price` double NOT NULL,
+  `status` varchar(20) NOT NULL,
+  KEY `transaction_id` (`transaction_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `invoice_sales_detail`
+--
+
+LOCK TABLES `invoice_sales_detail` WRITE;
+/*!40000 ALTER TABLE `invoice_sales_detail` DISABLE KEYS */;
+/*!40000 ALTER TABLE `invoice_sales_detail` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `invoice_sales_header`
+--
+
+DROP TABLE IF EXISTS `invoice_sales_header`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `invoice_sales_header` (
+  `transaction_id` varchar(50) NOT NULL,
+  `customer_name` varchar(200) NOT NULL,
+  `customer_id` varchar(50) NOT NULL,
+  `phone_number` varchar(200) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `payment_channel` varchar(50) DEFAULT NULL,
+  `payment_method` varchar(50) DEFAULT NULL,
+  `total_trx_amount` float DEFAULT NULL,
+  `total_discount_amount` float DEFAULT NULL,
+  `total_paid_amount` float DEFAULT NULL,
+  `created_by` varchar(50) DEFAULT NULL,
+  `created_time` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`transaction_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `invoice_sales_header`
+--
+
+LOCK TABLES `invoice_sales_header` WRITE;
+/*!40000 ALTER TABLE `invoice_sales_header` DISABLE KEYS */;
+/*!40000 ALTER TABLE `invoice_sales_header` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `master`
+--
+
+DROP TABLE IF EXISTS `master`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `master` (
+  `id` varchar(30) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `master`
+--
+
+LOCK TABLES `master` WRITE;
+/*!40000 ALTER TABLE `master` DISABLE KEYS */;
+/*!40000 ALTER TABLE `master` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `pos_detail_tmp`
+--
+
+DROP TABLE IF EXISTS `pos_detail_tmp`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_detail_tmp` (
+  `seq` int(6) NOT NULL AUTO_INCREMENT,
+  `request_id` varchar(50) NOT NULL,
+  `item_code` varchar(200) NOT NULL,
+  `item_code_label` varchar(200) NOT NULL,
+  `item_name` varchar(200) NOT NULL,
+  `description` varchar(500) DEFAULT NULL,
+  `qty` int(8) NOT NULL,
+  `sell_price` float NOT NULL,
+  `price_detail` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`price_detail`)),
+  `basic_price` float NOT NULL,
+  `item_type` varchar(20) NOT NULL,
+  PRIMARY KEY (`seq`),
+  KEY `request_id` (`request_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pos_detail_tmp`
+--
+
+LOCK TABLES `pos_detail_tmp` WRITE;
+/*!40000 ALTER TABLE `pos_detail_tmp` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pos_detail_tmp` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `pos_header_tmp`
+--
+
+DROP TABLE IF EXISTS `pos_header_tmp`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_header_tmp` (
+  `request_id` varchar(50) NOT NULL,
+  `customer_name` varchar(200) NOT NULL,
+  `customer_id` varchar(50) NOT NULL,
+  `phone_number` varchar(200) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `payment_method` varchar(50) NOT NULL,
+  `total_trx_amount` float DEFAULT NULL,
+  `total_discount_amount` float DEFAULT NULL,
+  `total_paid_amount` float DEFAULT NULL,
+  `username` varchar(100) DEFAULT NULL,
+  `created_time` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`request_id`),
+  KEY `username` (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pos_header_tmp`
+--
+
+LOCK TABLES `pos_header_tmp` WRITE;
+/*!40000 ALTER TABLE `pos_header_tmp` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pos_header_tmp` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sys_audit_trail`
+--
+
+DROP TABLE IF EXISTS `sys_audit_trail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sys_audit_trail` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `created_by` varchar(50) DEFAULT NULL,
+  `created_time` timestamp NOT NULL DEFAULT current_timestamp(),
+  `disabled` bit(1) NOT NULL,
+  `modified_by` varchar(50) DEFAULT NULL,
+  `modified_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `version` varchar(5) DEFAULT NULL,
+  `action_type` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sys_audit_trail`
+--
+
+LOCK TABLES `sys_audit_trail` WRITE;
+/*!40000 ALTER TABLE `sys_audit_trail` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sys_audit_trail` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sys_authorization`
+--
+
+DROP TABLE IF EXISTS `sys_authorization`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sys_authorization` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `created_by` varchar(50) DEFAULT NULL,
+  `created_time` timestamp NOT NULL DEFAULT current_timestamp(),
+  `disabled` bit(1) NOT NULL,
+  `modified_by` varchar(50) DEFAULT NULL,
+  `modified_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `version` varchar(5) DEFAULT NULL,
+  `is_delete` bit(1) DEFAULT NULL,
+  `is_insert` bit(1) DEFAULT NULL,
+  `is_read` bit(1) DEFAULT NULL,
+  `is_update` bit(1) DEFAULT NULL,
+  `parent_id` bigint(20) DEFAULT NULL,
+  `sys_menu_id` bigint(20) DEFAULT NULL,
+  `sys_roles_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKhq2ryvy52dy43k5ddyhhc2xgy` (`parent_id`),
+  KEY `FK26plj38hw0p4qguic3jid2ep0` (`sys_menu_id`),
+  KEY `FK4ddvput2y3elnxqf1cj10rx26` (`sys_roles_id`),
+  CONSTRAINT `FK26plj38hw0p4qguic3jid2ep0` FOREIGN KEY (`sys_menu_id`) REFERENCES `sys_menu` (`id`),
+  CONSTRAINT `FK4ddvput2y3elnxqf1cj10rx26` FOREIGN KEY (`sys_roles_id`) REFERENCES `sys_roles` (`id`),
+  CONSTRAINT `FKhq2ryvy52dy43k5ddyhhc2xgy` FOREIGN KEY (`parent_id`) REFERENCES `sys_authorization` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=255 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sys_authorization`
+--
+
+LOCK TABLES `sys_authorization` WRITE;
+/*!40000 ALTER TABLE `sys_authorization` DISABLE KEYS */;
+INSERT INTO `sys_authorization` VALUES (72,NULL,'2021-03-01 15:01:14','\0',NULL,'2021-03-01 15:01:14','1.0','\0','\0','','',NULL,4,1),(73,NULL,'2021-03-01 15:01:14','',NULL,'2021-03-01 15:01:14','1.0','','','','',72,5,1),(74,NULL,'2021-03-01 15:01:14','\0',NULL,'2021-03-01 15:01:14','1.0','\0','','','',73,6,1),(75,NULL,'2021-03-01 15:01:14','\0',NULL,'2021-03-01 15:01:14','1.0','\0','','','',73,7,1),(76,NULL,'2021-03-01 15:01:14','',NULL,'2021-03-01 15:01:14','1.0','','','','',72,8,1),(77,NULL,'2021-03-01 15:01:15','',NULL,'2021-03-01 15:01:15','1.0','\0','','','',72,9,1),(78,NULL,'2021-03-01 15:01:15','',NULL,'2021-03-01 15:01:15','1.0','\0','','','',72,10,1),(240,NULL,'2021-03-01 08:52:41','',NULL,'2021-03-01 08:52:41','1.0','','','','',73,13,1),(243,NULL,'2021-03-01 08:56:24','',NULL,'2021-03-01 08:56:24','1.0','','','','',72,11,1),(244,NULL,'2021-03-01 08:57:01','',NULL,'2021-03-01 08:57:01','1.0','','','','',243,12,1),(245,NULL,'2021-03-01 15:01:14','\0',NULL,'2021-03-01 15:01:14','1.0','\0','\0','','',NULL,24,1),(246,NULL,'2021-03-01 15:01:14','\0',NULL,'2021-03-01 15:01:14','1.0','\0','\0','','',245,25,1),(247,NULL,'2021-03-01 15:01:14','\0',NULL,'2021-03-01 15:01:14','1.0','\0','\0','','',245,26,1),(248,NULL,'2021-03-01 15:01:14','\0',NULL,'2021-03-01 15:01:14','1.0','\0','\0','','',245,27,1),(249,NULL,'2021-03-01 15:01:14','\0',NULL,'2021-03-01 15:01:14','1.0','\0','\0','','',248,28,1),(250,NULL,'2021-03-01 15:01:14','\0',NULL,'2021-03-01 15:01:14','1.0','\0','\0','','',248,29,1),(251,NULL,'2021-03-01 15:01:14','\0',NULL,'2021-03-01 15:01:14','1.0','\0','\0','','',245,30,1),(252,NULL,'2021-03-01 15:01:14','\0',NULL,'2021-03-01 15:01:14','1.0','\0','\0','','',245,31,1),(253,NULL,'2021-03-01 15:01:14','\0',NULL,'2021-03-01 15:01:14','1.0','\0','\0','','',NULL,24,3),(254,NULL,'2021-03-01 15:01:14','\0',NULL,'2021-03-01 15:01:14','1.0','\0','\0','','',253,31,3);
+/*!40000 ALTER TABLE `sys_authorization` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sys_button_action`
+--
+
+DROP TABLE IF EXISTS `sys_button_action`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sys_button_action` (
+  `button_name` varchar(100) NOT NULL,
+  `created_by` varchar(50) DEFAULT NULL,
+  `created_time` timestamp NOT NULL DEFAULT current_timestamp(),
+  `is_enable` bit(1) DEFAULT NULL,
+  `modified_by` varchar(50) DEFAULT NULL,
+  `modified_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `version` varchar(5) DEFAULT NULL,
+  `description` longtext DEFAULT NULL,
+  `alias` varchar(100) NOT NULL,
+  PRIMARY KEY (`button_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sys_button_action`
+--
+
+LOCK TABLES `sys_button_action` WRITE;
+/*!40000 ALTER TABLE `sys_button_action` DISABLE KEYS */;
+INSERT INTO `sys_button_action` VALUES ('add','system','2020-05-07 02:44:55','','system','2020-05-07 02:44:55','1.0','global add button action',''),('delete','system','2020-04-14 00:41:37','','system','2020-04-14 00:41:37','1.0','global delete button action',''),('edit','system','2020-04-14 00:41:37','','system','2020-04-14 00:41:37','1.0','global edit button action',''),('save','system','2020-04-14 00:41:37','','system','2020-04-14 00:41:37','1.0','global save button action',''),('view','system','2020-04-14 00:41:37','','system','2020-04-14 00:41:37','1.0','global view button action','');
+/*!40000 ALTER TABLE `sys_button_action` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sys_menu`
+--
+
+DROP TABLE IF EXISTS `sys_menu`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sys_menu` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `created_by` varchar(50) DEFAULT NULL,
+  `created_time` timestamp NOT NULL DEFAULT current_timestamp(),
+  `disabled` bit(1) NOT NULL,
+  `modified_by` varchar(50) DEFAULT NULL,
+  `modified_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `version` varchar(5) DEFAULT NULL,
+  `menus_name` varchar(255) DEFAULT NULL,
+  `url` varchar(100) DEFAULT NULL,
+  `url_regex` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sys_menu`
+--
+
+LOCK TABLES `sys_menu` WRITE;
+/*!40000 ALTER TABLE `sys_menu` DISABLE KEYS */;
+INSERT INTO `sys_menu` VALUES (4,'ari','2021-03-01 03:00:00','\0','ari','2021-03-01 03:00:00','1.0','Utility',NULL,NULL),(5,'ari','2021-03-01 03:00:00','\0','ari','2021-02-26 22:15:47','1.0','User Management',NULL,NULL),(6,'ari','2021-03-01 03:00:00','\0','ari','2021-03-01 04:50:37','1.0','User','../../../admin/v1/view/main#/user/','/admin/v1/view/user/'),(7,'ari','2021-03-01 03:00:00','\0','ari','2021-03-01 04:50:43','1.0','Authorization','../../../admin/v1/view/main#/authorization/','/admin/v1/view/authorization/'),(8,'ari','2021-03-01 03:00:00','\0','ari','2021-02-26 22:23:24','1.0','Profile Setting','admin/v1/setting/calendar',NULL),(9,'ari','2021-03-01 03:00:00','\0','ari','2021-03-01 03:00:00','1.0','Report Setting','admin/v1/reportsetting ',NULL),(10,'ari','2021-03-01 03:00:00','\0','ari','2021-03-01 03:00:00','1.0','Calendar Setting','admin/v1/setting/calendar',NULL),(11,'NULL','2021-03-01 03:00:00','\0','NULL','2021-03-01 03:00:00','1.0','Application Setting',NULL,NULL),(12,'NULL','2021-03-01 03:00:00','\0','NULL','2021-03-01 14:42:16','1.0','Add Menu','../../../admin/v1/view/menu','/view/menu'),(13,'NULL','2021-03-01 03:00:00','\0','NULL','2021-03-01 04:52:24','1.0','User Group','../../../admin/v1/view/main#/usergroup/','/admin/v1/view/usergroup/'),(24,'ari','2021-03-01 03:00:00','\0','ari','2021-03-01 03:00:00','1.0','Main Menu',NULL,NULL),(25,'ari','2021-03-01 03:00:00','\0','ari','2022-01-12 11:02:16','1.0','POS','../../../admin/v1/view/main#/pos/','/admin/v1/pos/'),(26,'ari','2021-03-01 03:00:00','\0','ari','2022-01-12 10:56:14','1.0','Inventory','../../../admin/v1/view/main#/daftar-dpo/','/admin/v1/view/daftar/dpo/'),(27,'ari','2021-03-01 03:00:00','\0','ari','2022-01-12 10:55:29','1.0','Report',NULL,NULL),(28,'ari','2021-03-01 03:00:00','\0','ari','2022-01-12 10:55:43','1.0','Daily sales','../../../admin/v1/view/main#/spintdik/','/admin/v1/view/spintdik/'),(29,'ari','2021-03-01 03:00:00','\0','ari','2022-01-12 10:56:01','1.0','Monthly sales','../../../admin/v1/view/main#/spintgas/','/admin/v1/view/sprintgas/'),(30,'ari','2021-03-01 03:00:00','\0','ari','2022-01-12 10:54:43','1.0','Accounting','../../../admin/v1/view/main#/penugasan-anggota/','/admin/v1/view/penugasan/anggota/'),(31,'ari','2021-03-01 03:00:00','\0','ari','2022-01-12 10:54:48','1.0','Finance','../../../admin/v1/view/main#/laporan-anggota/','/admin/v1/view/anggota/laporan/');
+/*!40000 ALTER TABLE `sys_menu` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sys_roles`
+--
+
+DROP TABLE IF EXISTS `sys_roles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sys_roles` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `created_by` varchar(50) DEFAULT NULL,
+  `created_time` timestamp NOT NULL DEFAULT current_timestamp(),
+  `disabled` bit(1) NOT NULL,
+  `modified_by` varchar(50) DEFAULT NULL,
+  `modified_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `version` varchar(5) DEFAULT NULL,
+  `role_name` varchar(15) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sys_roles`
+--
+
+LOCK TABLES `sys_roles` WRITE;
+/*!40000 ALTER TABLE `sys_roles` DISABLE KEYS */;
+INSERT INTO `sys_roles` VALUES (1,NULL,'2021-02-28 18:38:52','\0',NULL,'2021-02-28 18:38:52','1.0','admin'),(2,NULL,'2021-02-28 18:38:52','\0',NULL,'2021-02-28 18:38:52','1.0','approval'),(3,NULL,'2021-02-28 18:38:52','\0',NULL,'2021-02-28 18:38:52','1.0','user'),(4,NULL,'2021-02-28 18:38:52','\0',NULL,'2021-02-28 18:38:52','1.0','public');
+/*!40000 ALTER TABLE `sys_roles` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sys_roles_button_action`
+--
+
+DROP TABLE IF EXISTS `sys_roles_button_action`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sys_roles_button_action` (
+  `roles_id` bigint(20) NOT NULL,
+  `button_name` varchar(100) DEFAULT NULL,
+  `created_by` varchar(50) DEFAULT NULL,
+  `created_time` timestamp NOT NULL DEFAULT current_timestamp(),
+  `disabled` bit(1) NOT NULL,
+  `modified_by` varchar(50) DEFAULT NULL,
+  `modified_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `version` varchar(5) DEFAULT NULL,
+  KEY `sys_roles_button_action_roles_id` (`roles_id`),
+  KEY `sys_roles_button_action_menu_name` (`button_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sys_roles_button_action`
+--
+
+LOCK TABLES `sys_roles_button_action` WRITE;
+/*!40000 ALTER TABLE `sys_roles_button_action` DISABLE KEYS */;
+INSERT INTO `sys_roles_button_action` VALUES (1,'save',NULL,'2020-05-05 19:44:05','\0',NULL,'2020-05-05 19:44:05',NULL),(1,'edit',NULL,'2020-05-05 19:44:41','\0',NULL,'2020-05-05 19:44:41',NULL),(1,'delete',NULL,'2020-05-05 19:44:48','\0',NULL,'2020-05-05 19:44:48',NULL),(1,'view',NULL,'2020-05-05 19:45:29','\0',NULL,'2020-05-05 19:45:29',NULL),(1,'add',NULL,'2020-05-07 02:47:36','\0',NULL,'2020-05-07 02:47:36',NULL);
+/*!40000 ALTER TABLE `sys_roles_button_action` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sys_user`
+--
+
+DROP TABLE IF EXISTS `sys_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sys_user` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `created_by` varchar(50) DEFAULT NULL,
+  `created_time` timestamp NOT NULL DEFAULT current_timestamp(),
+  `disabled` bit(1) NOT NULL,
+  `modified_by` varchar(50) DEFAULT NULL,
+  `modified_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `version` varchar(5) DEFAULT NULL,
+  `email` varchar(30) NOT NULL,
+  `is_active` bit(1) DEFAULT NULL,
+  `name` varchar(50) NOT NULL,
+  `no_hp` varchar(13) NOT NULL,
+  `password` varchar(150) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_ahtq5ew3v0kt1n7hf1sgp7p8l` (`email`),
+  UNIQUE KEY `UK_51bvuyvihefoh4kp5syh2jpi4` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sys_user`
+--
+
+LOCK TABLES `sys_user` WRITE;
+/*!40000 ALTER TABLE `sys_user` DISABLE KEYS */;
+INSERT INTO `sys_user` VALUES (1,NULL,'2021-03-01 01:14:39','\0',NULL,'2021-03-01 01:14:39','1.0','prasetiyooo@gmail.com','','','085645480401','{noop}1234','NRP1'),(2,NULL,'2021-03-01 15:15:20','\0',NULL,'2021-03-01 15:15:20','1.0','coba@coba','','coba','1111111111','{noop}12345','NRP2');
+/*!40000 ALTER TABLE `sys_user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sys_user_roles`
+--
+
+DROP TABLE IF EXISTS `sys_user_roles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sys_user_roles` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `created_by` varchar(50) DEFAULT NULL,
+  `created_time` timestamp NOT NULL DEFAULT current_timestamp(),
+  `disabled` bit(1) NOT NULL,
+  `modified_by` varchar(50) DEFAULT NULL,
+  `modified_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `version` varchar(5) DEFAULT NULL,
+  `sys_roles_id` bigint(20) NOT NULL,
+  `sys_user_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK5rp9sy8avs7wgdwvg4q827imf` (`sys_roles_id`),
+  KEY `FKd0ut7sloes191bygyf7a3pk52` (`sys_user_id`),
+  CONSTRAINT `FK5rp9sy8avs7wgdwvg4q827imf` FOREIGN KEY (`sys_roles_id`) REFERENCES `sys_roles` (`id`),
+  CONSTRAINT `FKd0ut7sloes191bygyf7a3pk52` FOREIGN KEY (`sys_user_id`) REFERENCES `sys_user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sys_user_roles`
+--
+
+LOCK TABLES `sys_user_roles` WRITE;
+/*!40000 ALTER TABLE `sys_user_roles` DISABLE KEYS */;
+INSERT INTO `sys_user_roles` VALUES (1,NULL,'2021-03-01 14:02:17','\0',NULL,'2021-03-01 14:02:17','1.0',1,1),(2,NULL,'2021-03-01 15:08:47','\0',NULL,'2021-03-01 15:08:47','1.0',3,2);
+/*!40000 ALTER TABLE `sys_user_roles` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_costumer`
+--
+
+DROP TABLE IF EXISTS `user_costumer`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_costumer` (
+  `customer_id` varchar(50) NOT NULL,
+  `customer_name` varchar(200) NOT NULL,
+  `phone_number` varchar(200) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `created_by` varchar(50) DEFAULT NULL,
+  `created_time` timestamp NOT NULL DEFAULT current_timestamp(),
+  `is_active` tinyint(1) DEFAULT 0,
+  `inactive_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`customer_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_costumer`
+--
+
+LOCK TABLES `user_costumer` WRITE;
+/*!40000 ALTER TABLE `user_costumer` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_costumer` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2022-04-24 18:41:06

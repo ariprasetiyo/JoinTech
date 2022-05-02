@@ -5,6 +5,8 @@
  */
 package arprast.qiyosq.dao;
 
+import arprast.qiyosq.dto.RequestData;
+import arprast.qiyosq.http.Request;
 import arprast.qiyosq.model.*;
 import arprast.qiyosq.util.Util;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -20,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,9 +40,12 @@ public class DaoImpl {
     };
     private static final TypeReference<POSDetailTmpModel> posDetailTmpModellRef = new TypeReference<POSDetailTmpModel>() {
     };
+    private static final TypeReference<Request> requestRef = new TypeReference<Request>() {
+    };
     private static final ObjectWriter writePriceDetailJson = jsonMapper.writerFor(priceDetailRef);
     private static final ObjectWriter posHeaderTmpModeWriterJson = jsonMapper.writerFor(posHeaderTmpModelRef);
     private static final ObjectWriter posDetailTmpModellWriteJson = jsonMapper.writerFor(posDetailTmpModellRef);
+    private static final ObjectWriter requestWriteJson = jsonMapper.writerFor(requestRef);
 
     @Autowired
     @PersistenceContext
@@ -85,6 +91,21 @@ public class DaoImpl {
                 .toString();
     }
 
+    private static String updateHeaderPOS() {
+        return "UPDATE pos_header_tmp set total_trx_amount = ?, total_discount_amount = ?, total_paid_amount =? where request_id = ? and username = ? ";
+    }
+
+    private static String getPosItemListQuery() {
+        return "select item_code, item_code_label, item_name, description, qty, sell_price, total_sell_price, price_detail, item_type from pos_detail_tmp where request_id = ?  and ( item_code_label like ? or item_name like ?  ) order by seq desc limit ?,?  ";
+    }
+
+    private static String getPosTemporaryTransactionList(){
+        return new StringBuilder()
+                .append("select request_id, customer_name , customer_id , phone_number , address , payment_method, total_trx_amount,  total_discount_amount , total_paid_amount, username, created_time ")
+                .append("from pos_header_tmp where username = ? and ( customer_id like ? or phone_number like ? or customer_name like ? ) order by  created_time desc limit ?,? ")
+                .toString();
+    }
+
     private static String buildLike(final String search) {
         return new StringBuilder().append(Util.PERCENTAGE).append(search).append(Util.PERCENTAGE).toString();
     }
@@ -109,6 +130,41 @@ public class DaoImpl {
     }
 
     @SuppressWarnings("unchecked")
+    public List<POSItemTmpModel> getPosItemList(final Request<RequestData> request) {
+        return em.createNativeQuery(getPosItemListQuery(), "POSItemTmpModelMapper")
+                .setParameter(1, request.getRequestId())
+                .setParameter(2, buildLike(request.getRequestData().getSearch()))
+                .setParameter(3, buildLike(request.getRequestData().getSearch()))
+                .setParameter(4, request.getRequestData().getOffset())
+                .setParameter(5, request.getRequestData().getLimit())
+                .getResultList();
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<POSHeaderTmpModel> getPosTemporaryTransactionList(final Request<RequestData> request) {
+        try {
+            return em.createNativeQuery(getPosTemporaryTransactionList(), "POSHeaderTmpMapper")
+                    .setParameter(1, request.getUsername())
+                    .setParameter(2, buildLike(request.getRequestData().getSearch()))
+                    .setParameter(3, buildLike(request.getRequestData().getSearch()))
+                    .setParameter(4, buildLike(request.getRequestData().getSearch()))
+                    .setParameter(5, request.getRequestData().getOffset())
+                    .setParameter(6, request.getRequestData().getLimit())
+                    .getResultList();
+        } catch (NoResultException nre) {
+            try {
+                logger.info("no result data for {}", requestWriteJson.writeValueAsString(request));
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            logger.error("error getPOSHeaderTmp={} {}", request.getRequestId(), request.getUsername(), e);
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
+    @SuppressWarnings("unchecked")
     public POSHeaderTmpModel getPOSHeaderTmp(final String userName, final String requestId) {
         try {
             return (POSHeaderTmpModel) em.createNativeQuery(getPOSHeaderTmpQuery(), "POSHeaderTmpMapper")
@@ -118,18 +174,17 @@ public class DaoImpl {
         } catch (NoResultException nre) {
             logger.info("no result data for {}, user name {}. query={}", requestId, userName, getPOSHeaderTmpQuery());
         } catch (Exception e) {
-            logger.error("error getPOSHeaderTmp={} {}",  requestId, userName, e);
+            logger.error("error getPOSHeaderTmp={} {}", requestId, userName, e);
             e.printStackTrace();
-        } finally {
-            return null;
         }
+        return null;
     }
 
     @SuppressWarnings("unchecked")
     @Transactional
-    public int insertPOSHeaderTmp(POSHeaderTmpModel posHeaderTmpModel) {
+    public int insertPOSHeaderTmp(POSHeaderTmpModel posHeaderTmpModel, final POSDetailTmpModel detail) {
         try {
-            return em.createNativeQuery(getInsertHeaderPOS())
+            final int result = em.createNativeQuery(getInsertHeaderPOS())
                     .setParameter(1, posHeaderTmpModel.getRequestId())
                     .setParameter(2, posHeaderTmpModel.getCustomerName())
                     .setParameter(3, posHeaderTmpModel.getCustomerId())
@@ -141,9 +196,13 @@ public class DaoImpl {
                     .setParameter(9, posHeaderTmpModel.getTotalPaidAmount())
                     .setParameter(10, posHeaderTmpModel.getUsername())
                     .executeUpdate();
-        } catch (Exception e){
+            if(result <= 0){
+                return result;
+            }
+            return insertItemTmpPOS(detail);
+        } catch (Exception e) {
             try {
-                logger.error("error insertPOSHeaderTmp={}, query={}",  posHeaderTmpModeWriterJson.writeValueAsString(posHeaderTmpModel), getInsertHeaderPOS(), e);
+                logger.error("error insertPOSHeaderTmp={}, query={}", posHeaderTmpModeWriterJson.writeValueAsString(posHeaderTmpModel), getInsertHeaderPOS(), e);
             } catch (JsonProcessingException ex) {
                 ex.printStackTrace();
             }
@@ -159,37 +218,58 @@ public class DaoImpl {
 
     private static String getPOSDetalTmp() {
         return new StringBuilder()
-                .append("insert into pos_detail_tmp ( request_id, item_code, item_code_label, item_name, description, qty, sell_price, price_detail, basic_price, item_type) values ")
-                .append(" (?, ?, ?, ?, ?, ?, ?, ?, ?, ?); ")
+                .append("insert into pos_detail_tmp ( request_id, item_code, item_code_label, item_name, description, qty, sell_price, total_sell_price,  price_detail, basic_price, item_type) values ")
+                .append(" (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?); ")
                 .toString();
     }
 
     @SuppressWarnings("unchecked")
-    @Transactional
-    public int insertItemTmpPOS(final POSDetailTmpModel model) {
+    private int insertItemTmpPOS(final POSDetailTmpModel detail) {
+
+
         String priceDetailJson = null;
         try {
-            priceDetailJson = writePriceDetailJson.writeValueAsString(model.getPriceDetail());
+            priceDetailJson = writePriceDetailJson.writeValueAsString(detail.getPriceDetail());
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
 
+        return em.createNativeQuery(getPOSDetalTmp())
+                .setParameter(1, detail.getRequestId())
+                .setParameter(2, detail.getItemCode())
+                .setParameter(3, detail.getItemCodeLabel())
+                .setParameter(4, detail.getItemName())
+                .setParameter(5, detail.getDescription())
+                .setParameter(6, detail.getQty())
+                .setParameter(7, detail.getSellPrice())
+                .setParameter(8, detail.getTotalSellPrice())
+                .setParameter(9, priceDetailJson)
+                .setParameter(10, detail.getBasicPrice())
+                .setParameter(11, detail.getItemType().id)
+                .executeUpdate();
+
+    }
+
+    @SuppressWarnings("unchecked")
+    @Transactional
+    public int insertUpdateHeadItemTmpPOS(final POSHeaderTmpModel header, final POSDetailTmpModel detail) {
         try {
-            return em.createNativeQuery(getPOSDetalTmp())
-                    .setParameter(1, model.getRequestId())
-                    .setParameter(2, model.getItemCode())
-                    .setParameter(3, model.getItemCodeLabel())
-                    .setParameter(4, model.getItemName())
-                    .setParameter(5, model.getDescription())
-                    .setParameter(6, model.getQty())
-                    .setParameter(7, model.getSellPrice())
-                    .setParameter(8, priceDetailJson)
-                    .setParameter(9, model.getBasicPrice())
-                    .setParameter(10, model.getItemType().id)
+            int result = em.createNativeQuery(updateHeaderPOS())
+                    .setParameter(1, header.getTotalTrxAmount())
+                    .setParameter(2, header.getTotalDiscountAmount())
+                    .setParameter(3, header.getTotalPaidAmount())
+                    .setParameter(4, header.getRequestId())
+                    .setParameter(5, header.getUsername())
                     .executeUpdate();
-        }catch (Exception e){
+            if (result <= 0) {
+                return 0;
+            }
+            return insertItemTmpPOS(detail);
+        } catch (Exception e) {
             try {
-                logger.error("error insertItemTmpPOS={}, query={}",  posDetailTmpModellWriteJson.writeValueAsString(model), getPOSDetalTmp(), e);
+                logger.error("error insertUpdateHeadItemTmpPOS={}, detail {}",
+                        posHeaderTmpModeWriterJson.writeValueAsString(header),
+                        posDetailTmpModellWriteJson.writeValueAsString(detail), e);
             } catch (JsonProcessingException ex) {
                 ex.printStackTrace();
             }

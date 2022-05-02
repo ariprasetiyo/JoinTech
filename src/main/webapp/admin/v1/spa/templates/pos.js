@@ -61,6 +61,12 @@ $(function() {
                 $('#addQty').modal('show');
 	});
 
+
+	$("#getTmpSalesButton").on('click', function(){
+	      $('#getItemTmpPos').modal('show');
+	      varTmpTrxListTable.ajax.reload();
+     })
+
 	function getUUID(){
         if(uudIdValue === null || uudIdValue === '' || uudIdValue === 'undefined'){
             uudIdValue = _uuid();
@@ -105,7 +111,7 @@ $(function() {
                     $("#infoRestMessage").attr('class', 'success-message');
                 }
                 $("#infoRestMessage").text(message);
-//                tableMenu.ajax.reload();
+                tablePosTmpList.ajax.reload();
             },
             complete : function() {
             },
@@ -195,6 +201,166 @@ $(function() {
         });
 	}
 
+	function listTmpItemDataTableJsonRequest(data, id) {
+    	var jsonRequest = {};
+    	jsonRequest["requestId"] = uudIdValue;
+    	var request = {};
+    	request["id"] = id;
+    	request["limit"] = data.length;
+    	request["offset"] = data.start;
+    	request["search"] = data.search.value;
+    	jsonRequest["requestData"] = request;
+    	return JSON.stringify(jsonRequest);
+    }
+
+    function buildTmpTrxListJson(data, id) {
+        	var jsonRequest = {};
+        	jsonRequest["requestId"] = _uuid();
+        	var request = {};
+        	request["id"] = id;
+        	request["limit"] = data.length;
+        	request["offset"] = data.start;
+        	request["search"] = data.search.value;
+        	jsonRequest["requestData"] = request;
+        	return JSON.stringify(jsonRequest);
+        }
+
+	function listTmpItemDataTable(data, callback, settings) {
+    		$.ajax({
+                async : true,
+
+                type : 'POST',
+                contentType : 'application/json',
+                url : '/admin/v1/api/pos/item/list',
+                headers : {
+                    'X-XSRF-TOKEN' : csrfToken
+                },
+                /*
+                 * data : { limit : data.length, offset : data.start, search :
+                 * data.search.value },
+                 */
+                data : listTmpItemDataTableJsonRequest(data, _idRole()),
+                dataType : "json",
+                beforeSend : function() {
+
+                },
+                success : function(dataResponse, textStatus, jqXHR) {
+                    var out = [];
+                    var itemCode = null;
+
+                    function buttonAction(i, itemCode) {
+                        if(editButtonAction == editButtonActionStatic){
+                            return '<input type = "hidden" name = "${_csrf.parameterName}" value = "${_csrf.token}" />'
+                                                                + '<input type = "hidden" id = "itemCode'
+                                                                + itemCode
+                                                                + '" class="idDataHide'
+                                                                + i
+                                                                + '" /> '
+                                                                + '<button type = "submit" id = "itemCodeButton'
+                                                                + itemCode
+                                                                + '" class = "btn btn-primary addGoodsItem" > Add </button> ';
+                        }
+                        return '';
+                    }
+
+                    for (var i = 0, ien = dataResponse.responseData.data.length; i < ien; i++) {
+                        itemCode = dataResponse.responseData.data[i].itemCode;
+                        out
+                                .push([
+                                        _getNumberOfRow(data.start, i),
+                                        _center(dataResponse.responseData.data[i].itemCodeLabel),
+                                        _center(dataResponse.responseData.data[i].itemName),
+                                        _center(dataResponse.responseData.data[i].qty),
+                                        _center(dataResponse.responseData.data[i].sellPrice),
+                                        _center(dataResponse.responseData.data[i].priceDetail.discountDetail.discountAmount),
+                                        _center(dataResponse.responseData.data[i].totalSellPrice),
+                                        buttonAction(i, itemCode) ]);
+                    }
+
+                    setTimeout(
+                            function() {
+                                callback({
+                                    draw : data.draw,
+                                    data : out,
+                                    recordsTotal : dataResponse.responseData.totalRecord,
+                                    recordsFiltered : dataResponse.responseData.totalRecord
+                                });
+                            }, 50);
+                },
+                complete : function() {
+                },
+                error : function(jqXHR, textStatus, errorThrown) {
+                }
+            });
+    	}
+
+    function getTmpTrxListTable(data, callback, settings) {
+        $.ajax({
+            async : true,
+
+            type : 'POST',
+            contentType : 'application/json',
+            url : '/admin/v1/api/pos/transaction/tmp/list',
+            headers : {
+                'X-XSRF-TOKEN' : csrfToken
+            },
+            /*
+             * data : { limit : data.length, offset : data.start, search :
+             * data.search.value },
+             */
+            data : buildTmpTrxListJson(data, _idRole()),
+            dataType : "json",
+            beforeSend : function() {
+
+            },
+            success : function(dataResponse, textStatus, jqXHR) {
+                var out = [];
+                var requestId = null;
+
+                function buttonAction(i, itemCode) {
+                    if(editButtonAction == editButtonActionStatic){
+                        return '<input type = "hidden" name = "${_csrf.parameterName}" value = "${_csrf.token}" />'
+                                                            + '<input type = "hidden" id = "itemCode'
+                                                            + itemCode
+                                                            + '" class="idDataHide'
+                                                            + i
+                                                            + '" /> '
+                                                            + '<button type = "submit" id = "itemCodeButton'
+                                                            + itemCode
+                                                            + '" class = "btn btn-primary addGoodsItem" > Add </button> ';
+                    }
+                    return '';
+                }
+
+                for (var i = 0, ien = dataResponse.responseData.data.length; i < ien; i++) {
+                    requestId = dataResponse.responseData.data[i].requestId;
+                    out
+                            .push([
+                                    _getNumberOfRow(data.start, i),
+                                    _center(_convertDate(dataResponse.responseData.data[i].createdTime)),
+                                    _center(dataResponse.responseData.data[i].customerId),
+                                    _center(dataResponse.responseData.data[i].customerName),
+                                    _center(dataResponse.responseData.data[i].phoneNumber),
+                                    buttonAction(i, requestId) ]);
+                }
+
+                setTimeout(
+                        function() {
+                            callback({
+                                draw : data.draw,
+                                data : out,
+                                recordsTotal : dataResponse.responseData.totalRecord,
+                                recordsFiltered : dataResponse.responseData.totalRecord
+                            });
+                        }, 50);
+            },
+            complete : function() {
+            },
+            error : function(jqXHR, textStatus, errorThrown) {
+            }
+        });
+    }
+
 	function _getMiniScreenDataTableTab() {
         	return $(window).height() - 700;
     }
@@ -218,6 +384,34 @@ $(function() {
 			loadingIndicator : true
 		}
 	});
+
+	var tablePosTmpList = $('#posTmptList').DataTable({
+    		"sDom" : '<"top"fl>rt<"bottom"p><"clear">',
+    		serverSide : true,
+    		ordering : false,
+    		searching : true,
+    		ajax : function(data, callback, settings) {
+    			listTmpItemDataTable(data, callback, settings);
+    		},
+    		scrollY : _getMiniScreenDataTableTab(),
+    		scroller : {
+    			loadingIndicator : true
+    		}
+    });
+
+    var varTmpTrxListTable = $('#tmpTrxListTable').DataTable({
+            "sDom" : '<"top"fl>rt<"bottom"p><"clear">',
+            serverSide : true,
+            ordering : false,
+            searching : true,
+            ajax : function(data, callback, settings) {
+                getTmpTrxListTable(data, callback, settings);
+            },
+            scrollY : _getMiniScreenDataTableTab(),
+            scroller : {
+                loadingIndicator : true
+            }
+     });
 
 	function getDataOnTable(varThis) {
 

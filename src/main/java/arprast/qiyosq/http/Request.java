@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.UUID;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Request<T> {
@@ -13,8 +14,17 @@ public class Request<T> {
     private T requestData;
     @NotBlank(message = "Request id can't be blank")
     private String requestId;
+    private String id = UUID.randomUUID().toString();
     private String version;
     private String username;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public T getRequestData() {
         return requestData;

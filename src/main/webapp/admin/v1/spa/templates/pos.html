@@ -9,7 +9,7 @@
 				<!-- Tabs within a box -->
 				<ul class="nav nav-tabs pull-left">
 					<li class="active"><a href="#pos-href" data-toggle="tab">POS</a></li>
-					<li><a href="#menu-tab" data-toggle="tab" id="menuTab">Menu</a></li>
+					<li><a href="#menuPosList" data-toggle="tab" id="menuTab">POS List</a></li>
 				</ul>
 				<div class="tab-content no-padding">
 					<!-- Morris chart - Sales -->
@@ -53,6 +53,13 @@
 										<input id="checkBoxIsActive" type="checkbox" checked="checked"> <span class="checkmarkChk"></span>
 									</label>
 									</div>
+									<div class="form-group">
+										<label class="control-label col-sm-3" style="">Get sales</label>
+										<div class="col-sm-9">
+											<button type="button" id="getTmpSalesButton" class="btn btn-info btn-flat"> Get Sales </button>
+										</div>
+									</label>
+									</div>
 								</form>
 							</div>
 						</div>
@@ -83,10 +90,12 @@
 									<thead>
 									<tr>
 										<th><div class="center_header">No</div></th>
-										<th><div class="center_header">Create Time</div></th>
-										<th><div class="center_header">Modify Time</div></th>
-										<th><div class="center_header">Role Name</div></th>
-										<th><div class="center_header">Is Active</div></th>
+										<th><div class="center_header">Item Code</div></th>
+										<th><div class="center_header">Item Name</div></th>
+										<th><div class="center_header">Qty</div></th>
+										<th><div class="center_header">Price</div></th>
+										<th><div class="center_header">Discount</div></th>
+										<th><div class="center_header">Total Price</div></th>
 										<th><div class="center_header">Action</div></th>
 									</tr>
 									</thead>
@@ -97,7 +106,7 @@
 						</div>
 					</div>
 
-					<div class="chart tab-pane screen-tab" id="menu-tab"
+					<div class="chart tab-pane screen-tab" id="menuPosList"
 						style="position: relative; height: 900px;">
 						<div class="box-header">
 							<div class="pull-right form-inline">
@@ -186,5 +195,34 @@
 	</div>
 </div>
 
+<!-- Modal -->
+<div id="getItemTmpPos" class="modal fade" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Temporary Sales</h4>
+			</div>
+			<div class="box-body">
+				<table id="tmpTrxListTable" class="table table-bordered">
+					<thead>
+					<tr>
+						<th><div class="center_header">No</div></th>
+						<th><div class="center_header">Modify Time</div></th>
+						<th><div class="center_header">Customer Id</div></th>
+						<th><div class="center_header">Customer Name</div></th>
+						<th><div class="center_header">Phone Number</div></th>
+						<th><div class="center_header">Action</div></th>
+					</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+	</div>
+</div>
 <script type="text/javascript" src="/admin/v1/spa/templates/pos.js"></script>
 

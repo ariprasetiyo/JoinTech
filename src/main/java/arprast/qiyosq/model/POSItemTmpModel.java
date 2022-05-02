@@ -1,19 +1,14 @@
 package arprast.qiyosq.model;
 
 import arprast.qiyosq.ref.ItemType;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 
 import java.util.Date;
 
-public class POSDetailTmpModel {
-    private static final ObjectMapper jsonMapper = new ObjectMapper();
-    private static final TypeReference<PriceDetail> priceDetailRef = new TypeReference<PriceDetail>() {
-    };
-    private static final ObjectReader priceDetailDeserialize = jsonMapper.readerFor(priceDetailRef);
-
-    private String requestId;
+public class POSItemTmpModel {
     private String itemCode;
     private String itemCodeLabel;
     private String itemName;
@@ -22,23 +17,34 @@ public class POSDetailTmpModel {
     private float sellPrice;
     private float totalSellPrice;
     private PriceDetail priceDetail;
-    private float basicPrice;
     private ItemType itemType;
 
-    public float getTotalSellPrice() {
-        return totalSellPrice;
-    }
+    private static final ObjectMapper jsonMapper = new ObjectMapper();
+    private static final TypeReference<PriceDetail> priceDetailRef = new TypeReference<PriceDetail>() {};
+    private static final ObjectReader priceDetailDeserialize = jsonMapper.readerFor(priceDetailRef);
 
-    public void setTotalSellPrice(float totalSellPrice) {
+    public POSItemTmpModel(final String itemCode,
+                           final String itemCodeLabel,
+                           final String itemName,
+                           final String description,
+                           final int qty,
+                           final float sellPrice,
+                           final float totalSellPrice,
+                           final String priceDetail,
+                           final String itemType) {
+        this.itemCode = itemCode;
+        this.itemCodeLabel = itemCodeLabel;
+        this.itemName = itemName;
+        this.description = description;
+        this.sellPrice = sellPrice;
         this.totalSellPrice = totalSellPrice;
-    }
-
-    public String getRequestId() {
-        return requestId;
-    }
-
-    public void setRequestId(String requestId) {
-        this.requestId = requestId;
+        try {
+            this.priceDetail = priceDetailDeserialize.readValue(priceDetail);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        this.itemType = ItemType.valueOfName(itemType);
+        this.qty = qty;
     }
 
     public String getItemCode() {
@@ -89,20 +95,20 @@ public class POSDetailTmpModel {
         this.sellPrice = sellPrice;
     }
 
+    public float getTotalSellPrice() {
+        return totalSellPrice;
+    }
+
+    public void setTotalSellPrice(float totalSellPrice) {
+        this.totalSellPrice = totalSellPrice;
+    }
+
     public PriceDetail getPriceDetail() {
         return priceDetail;
     }
 
     public void setPriceDetail(PriceDetail priceDetail) {
         this.priceDetail = priceDetail;
-    }
-
-    public float getBasicPrice() {
-        return basicPrice;
-    }
-
-    public void setBasicPrice(float basicPrice) {
-        this.basicPrice = basicPrice;
     }
 
     public ItemType getItemType() {

@@ -25,6 +25,7 @@ public enum StatusCode {
 	SUCCESS(200, "success"),
 	FAILED(300, "failed"),
 	POS_TMP_NOT_ENOUGH_STOCK(1000, "not enough stock"),
+	POS_TMP_MAX_QTY_ONLY_ONE(1001, "maximum qty only 1"),
 
 	DATA_NOT_FOUND(517,"DATA NOT FOUND");
 

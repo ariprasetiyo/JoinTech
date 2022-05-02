@@ -39,6 +39,7 @@ public class Util {
 		final Response responseDto = new Response();
 		responseDto.setResponseId(request.getRequestId());
 		responseDto.setUsername(request.getUsername());
+		responseDto.setId(request.getId());
 		return responseDto;
 	}
 

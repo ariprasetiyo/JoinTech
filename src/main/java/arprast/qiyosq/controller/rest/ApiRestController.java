@@ -34,6 +34,24 @@ public class ApiRestController {
         return LogUtil.logResponse(masterItemService.getClass(), masterItemService.getMasterItem( initRequest(masterItemService.getClass(), masterItemRequest)));
     }
 
+    @RequestMapping(value = "/admin/v1/api/pos/item/list", method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE,
+            MediaType.APPLICATION_XML_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE,
+            MediaType.APPLICATION_XML_VALUE})
+    @ResponseBody
+    @SuppressWarnings("unchecked")
+    public final ResponseEntity<Response> getPosItemList(@RequestBody @Valid final Request<RequestData> request) {
+        return LogUtil.logResponse(posService.getClass(), posService.getPosItemList( initRequest(posService.getClass(), request)));
+    }
+
+    @RequestMapping(value = "/admin/v1/api/pos/transaction/tmp/list", method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE,
+            MediaType.APPLICATION_XML_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE,
+            MediaType.APPLICATION_XML_VALUE})
+    @ResponseBody
+    @SuppressWarnings("unchecked")
+    public final ResponseEntity<Response> getPosTransactionTmpList(@RequestBody @Valid final Request<RequestData> request) {
+        return LogUtil.logResponse(posService.getClass(), posService.getPosTemporaryTransactionList( initRequest(posService.getClass(), request)));
+    }
+
     @RequestMapping(value = "/admin/v1/api/pos/item/add", method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE,
             MediaType.APPLICATION_XML_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE,
             MediaType.APPLICATION_XML_VALUE})

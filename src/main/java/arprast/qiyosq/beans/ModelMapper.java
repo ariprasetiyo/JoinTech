@@ -3,6 +3,7 @@ package arprast.qiyosq.beans;
 import arprast.qiyosq.model.DaftarPelakuModel;
 import arprast.qiyosq.model.MasterItemModel;
 import arprast.qiyosq.model.POSHeaderTmpModel;
+import arprast.qiyosq.model.POSItemTmpModel;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -53,6 +54,7 @@ import java.util.Date;
                                 @ColumnResult(name = "stock",  type = Integer.class)
                         })
         })
+
 @SqlResultSetMapping(name = "MasterItemModelMapper",
         classes = {
                 @ConstructorResult(
@@ -70,6 +72,24 @@ import java.util.Date;
                                 @ColumnResult(name = "stock",  type = Integer.class)
                         })
         })
+
+@SqlResultSetMapping(name = "POSItemTmpModelMapper",
+        classes = {
+                @ConstructorResult(
+                        targetClass = POSItemTmpModel.class,
+                        columns = {
+                                @ColumnResult(name = "item_code",  type = String.class),
+                                @ColumnResult(name = "item_code_label",  type = String.class),
+                                @ColumnResult(name = "item_name",  type = String.class),
+                                @ColumnResult(name = "description",  type = String.class),
+                                @ColumnResult(name = "qty",   type = Integer.class),
+                                @ColumnResult(name = "sell_price",   type = Float.class),
+                                @ColumnResult(name = "total_sell_price",   type = Float.class),
+                                @ColumnResult(name = "price_detail",  type = String.class),
+                                @ColumnResult(name = "item_type",  type = String.class)
+                        })
+        })
+
 @SqlResultSetMapping(name = "POSHeaderTmpMapper",
         classes = {
                 @ConstructorResult(
@@ -88,6 +108,7 @@ import java.util.Date;
                                 @ColumnResult(name = "created_time",  type = Date.class)
                         })
         })
+
 
 public class ModelMapper {
 

@@ -356,20 +356,24 @@ create table pos_header_tmp(
   index(username)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-create table pos_detail_tmp (
-  seq int(6) not null AUTO_INCREMENT primary key,
-  request_id varchar(50) not null,
-  item_code varchar(200) not null,
-  item_code_label varchar(200) not null,
-  item_name varchar(200) not null,
-  description varchar(500) default null,
-  qty integer(8) not null,
-  sell_price float not null,
-  price_detail json not null,
-  basic_price float not null,
-  item_type varchar(20) not null,
-  index(request_id)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+-- resmob.pos_detail_tmp definition
+
+CREATE TABLE `pos_detail_tmp` (
+  `seq` int(6) NOT NULL AUTO_INCREMENT,
+  `request_id` varchar(50) NOT NULL,
+  `item_code` varchar(200) NOT NULL,
+  `item_code_label` varchar(200) NOT NULL,
+  `item_name` varchar(200) NOT NULL,
+  `description` varchar(500) DEFAULT NULL,
+  `qty` int(8) NOT NULL,
+  `sell_price` float NOT NULL,
+  `total_sell_price` float NOT NULL,
+  `price_detail` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`price_detail`)),
+  `basic_price` float NOT NULL,
+  `item_type` varchar(20) NOT NULL,
+  PRIMARY KEY (`seq`),
+  KEY `request_id` (`request_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 create table invoice_sales_header(
  transaction_id varchar(50) not null,
