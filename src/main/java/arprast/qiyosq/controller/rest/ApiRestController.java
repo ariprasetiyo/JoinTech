@@ -1,5 +1,6 @@
 package arprast.qiyosq.controller.rest;
 
+import arprast.qiyosq.http.GetPosTransactionTmpRequest;
 import arprast.qiyosq.http.POSHeaderTmpRequest;
 import arprast.qiyosq.dto.RequestData;
 import arprast.qiyosq.http.Request;
@@ -43,13 +44,22 @@ public class ApiRestController {
         return LogUtil.logResponse(posService.getClass(), posService.getPosItemList( initRequest(posService.getClass(), request)));
     }
 
-    @RequestMapping(value = "/admin/v1/api/pos/transaction/tmp/list", method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE,
+    @RequestMapping(value = "/admin/v1/api/pos/transaction/tmp", method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE,
+            MediaType.APPLICATION_XML_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE,
+            MediaType.APPLICATION_XML_VALUE})
+    @ResponseBody
+    @SuppressWarnings("unchecked")
+    public final ResponseEntity<Response> getPosTransactionTmp(@RequestBody @Valid final Request request) {
+        return LogUtil.logResponse(posService.getClass(), posService.getPosTemporaryTransaction( initRequest(posService.getClass(), request)));
+    }
+
+    @RequestMapping(value = "/admin/v1/api/pos/header/transaction/tmp/list", method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE,
             MediaType.APPLICATION_XML_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE,
             MediaType.APPLICATION_XML_VALUE})
     @ResponseBody
     @SuppressWarnings("unchecked")
     public final ResponseEntity<Response> getPosTransactionTmpList(@RequestBody @Valid final Request<RequestData> request) {
-        return LogUtil.logResponse(posService.getClass(), posService.getPosTemporaryTransactionList( initRequest(posService.getClass(), request)));
+        return LogUtil.logResponse(posService.getClass(), posService.getPosHeaderTemporaryTransactionList( initRequest(posService.getClass(), request)));
     }
 
     @RequestMapping(value = "/admin/v1/api/pos/item/add", method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE,

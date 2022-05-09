@@ -1,6 +1,7 @@
 package arprast.qiyosq.model;
 
 import arprast.qiyosq.ref.ItemType;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
@@ -24,6 +25,26 @@ public class POSDetailTmpModel {
     private PriceDetail priceDetail;
     private float basicPrice;
     private ItemType itemType;
+
+    public POSDetailTmpModel(){}
+
+    public POSDetailTmpModel(String requestId, String itemCode, String itemCodeLabel, String itemName, String description, int qty, float sellPrice, float totalSellPrice, String priceDetail, float basicPrice, String itemType) {
+        this.requestId = requestId;
+        this.itemCode = itemCode;
+        this.itemCodeLabel = itemCodeLabel;
+        this.itemName = itemName;
+        this.description = description;
+        this.qty = qty;
+        this.sellPrice = sellPrice;
+        this.totalSellPrice = totalSellPrice;
+        try {
+            this.priceDetail = priceDetailDeserialize.readValue(priceDetail);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        this.basicPrice = basicPrice;
+        this.itemType = ItemType.valueOfName(itemType);
+    }
 
     public float getTotalSellPrice() {
         return totalSellPrice;

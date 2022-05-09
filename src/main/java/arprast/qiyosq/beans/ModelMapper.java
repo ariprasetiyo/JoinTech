@@ -1,9 +1,6 @@
 package arprast.qiyosq.beans;
 
-import arprast.qiyosq.model.DaftarPelakuModel;
-import arprast.qiyosq.model.MasterItemModel;
-import arprast.qiyosq.model.POSHeaderTmpModel;
-import arprast.qiyosq.model.POSItemTmpModel;
+import arprast.qiyosq.model.*;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -41,17 +38,17 @@ import java.util.Date;
                         targetClass = MasterItemModel.class,
                         columns = {
                                 @ColumnResult(name = "item_code", type = String.class),
-                                @ColumnResult(name = "item_code_label",  type = String.class),
-                                @ColumnResult(name = "item_name",  type = String.class),
-                                @ColumnResult(name = "description",  type = String.class),
-                                @ColumnResult(name = "sell_price",   type = Float.class),
-                                @ColumnResult(name = "price_detail",  type = String.class),
-                                @ColumnResult(name = "basic_price",   type = Float.class),
-                                @ColumnResult(name = "unit_measure",  type = String.class),
-                                @ColumnResult(name = "is_active",  type = Boolean.class),
-                                @ColumnResult(name = "modified_time",  type = Date.class),
-                                @ColumnResult(name = "item_type",  type = String.class),
-                                @ColumnResult(name = "stock",  type = Integer.class)
+                                @ColumnResult(name = "item_code_label", type = String.class),
+                                @ColumnResult(name = "item_name", type = String.class),
+                                @ColumnResult(name = "description", type = String.class),
+                                @ColumnResult(name = "sell_price", type = Float.class),
+                                @ColumnResult(name = "price_detail", type = String.class),
+                                @ColumnResult(name = "basic_price", type = Float.class),
+                                @ColumnResult(name = "unit_measure", type = String.class),
+                                @ColumnResult(name = "is_active", type = Boolean.class),
+                                @ColumnResult(name = "modified_time", type = Date.class),
+                                @ColumnResult(name = "item_type", type = String.class),
+                                @ColumnResult(name = "stock", type = Integer.class)
                         })
         })
 
@@ -61,15 +58,15 @@ import java.util.Date;
                         targetClass = MasterItemModel.class,
                         columns = {
                                 @ColumnResult(name = "item_code", type = String.class),
-                                @ColumnResult(name = "item_code_label",  type = String.class),
-                                @ColumnResult(name = "item_name",  type = String.class),
-                                @ColumnResult(name = "description",  type = String.class),
-                                @ColumnResult(name = "sell_price",   type = Float.class),
-                                @ColumnResult(name = "price_detail",  type = String.class),
-                                @ColumnResult(name = "basic_price",   type = Float.class),
-                                @ColumnResult(name = "unit_measure",  type = String.class),
-                                @ColumnResult(name = "item_type",  type = String.class),
-                                @ColumnResult(name = "stock",  type = Integer.class)
+                                @ColumnResult(name = "item_code_label", type = String.class),
+                                @ColumnResult(name = "item_name", type = String.class),
+                                @ColumnResult(name = "description", type = String.class),
+                                @ColumnResult(name = "sell_price", type = Float.class),
+                                @ColumnResult(name = "price_detail", type = String.class),
+                                @ColumnResult(name = "basic_price", type = Float.class),
+                                @ColumnResult(name = "unit_measure", type = String.class),
+                                @ColumnResult(name = "item_type", type = String.class),
+                                @ColumnResult(name = "stock", type = Integer.class)
                         })
         })
 
@@ -78,15 +75,15 @@ import java.util.Date;
                 @ConstructorResult(
                         targetClass = POSItemTmpModel.class,
                         columns = {
-                                @ColumnResult(name = "item_code",  type = String.class),
-                                @ColumnResult(name = "item_code_label",  type = String.class),
-                                @ColumnResult(name = "item_name",  type = String.class),
-                                @ColumnResult(name = "description",  type = String.class),
-                                @ColumnResult(name = "qty",   type = Integer.class),
-                                @ColumnResult(name = "sell_price",   type = Float.class),
-                                @ColumnResult(name = "total_sell_price",   type = Float.class),
-                                @ColumnResult(name = "price_detail",  type = String.class),
-                                @ColumnResult(name = "item_type",  type = String.class)
+                                @ColumnResult(name = "item_code", type = String.class),
+                                @ColumnResult(name = "item_code_label", type = String.class),
+                                @ColumnResult(name = "item_name", type = String.class),
+                                @ColumnResult(name = "description", type = String.class),
+                                @ColumnResult(name = "qty", type = Integer.class),
+                                @ColumnResult(name = "sell_price", type = Float.class),
+                                @ColumnResult(name = "total_sell_price", type = Float.class),
+                                @ColumnResult(name = "price_detail", type = String.class),
+                                @ColumnResult(name = "item_type", type = String.class)
                         })
         })
 
@@ -97,15 +94,35 @@ import java.util.Date;
                         columns = {
                                 @ColumnResult(name = "request_id", type = String.class),
                                 @ColumnResult(name = "customer_name", type = String.class),
-                                @ColumnResult(name = "customer_id",  type = String.class),
-                                @ColumnResult(name = "phone_number",  type = String.class),
-                                @ColumnResult(name = "address",   type = String.class),
-                                @ColumnResult(name = "payment_method",  type = String.class),
-                                @ColumnResult(name = "total_trx_amount",   type = Float.class),
-                                @ColumnResult(name = "total_discount_amount",  type = Float.class),
-                                @ColumnResult(name = "total_paid_amount",  type = Float.class),
-                                @ColumnResult(name = "username",  type = String.class),
-                                @ColumnResult(name = "created_time",  type = Date.class)
+                                @ColumnResult(name = "customer_id", type = String.class),
+                                @ColumnResult(name = "phone_number", type = String.class),
+                                @ColumnResult(name = "address", type = String.class),
+                                @ColumnResult(name = "payment_method", type = String.class),
+                                @ColumnResult(name = "total_trx_amount", type = Float.class),
+                                @ColumnResult(name = "total_discount_amount", type = Float.class),
+                                @ColumnResult(name = "total_paid_amount", type = Float.class),
+                                @ColumnResult(name = "username", type = String.class),
+                                @ColumnResult(name = "created_time", type = Date.class)
+                        })
+        })
+
+
+@SqlResultSetMapping(name = "POSDetailTmpModelMapper",
+        classes = {
+                @ConstructorResult(
+                        targetClass = POSDetailTmpModel.class,
+                        columns = {
+                                @ColumnResult(name = "request_id", type = String.class),
+                                @ColumnResult(name = "item_code", type = String.class),
+                                @ColumnResult(name = "item_code_label", type = String.class),
+                                @ColumnResult(name = "item_name", type = String.class),
+                                @ColumnResult(name = "description", type = String.class),
+                                @ColumnResult(name = "qty", type = Integer.class),
+                                @ColumnResult(name = "sell_price", type = Float.class),
+                                @ColumnResult(name = "total_sell_price", type = Float.class),
+                                @ColumnResult(name = "price_detail", type = String.class),
+                                @ColumnResult(name = "basic_price", type = Float.class),
+                                @ColumnResult(name = "item_type", type = String.class)
                         })
         })
 

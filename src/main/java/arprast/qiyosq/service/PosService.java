@@ -2,9 +2,7 @@ package arprast.qiyosq.service;
 
 import arprast.qiyosq.dao.DaoImpl;
 import arprast.qiyosq.dto.*;
-import arprast.qiyosq.http.POSHeaderTmpRequest;
-import arprast.qiyosq.http.Request;
-import arprast.qiyosq.http.Response;
+import arprast.qiyosq.http.*;
 import arprast.qiyosq.model.MasterItemModel;
 import arprast.qiyosq.model.POSDetailTmpModel;
 import arprast.qiyosq.model.POSHeaderTmpModel;
@@ -74,15 +72,44 @@ public class PosService {
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
-    public final ResponseEntity<Response> getPosTemporaryTransactionList(final Request<RequestData> request) {
+    public final ResponseEntity<Response> getPosTemporaryTransaction(final Request request) {
         final Response responseDto = Util.buildResponse(request);
 
-        final List<POSHeaderTmpModel> posItemList = daoImpl.getPosTemporaryTransactionList(request);
+        final POSHeaderTmpModel headerTmpTrx = daoImpl.getPOSHeaderTmp(request.getUsername(), request.getRequestId());
+        if(headerTmpTrx == null){
+            responseDto.setStatusCode(StatusCode.POS_TMP_HEADER_TRX_NOT_FOUND);
+            return new ResponseEntity<>(responseDto, HttpStatus.OK);
+        }
+        final List<POSItemTmpModel> posItemList = daoImpl.getPosTemporaryTransactionListByRequestId(request);
+        if(posItemList.isEmpty()){
+            responseDto.setStatusCode(StatusCode.POS_TMP_TRX_NOT_FOUND);
+            return new ResponseEntity<>(responseDto, HttpStatus.OK);
+        }
+
+        final GetPosTransactionTmpResponse response = buildPosTransactionTmpResponse(headerTmpTrx, posItemList);
+        final ResponseData responseData = new ResponseData();
+        responseData.setTotalRecord(response.getDetailTrxList().size());
+        responseData.setData(response);
+        responseDto.setResponseData(responseData);
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
+    }
+
+    public final ResponseEntity<Response> getPosHeaderTemporaryTransactionList(final Request<RequestData> request) {
+        final Response responseDto = Util.buildResponse(request);
+
+        final List<POSHeaderTmpModel> posItemList = daoImpl.getPosHeaderTemporaryTransactionList(request);
         final ResponseData responseData = new ResponseData();
         responseData.setTotalRecord(posItemList.size());
         responseData.setData(posItemList);
         responseDto.setResponseData(responseData);
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
+    }
+
+    private GetPosTransactionTmpResponse buildPosTransactionTmpResponse( final POSHeaderTmpModel headerTmpTrx, final List<POSItemTmpModel> posItemList){
+        GetPosTransactionTmpResponse response = new GetPosTransactionTmpResponse();
+        response.setHeaderTrx(headerTmpTrx);
+        response.setDetailTrxList(posItemList);
+        return response;
     }
 
     private int insertPOSHeaderTmp(final Request<POSHeaderTmpRequest> request, final MasterItemModel masterItem){

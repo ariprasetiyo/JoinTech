@@ -9,8 +9,7 @@ import java.util.UUID;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Request<T> {
-    @Valid
-    @NotNull
+
     private T requestData;
     @NotBlank(message = "Request id can't be blank")
     private String requestId;

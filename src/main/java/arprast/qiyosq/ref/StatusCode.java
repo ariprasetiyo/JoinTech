@@ -26,6 +26,8 @@ public enum StatusCode {
 	FAILED(300, "failed"),
 	POS_TMP_NOT_ENOUGH_STOCK(1000, "not enough stock"),
 	POS_TMP_MAX_QTY_ONLY_ONE(1001, "maximum qty only 1"),
+	POS_TMP_TRX_NOT_FOUND(1002, "transaction not found"),
+	POS_TMP_HEADER_TRX_NOT_FOUND(1003, "header transaction not found"),
 
 	DATA_NOT_FOUND(517,"DATA NOT FOUND");
 

@@ -99,6 +99,10 @@ public class DaoImpl {
         return "select item_code, item_code_label, item_name, description, qty, sell_price, total_sell_price, price_detail, item_type from pos_detail_tmp where request_id = ?  and ( item_code_label like ? or item_name like ?  ) order by seq desc limit ?,?  ";
     }
 
+    private static String getPosItemListByRequestIdQuery() {
+        return "select item_code, item_code_label, item_name, description, qty, sell_price, total_sell_price, price_detail, item_type from pos_detail_tmp where request_id = ?   ";
+    }
+
     private static String getPosTemporaryTransactionList(){
         return new StringBuilder()
                 .append("select request_id, customer_name , customer_id , phone_number , address , payment_method, total_trx_amount,  total_discount_amount , total_paid_amount, username, created_time ")
@@ -141,7 +145,7 @@ public class DaoImpl {
     }
 
     @SuppressWarnings("unchecked")
-    public List<POSHeaderTmpModel> getPosTemporaryTransactionList(final Request<RequestData> request) {
+    public List<POSHeaderTmpModel> getPosHeaderTemporaryTransactionList(final Request<RequestData> request) {
         try {
             return em.createNativeQuery(getPosTemporaryTransactionList(), "POSHeaderTmpMapper")
                     .setParameter(1, request.getUsername())
@@ -150,6 +154,26 @@ public class DaoImpl {
                     .setParameter(4, buildLike(request.getRequestData().getSearch()))
                     .setParameter(5, request.getRequestData().getOffset())
                     .setParameter(6, request.getRequestData().getLimit())
+                    .getResultList();
+        } catch (NoResultException nre) {
+            try {
+                logger.info("no result data for {}", requestWriteJson.writeValueAsString(request));
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            logger.error("error getPOSHeaderTmp={} {}", request.getRequestId(), request.getUsername(), e);
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
+
+    @SuppressWarnings("unchecked")
+    public List<POSItemTmpModel> getPosTemporaryTransactionListByRequestId(final Request request) {
+        try {
+            return em.createNativeQuery(getPosItemListByRequestIdQuery(), "POSItemTmpModelMapper")
+                    .setParameter(1, request.getRequestId())
                     .getResultList();
         } catch (NoResultException nre) {
             try {
